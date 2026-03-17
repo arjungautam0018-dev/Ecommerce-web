@@ -12,3 +12,5 @@ setInterval(() => {
     current = (current + 1) % layers.length;
     layers[current].classList.add('active');
 }, 5000);
+
+
