@@ -58,3 +58,24 @@ productsList.forEach(product=>{
     productsContainer.appendChild(productCard);
 });
 
+const productsContainer2 = document.querySelector('.products2');
+productsList.forEach(product=>{
+    const productCard = document.createElement('div');
+    productCard.classList.add('product-card');
+    productCard.innerHTML = `
+                   <img class="products_images" src="${product.img}" alt="Product 1">
+            <div class="product-inform">
+
+                <h3>${product.title}</h3>
+                <p class="desc-product">${product.desc}</p>
+                <p class="price-product">${product.price}</p>
+            </div>
+            <div class="add-to-cart">
+                <button>
+                    <i class="fa-solid fa-cart-shopping"></i>
+                        Add to Cart
+                </button>
+            </div>
+    `;
+    productsContainer2.appendChild(productCard);
+});
