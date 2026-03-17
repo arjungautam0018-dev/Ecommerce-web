@@ -146,3 +146,96 @@ body{
 .constant-change .explore-now button:hover {
     transform: scale(1.05);
 }
+
+.top-products {
+    padding: 2rem 1rem;
+    font-family: 'Poppins', 'Manrope', sans-serif;
+}
+.text-top-products p{
+    color: #555;
+    margin-top: -5px;
+}
+
+/* Products design */
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 4rem;
+}
+.product-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+     border: 1px solid rgba(0,0,0,0.08); /* very light gray */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* soft shadow for depth */
+        transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+
+}
+.product-card:hover {
+     transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12); /* slightly stronger shadow */
+    border-color: rgba(124, 58, 237, 0.3); /* subtle purple accent border on hover */
+}
+.product-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+.product-card h3 {
+    font-size: 1.4rem;
+    color: black;
+    font-family: 'Poppins', 'Manrope', sans-serif;
+    font-weight: 600;
+}
+.product-inform{
+    padding: 0.5rem;
+    margin-left: 5px;
+}
+.desc-product{
+    margin-top: -5px;
+    color: #777;
+    font-size: 0.9rem;
+
+}
+.price-product {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: purple;
+    margin-top: -3px;
+
+}
+
+
+.add-to-cart button {
+    display: flex;                /* horizontal layout */
+    align-items: center;          /* center icon & text vertically */
+    justify-items: center;
+    justify-content: center;
+    gap: 0.5rem;                  /* space between icon and text */
+    padding: 0.6rem 1.2rem;       /* top-bottom, left-right */
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: #021024;    /* modern purple */
+    color: #fff;                  /* white text */
+    border: none;
+    border-radius: 8px;           /* rounded corners */
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+    width: 90%;
+    margin: 0px 10px 20px 10px;
+}
+
+/* Slight hover animation (without changing color) */
+.add-to-cart button:hover {
+    transform: translateY(-2px);  /* subtle lift effect */
+}
+
+/* FontAwesome Icon inside button */
+.add-to-cart button i {
+    font-size: 1.1rem;             /* slightly bigger than text */
+    display: inline-block;
+    vertical-align: middle;
+}
+
