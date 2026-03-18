@@ -86,3 +86,43 @@ productsList.forEach(product=>{
     `;
     productsContainer2.appendChild(productCard);
 });
+
+
+// index.js (add at the end of your current code)
+
+// Select all Add to Cart buttons
+function setupAddToCartButtons() {
+    const buttons = document.querySelectorAll('.add-to-cart button');
+
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const card = btn.closest('.product-card');
+            const title = card.querySelector('h3').textContent;
+            const priceText = card.querySelector('.price-product').textContent;
+            const img = card.querySelector('.products_images').src;
+
+            const price = parseInt(priceText.replace(/[^0-9]/g, ''));
+
+            // Get cart from localStorage
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            // Check if item already exists
+            const existing = cart.find(item => item.title === title);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({
+                    title,
+                    price,
+                    img,
+                    quantity: 1
+                });
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert(`${title} added to cart`);
+        });
+    });
+}
+
+setupAddToCartButtons();
