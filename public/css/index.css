@@ -1,17 +1,23 @@
-body{
+/* Reset */
+body {
     margin: 0;
-        font-family: 'Poppins', 'Manrope', sans-serif;
-
+    font-family: 'Poppins', 'Manrope', sans-serif;
 }
-/* Navbar container */
+
+/* Navbar */
 .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
-    background-color: #fff;
-    padding: 15px 20px;
 
+    padding: 18px 16px; /* taller navbar */
+
+    background: #ffffff;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
 }
 .shophub-nav{
     text-decoration: none;
@@ -19,7 +25,7 @@ body{
 /* Logo */
 .nav-bar-left h1 {
     margin: 0;
-    font-size: 16px;
+    font-size: 1.6rem; /* larger, scales with rem */
     font-weight: 700;
 
     background: linear-gradient(135deg, #667eea, #764ba2);
@@ -27,27 +33,86 @@ body{
     -webkit-text-fill-color: transparent;
 }
 
-
-/* Right side icons */
+/* Right icons */
 .nav-bar-right {
     display: flex;
     align-items: center;
-    gap: 12px; /* smaller gap for mobile */
+    gap: 12px;
+    position: relative;
 }
 
-/* SVG icons */
+/* Icons */
 .icons-svg-nav {
-    width: 22px;
-    height: 22px;
-    stroke-width: 1.5; /* lighter than desktop */
+    width: 20px;
+    height: 20px;
+    stroke-width: 1.6;
+
     cursor: pointer;
-    transition: transform 0.15s ease; /* slight animation */
+    transition: transform 0.15s ease;
 }
 
-/* Slight hover/tap effect */
-.icons-svg-nav:hover {
-    transform: scale(1.1);
+/* Tap effect */
+.icons-svg-nav:active {
+    transform: scale(1.15);
 }
+
+/* Hamburger */
+.hamburger {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Dropdown */
+.quickies {
+    position: absolute;
+    top: 60px; /* matches navbar height */
+    right: 0;
+
+    width: 150px;
+
+    background: #fff;
+    border-radius: 10px;
+
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+
+    display: flex;
+    flex-direction: column;
+
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+
+    transition: all 0.2s ease;
+}
+
+/* Show menu */
+.quickies.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* Links */
+.quickies a {
+    padding: 10px 12px;
+    font-size: 1rem; /* readable on mobile */
+    text-decoration: none;
+    color: #333;
+
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+/* Last item */
+.quickies a:last-child {
+    border-bottom: none;
+}
+
+/* Tap feedback */
+.quickies a:active {
+    background: #f2f2f2;
+}
+
 
 .constant-change {
     position: relative;

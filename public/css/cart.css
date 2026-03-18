@@ -14,7 +14,7 @@ body {
     justify-content: space-between;
     align-items: center;
 
-    padding: 10px 12px;
+    padding: 18px 16px; /* taller navbar */
 
     background: #ffffff;
     border-bottom: 1px solid rgba(0,0,0,0.06);
@@ -25,7 +25,7 @@ body {
 /* Logo */
 .nav-bar-left h1 {
     margin: 0;
-    font-size: 16px;
+    font-size: 1.6rem; /* larger, scales with rem */
     font-weight: 700;
 
     background: linear-gradient(135deg, #667eea, #764ba2);
@@ -66,7 +66,7 @@ body {
 /* Dropdown */
 .quickies {
     position: absolute;
-    top: 48px;
+    top: 60px; /* matches navbar height */
     right: 0;
 
     width: 150px;
@@ -96,7 +96,7 @@ body {
 /* Links */
 .quickies a {
     padding: 10px 12px;
-    font-size: 0.9rem;
+    font-size: 1rem; /* readable on mobile */
     text-decoration: none;
     color: #333;
 
@@ -128,6 +128,7 @@ body {
     border: 1px solid rgba(0,0,0,0.1);
     border-radius: 14px;
     margin: 2rem 20px;
+    position: relative;
 }
 .img-product img{
  width: 70px;   /* or 80px */
@@ -138,13 +139,20 @@ body {
     border: 1px solid rgba(0,0,0,0.1);
     margin: 5px 0px 5px 5px;
 }
+.delete-product{
+    margin-left: auto;
+    cursor: pointer;
+}
 .delete-product svg{
     width: 20px;
     height: 20px;
     stroke-width: 1.5;
     position: relative;
     bottom: 14px;
-    left: 10px;
+    display: flex;
+    padding-right: 10px;
+
+
 }
 .delete-product svg:active{
     transform: scale(1.2);
