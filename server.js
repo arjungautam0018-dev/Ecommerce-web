@@ -14,6 +14,10 @@ app.get("/", (req,res)=>{
 app.get("/serve/cart", (req,res)=>{
     res.sendFile(__dirname+"/public/html/cart.html");
 })
+//Serve Profile
+app.get("/serve/profile", (req,res)=>{
+    res.sendFile(__dirname+"/public/html/profile.html")
+})
 //Start Server
 app.listen(3000, () => {
     console.log("Server is running on port 3000");
