@@ -31,10 +31,11 @@
         <!-- Cart -->
          <a href="/serve/cart">
 
-             <svg class="icons-svg-nav" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
-                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4"/>
-                 <circle cx="7" cy="21" r="2"/>
-                 <circle cx="17" cy="21" r="2"/>
+             <svg class="icons-svg-nav" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.7" xmlns="http://www.w3.org/2000/svg">
+                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 8h15l-2 11H7L5 4H3"/>
+                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 0 1 6 0v2"/>
+                 <circle cx="9" cy="21" r="1.25"/>
+                 <circle cx="17" cy="21" r="1.25"/>
              </svg>
          </a>
 
@@ -78,8 +79,16 @@
     <div class="carousel-layer" style="background-image: url('/resources/stamp.jpg');"></div>
 
     <!-- Navigation buttons -->
-    <button class="carousel-btn prev">&larr;</button>
-    <button class="carousel-btn next">&rarr;</button>
+    <button class="carousel-btn prev" type="button" aria-label="Previous slide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M15 18l-6-6 6-6"/>
+      </svg>
+    </button>
+    <button class="carousel-btn next" type="button" aria-label="Next slide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M9 6l6 6-6 6"/>
+      </svg>
+    </button>
   </div>
 
   <!-- Right side: Static content area -->
@@ -136,23 +145,43 @@
        </div>
        <div class="categories-option">
         <!-- Gifts -->
-           <div class="category" style="background: linear-gradient(135deg, #a1c4fd, #c2e9fb); border-radius: 14px; padding: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: all 0.2s ease;">
-                <svg class="svg-category" viewBox="0 0 1024 1024" fill="#000000" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M216.8 952c-37.6 0-68-30.4-68-68V553.6h48.8v329.6c0 10.4 8.8 19.2 19.2 19.2h568c10.4 0 19.2-8.8 19.2-19.2V564.8h48.8v319.2c0 37.6-30.4 68-68 68h-568z" fill=""></path><path d="M151.2 556v327.2c0 36 29.6 65.6 65.6 65.6h568c36 0 65.6-28.8 65.6-65.6V567.2h-44v316.8c0 12-9.6 21.6-21.6 21.6h-568c-12 0-21.6-9.6-21.6-21.6v-328h-44z" fill=""></path><path d="M498.4 302.4h48.8v627.2h-48.8z" fill=""></path><path d="M544 927.2V304.8h-44v622.4H544z" fill=""></path><path d="M172.8 569.6c-61.6 0-111.2-50.4-111.2-111.2V280.8h766.4c61.6 0 111.2 50.4 111.2 111.2v176.8H172.8z m-62.4-112c0 35.2 28 63.2 63.2 63.2h718.4v-128c0-35.2-28-63.2-63.2-63.2H110.4v128z" fill=""></path><path d="M85.6 327.2h742.4c36 0 65.6 29.6 65.6 65.6v152.8l21.6-21.6H172.8c-36 0-65.6-29.6-65.6-65.6V304.8l-21.6 22.4z m0-44H64v174.4c0 60 48.8 108.8 108.8 108.8h764V392.8c0-60-48.8-108.8-108.8-108.8H85.6v-0.8z" fill=""></path><path d="M432.8 329.6V215.2h179.2v113.6H432.8z m131.2-48.8V264H480.8v16.8h83.2z" fill=""></path><path d="M456.8 261.6h131.2L566.4 240v65.6l21.6-21.6H456.8l21.6 21.6V240l-21.6 21.6z m0-44h-21.6v109.6H609.6V218.4H456.8v-0.8z" fill=""></path><path d="M260.8 320.8c-2.4-3.2-6.4-8-12-15.2-9.6-12.8-18.4-25.6-25.6-37.6-9.6-14.4-16.8-28.8-23.2-41.6-20.8-44-22.4-76-4.8-99.2 40-53.6 112.8-96.8 161.6-96.8 24 0 50.4 20 92.8 71.2 8 9.6 16 20 24.8 31.2 13.6 19.2 29.6 40.8 45.6 64 5.6 8 10.4 15.2 14.4 21.6 2.4 4 6.4 10.4 6.4 10.4l-40.8 26.4s-4-6.4-6.4-9.6c-3.2-6.4-8-13.6-13.6-21.6-16-22.4-31.2-44-45.6-62.4-8-10.4-16-20.8-23.2-29.6-29.6-36-51.2-53.6-55.2-53.6-32.8 0-92.8 37.6-122.4 77.6-4 5.6-2.4 22.4 10.4 49.6 5.6 11.2 12 23.2 20 36 7.2 11.2 15.2 23.2 24 34.4 4.8 6.4 8.8 11.2 10.4 13.6l1.6 1.6-37.6 30.4-1.6-0.8z" fill=""></path><path d="M505.6 228l36.8 24c0.8-1.6 2.4-4 4.8-8 4-6.4 8.8-13.6 14.4-20.8 14.4-21.6 30.4-43.2 45.6-63.2 8-10.4 16-20.8 24-29.6 28-33.6 52-54.4 57.6-54.4 34.4 0 93.6 37.6 124.8 78.4 4.8 6.4 2.4 25.6-10.4 52-5.6 11.2-12 24-20 36.8-7.2 12-16 24-24 34.4-4.8 6.4-8.8 11.2-10.4 13.6l33.6 28c2.4-3.2 6.4-8 12-15.2 8.8-12 17.6-24.8 25.6-37.6 8.8-14.4 16.8-28 23.2-41.6 18.4-40 23.2-72.8 5.6-96.8-40-50.4-112-96-161.6-96-24.8 0-52.8 24.8-91.2 70.4-8 9.6-16 20-24.8 31.2-16 20.8-31.2 42.4-46.4 64.8-5.6 8-10.4 15.2-14.4 21.6-2.4 3.2-4 6.4-4.8 8z" fill=""></path></g></svg>
+           <div class="category cat-gifts">
+                <svg class="svg-category" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M20 12v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8"/>
+                  <path d="M2 7h20v5H2z"/>
+                  <path d="M12 7v15"/>
+                  <path d="M12 7H8.5a2.5 2.5 0 1 1 0-5C10.5 2 12 4.5 12 7z"/>
+                  <path d="M12 7h3.5a2.5 2.5 0 1 0 0-5C13.5 2 12 4.5 12 7z"/>
+                </svg>
                 <p>Gifts</p>
            </div>
            <!-- Events -->
-           <div class="category" style="background: linear-gradient(135deg, #a1c4fd, #c2e9fb); border-radius: 14px; padding: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: all 0.2s ease;">
-            <svg class="svg-category" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.53 11.06L15.47 10l-4.88 4.88-2.12-2.12-1.06 1.06L10.59 17l5.94-5.94zM19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"></path></g></svg>
+           <div class="category cat-events">
+            <svg class="svg-category" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M8 2v3M16 2v3"/>
+              <path d="M3 7h18"/>
+              <path d="M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/>
+              <path d="m9.5 14.5 1.7 1.7 3.8-3.8"/>
+            </svg>
             <p>Events</p>
             <!-- Offices -->
         </div>
-           <div class="category" style="background: linear-gradient(135deg, #a1c4fd, #c2e9fb); border-radius: 14px; padding: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: all 0.2s ease;">
-           <svg class="svg-category" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <defs> <style>.cls-1{fill:none;stroke:#020202;stroke-linecap:square;stroke-miterlimit:10;stroke-width:1.91px;}</style> </defs> <g id="briefcase_office" data-name="briefcase office"> <rect class="cls-1" x="1.5" y="6.27" width="21" height="15.27" rx="1.91"></rect> <path class="cls-1" d="M3.41,6.27H20.59A1.91,1.91,0,0,1,22.5,8.18v1A3.82,3.82,0,0,1,18.68,13H5.32A3.82,3.82,0,0,1,1.5,9.14v-1A1.91,1.91,0,0,1,3.41,6.27Z"></path> <line class="cls-1" x1="7.23" y1="12.95" x2="7.23" y2="14.86"></line> <line class="cls-1" x1="16.77" y1="12.95" x2="16.77" y2="14.86"></line> <polygon class="cls-1" points="15.82 6.27 8.18 6.27 9.14 2.46 14.86 2.46 15.82 6.27"></polygon> </g> </g></svg>
+           <div class="category cat-office">
+           <svg class="svg-category" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+             <path d="M9 6V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1"/>
+             <path d="M3 8h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8z"/>
+             <path d="M3 12h18"/>
+           </svg>
            <p>Office</p>
            <!-- Custom -->
         </div>
-           <div class="category" style="background: linear-gradient(135deg, #a1c4fd, #c2e9fb); border-radius: 14px; padding: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: all 0.2s ease;">
-            <svg class="svg-category" fill="#000000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" enable-background="new 0 0 52 52" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M49.4,12.2c-0.2-0.6-0.9-0.7-1.4-0.3L39.9,20c-0.6,0.6-1.6,0.6-2.2,0L32,14.3c-0.6-0.6-0.6-1.6,0-2.2L40.2,4 c0.4-0.4,0.2-1.1-0.3-1.4C38.5,2.2,37,2,35.6,2c-8.5,0-15.3,7.3-14.3,16c0.2,1.4,0.5,2.6,1,3.8L3.6,40.4c-2.2,2.2-2.2,5.8,0,7.9 c1.1,1.1,2.6,1.7,4,1.7s2.9-0.6,4-1.7l18.6-18.6c1.2,0.5,2.5,0.8,3.8,1c8.7,1,16-5.8,16-14.3C50,14.9,49.8,13.5,49.4,12.2z"></path> </g></svg>
+           <div class="category cat-custom">
+            <svg class="svg-category" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M15 4l5 5"/>
+              <path d="M14 6l4 4"/>
+              <path d="M3 21l6-2 11-11a2 2 0 0 0 0-3l-1-1a2 2 0 0 0-3 0L5 15l-2 6z"/>
+              <path d="M5 15l4 4"/>
+            </svg>
             <p>Custom</p>
         </div>
        </div>
