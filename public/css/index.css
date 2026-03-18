@@ -305,14 +305,14 @@ body {
 
 }
 .product-card:hover {
-     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0,0,0,0.12); /* slightly stronger shadow */
     border-color: rgba(124, 58, 237, 0.3); /* subtle purple accent border on hover */
 }
 .product-card img {
     width: 100%;
-    height: auto;
-    border-radius: 4px;
+    height: 140px;        /* 🔥 control size here */
+    object-fit: cover;    /* 🔥 keeps image nice */
+    border-radius: 12px;
 }
 .product-card h3 {
     font-size: 1.4rem;
@@ -359,9 +359,7 @@ body {
 }
 
 /* Slight hover animation (without changing color) */
-.add-to-cart button:hover {
-    transform: translateY(-2px);  /* subtle lift effect */
-}
+
 
 /* FontAwesome Icon inside button */
 .add-to-cart button i {
@@ -442,7 +440,6 @@ body {
 
 /* Hover */
 .category:hover {
-    transform: translateY(-3px);
     box-shadow: 0 6px 14px rgba(0,0,0,0.08);
 }
 
@@ -596,7 +593,6 @@ body {
 
 #send-feed-foot:hover {
   background-color: #b50f30;
-  transform: translateY(-2px);
   box-shadow: 0 8px 28px rgba(220,20,60,0.45);
 }
 

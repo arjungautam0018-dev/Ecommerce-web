@@ -359,7 +359,6 @@ body {
 }
 
 .cart-product:hover {
-  transform: translateY(-2px);
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
@@ -372,4 +371,114 @@ body {
 @keyframes pulseBorder {
   0% { box-shadow: 0 0 10px rgba(2,16,36,0.2); }
   100% { box-shadow: 0 0 18px rgba(2,16,36,0.35); }
+}
+
+
+
+/* Footer base */
+.footers {
+  width: 100%;
+  background-color: #0d0d0d; /* dark background */
+  color: #fff;
+  padding: 0; /* we will handle spacing inside */
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  font-family: 'Poppins', 'Manrope', sans-serif;
+  position: relative;
+}
+
+/* Gradient top line */
+.footer-gradient-line {
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(90deg, #ff003c, #0040ff); /* red to blue gradient */
+}
+
+/* Footer container for sections */
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px 16px;
+}
+
+/* Section heading */
+.footer-section h3.head-footers {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+/* Paragraph text */
+.footer-section p.side-footers {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+
+/* Links in quick links */
+.footer-nav {
+  display: block;
+  font-size: 0.95rem;
+  color: #fff;
+  text-decoration: none;
+  margin: 6px 0;
+  transition: all 0.3s ease;
+  padding: 6px 0;
+}
+
+.footer-nav:hover {
+  background: linear-gradient(90deg, #ff003c, #0040ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Get in Touch button */
+#send-feed-foot {
+  width: calc(100% - 20px); /* full width minus margin */
+  margin: 10px 10px 0 10px;
+  background-color: #dc143c;
+  color: #fff;
+  border: none;
+  padding: 12px 0;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(220,20,60,0.35);
+  transition: all 0.3s ease;
+}
+
+#send-feed-foot:hover {
+  background-color: #b50f30;
+  box-shadow: 0 8px 28px rgba(220,20,60,0.45);
+}
+
+/* Email link */
+.footer-section a {
+  color: #04f5f5;
+  text-decoration: underline;
+}
+
+/* Copyright */
+.copyrights {
+  font-size: 0.8rem;
+  text-align: center;
+  color: rgba(255,255,255,0.5);
+  padding: 16px 0;
+  background-color: #0b0b0b;
+}
+
+/* Responsive for mobile screens */
+@media (max-width: 480px) {
+  .footer-container {
+    gap: 16px;
+  }
+  .footer-section h3.head-footers {
+    font-size: 1.1rem;
+  }
+  .footer-nav, #send-feed-foot {
+    font-size: 0.9rem;
+  }
 }
