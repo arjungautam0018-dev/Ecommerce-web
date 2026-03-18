@@ -242,4 +242,3 @@ function updateCheckoutSummary() {
 // Initialize: no selection at first
 updateCheckoutSummary();
 });
-
