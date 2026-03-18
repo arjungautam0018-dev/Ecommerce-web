@@ -1,7 +1,14 @@
 function toggleMenu(){
     document.querySelector(".quickies").classList.toggle("show");
 }
+document.addEventListener("click", function(e){
+    const menu = document.querySelector(".quickies");
+    const hamburger = document.querySelector(".hamburger");
 
+    if (!hamburger.contains(e.target) && !menu.contains(e.target)) {
+        menu.classList.remove("show");
+    }
+});
 
 const layers = document.querySelectorAll('.constant-change .gradient-layer');
 let current = 0;

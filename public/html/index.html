@@ -13,31 +13,57 @@
 <!-- Navbar -->
 <div class="navbar">
     <div class="nav-bar-left">
-        <h1 class="gradient-text">ShopHub</h1>
+        <a href="/" class="shophub-nav">
+
+            <h1 class="gradient-text">ShopHub</h1>
+        </a>
     </div>
 
     <div class="nav-bar-right">
         <!-- Theme / Night -->
-        <svg class="icons-svg-nav" fill="none" stroke="#000" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
-        </svg>
+         <a href="">
+
+             <svg class="icons-svg-nav" fill="none" stroke="#000" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+             </svg>
+         </a>
 
         <!-- Cart -->
-        <svg class="icons-svg-nav" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4"/>
-            <circle cx="7" cy="21" r="2"/>
-            <circle cx="17" cy="21" r="2"/>
-        </svg>
+         <a href="/serve/cart">
+
+             <svg class="icons-svg-nav" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4"/>
+                 <circle cx="7" cy="21" r="2"/>
+                 <circle cx="17" cy="21" r="2"/>
+             </svg>
+         </a>
 
         <!-- Profile -->
-        <svg class="icons-svg-nav" fill="none" stroke="#000" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zM6 20c0-3.31 2.69-6 6-6s6 2.69 6 6H6z"/>
-        </svg>
+         <a href="">
+
+             <svg class="icons-svg-nav" fill="none" stroke="#000" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zM6 20c0-3.31 2.69-6 6-6s6 2.69 6 6H6z"/>
+             </svg>
+         </a>
 
         <!-- Hamburger Menu -->
-        <svg class="icons-svg-nav" fill="none" stroke="#000" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
+        
+<!-- Hamburger Menu -->
+<div class="hamburger" onclick="toggleMenu()">
+    <svg class="icons-svg-nav" fill="none" stroke="#000" stroke-width="1.5" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+    </svg>
+</div>
+
+<!-- Dropdown Menu -->
+<div class="quickies">
+    <a href="#">Home</a>
+    <a href="#">Categories</a>
+    <a href="/serve/cart">Cart</a>
+    <a href="#">Profile</a>
+    <a href="#">Logout</a>
+</div>
+        
     </div>
 </div>
 
