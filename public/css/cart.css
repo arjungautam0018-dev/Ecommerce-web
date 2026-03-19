@@ -215,7 +215,7 @@ body {
     display: flex;
     justify-content: end;
     padding: 0px 10px 10px 0px;
-    color: #6325a1;
+    color: #052659;
 }
 /* Checkout Box */
 .checkout-box {
@@ -346,7 +346,7 @@ body {
   background-color: #ddd;
 }
 .total-line span:last-child {
-  color: #7c3aed; /* purple */
+  color: #052659;
   font-weight: 700;
 }
 
@@ -480,5 +480,89 @@ body {
   }
   .footer-nav, #send-feed-foot {
     font-size: 0.9rem;
+  }
+}
+
+
+
+/* Gradient for cart products container (mobile-friendly) */
+@media (max-width: 480px) {
+  .cart-container {
+      background: linear-gradient(
+        135deg, 
+        #021024, /* deep navy */
+        #052659, /* dark blue */
+        #5483B3, /* light blue */
+        #7DA0CA /* sky blue */
+      );
+      border-radius: 16px;
+      padding: 16px;
+      color: #fff; /* text white on dark gradient */
+  }
+
+  /* Cart product cards slightly transparent to show gradient */
+  .cart-product {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  .cart-product .details h3,
+  .cart-product .details p,
+  .cart-product .total h3 {
+      color: #fff;
+  }
+
+  .quantity button {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.3);
+  }
+
+  .quantity button:active {
+      background: rgba(255,255,255,0.25);
+  }
+
+  /* Checkout box gradient */
+  .checkout-box {
+      background: linear-gradient(
+          135deg, 
+          #2A0800, /* dark brown */
+          #775144, /* muted copper */
+          #C09891, /* dusty pink */
+          #BEA8A7  /* light pink */
+      );
+      color: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+  }
+
+  .checkout-title,
+  .summary-line span,
+  .checkout-item-details h4,
+  .checkout-item-details p {
+      color: #fff;
+  }
+
+  #proceed-checkout,
+  #continue-shopping {
+      color: #fff;
+      border: none;
+  }
+
+  #proceed-checkout {
+      background-color: rgba(2,16,36,0.8); /* overlay on gradient */
+  }
+
+  #continue-shopping {
+      background-color: rgba(255,255,255,0.15);
+  }
+
+  #proceed-checkout:hover {
+      background-color: rgba(2,16,36,1);
+  }
+
+  #continue-shopping:hover {
+      background-color: rgba(255,255,255,0.25);
   }
 }

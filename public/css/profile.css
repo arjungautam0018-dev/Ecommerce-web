@@ -121,18 +121,20 @@ body {
 
 :root{
     --bg: #ffffff;
-    --fg: #0a0a0a;
+    --fg: #021024;
     --muted: #f3f4f6;
-    --muted-2: #eef2ff;
-    --muted-fg: rgba(10, 10, 10, 0.62);
-    --border: rgba(0,0,0,0.10);
-    --shadow: 0 10px 30px rgba(0,0,0,0.08);
-    --shadow-lg: 0 18px 50px rgba(0,0,0,0.12);
+    --muted-2: #e5f2ff;
+    --muted-fg: rgba(2, 16, 36, 0.62);
+    --border: rgba(2,16,36,0.10);
+    --shadow: 0 10px 30px rgba(2,16,36,0.10);
+    --shadow-lg: 0 18px 50px rgba(2,16,36,0.16);
     --radius: 16px;
     --radius-lg: 20px;
-    --purple: #9333EA;
-    --blue: #2563EB;
-    --pink: #DB2777;
+    --primary-dark: #021024;
+    --primary-mid: #052659;
+    --primary-soft: #5483B3;
+    --primary-light: #7DA0CA;
+    --primary-pale: #C1E8FF;
     --green: #16a34a;
     --red: #ef4444;
 }
@@ -142,8 +144,8 @@ body {
 body{
     color: var(--fg);
     background:
-      radial-gradient(900px 320px at 10% 0%, rgba(147, 51, 234, 0.10), transparent 60%),
-      radial-gradient(900px 320px at 90% 10%, rgba(37, 99, 235, 0.10), transparent 55%),
+      radial-gradient(900px 320px at 10% 0%, rgba(193, 232, 255, 0.40), transparent 60%),
+      radial-gradient(900px 320px at 90% 10%, rgba(84, 131, 179, 0.35), transparent 55%),
       linear-gradient(180deg, var(--bg) 0%, rgba(243, 244, 246, 0.55) 100%);
 }
 
@@ -204,7 +206,7 @@ body{
 
 .profile-card-banner{
     height: 128px;
-    background: linear-gradient(90deg, #9333EA 0%, #2563EB 50%, #9333EA 100%);
+    background: linear-gradient(90deg, #021024 0%, #052659 40%, #5483B3 100%);
 }
 
 .profile-card-body{
@@ -238,7 +240,7 @@ body{
     width: 128px;
     height: 128px;
     border-radius: 999px;
-    background: linear-gradient(135deg, #9333EA, #2563EB);
+    background: linear-gradient(135deg, #021024, #052659);
     display: grid;
     place-items: center;
     border: 4px solid var(--bg);
@@ -396,12 +398,12 @@ body{
 
 .btn-primary{
     color: #fff;
-    background: linear-gradient(135deg, #9333EA, #2563EB);
-    box-shadow: 0 14px 40px rgba(37,99,235,0.22);
+    background: linear-gradient(135deg, #021024, #052659, #5483B3);
+    box-shadow: 0 14px 40px rgba(2,16,36,0.30);
 }
 
 .btn-primary:hover{
-    box-shadow: 0 18px 52px rgba(37,99,235,0.28);
+    box-shadow: 0 18px 52px rgba(2,16,36,0.40);
     transform: translateY(-1px);
 }
 
@@ -428,7 +430,6 @@ body{
 
 .stat-card:hover{
     box-shadow: 0 16px 45px rgba(0,0,0,0.14);
-    transform: translateY(-2px);
 }
 
 .stat-inner{
@@ -453,9 +454,9 @@ body{
     height: 24px;
 }
 
-.stat-icon-purple{ background: linear-gradient(135deg, #A855F7, #9333EA); }
-.stat-icon-pink{ background: linear-gradient(135deg, #EC4899, #DB2777); }
-.stat-icon-blue{ background: linear-gradient(135deg, #3B82F6, #2563EB); }
+.stat-icon-purple{ background: linear-gradient(135deg, #021024, #052659); }
+.stat-icon-pink{ background: linear-gradient(135deg, #052659, #5483B3); }
+.stat-icon-blue{ background: linear-gradient(135deg, #5483B3, #7DA0CA); }
 
 .stat-value{
     font-size: 1.35rem;
@@ -569,8 +570,8 @@ body{
 }
 
 .field-input:focus{
-    border-color: rgba(147, 51, 234, 0.55);
-    box-shadow: 0 0 0 4px rgba(147, 51, 234, 0.14);
+    border-color: rgba(5, 38, 89, 0.65);
+    box-shadow: 0 0 0 4px rgba(84, 131, 179, 0.30);
 }
 
 /* Sidebar */
@@ -581,9 +582,9 @@ body{
 /* Account status */
 .card-status{
     border-width: 2px;
-    border-color: rgba(147, 51, 234, 0.20);
+    border-color: rgba(5, 38, 89, 0.35);
     background:
-      linear-gradient(180deg, rgba(147, 51, 234, 0.06), rgba(37, 99, 235, 0.06)),
+      linear-gradient(180deg, rgba(193, 232, 255, 0.55), rgba(125, 160, 202, 0.45)),
       rgba(255,255,255,0.86);
 }
 
@@ -615,16 +616,15 @@ body{
 }
 
 .badge-premium{
-    background: rgba(147, 51, 234, 0.14);
-    color: #6b21a8;
-    border-color: rgba(147, 51, 234, 0.24);
+    background: rgba(5, 38, 89, 0.18);
+    color: #021024;
+    border-color: rgba(2,16,36,0.35);
 }
 
 /* Animations */
 [data-animate]{
     opacity: 0;
-    transform: translateY(20px);
-    animation: profileFadeUp 0.55s ease forwards;
+    animation: profileFadeUp 0.45s ease forwards;
 }
 
 [data-animate="profile-card"]{ animation-delay: 0.05s; }
@@ -635,7 +635,7 @@ body{
 @keyframes profileFadeUp{
     to{
         opacity: 1;
-        transform: translateY(0);
+        transform: none;
     }
 }
 

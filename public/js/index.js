@@ -219,28 +219,32 @@ themeButton.addEventListener('click', function(event) {
     }
 });
 
+document.addEventListener("DOMContentLoaded", () => {
 
-const layers = document.querySelectorAll('.carousel-layer');
-const prevBtn = document.querySelector('.carousel-btn.prev');
-const nextBtn = document.querySelector('.carousel-btn.next');
-let current = 0;
+  const layers = document.querySelectorAll('.carousel-layer');
+  const prevBtn = document.querySelector('.carousel-btn.prev');
+  const nextBtn = document.querySelector('.carousel-btn.next');
 
-function showLayer(index) {
-  layers.forEach((layer, i) => layer.classList.remove('active'));
-  layers[index].classList.add('active');
-}
+  let current = 0;
 
-nextBtn.addEventListener('click', () => {
-  current = (current + 1) % layers.length;
-  showLayer(current);
+  function showLayer(index) {
+    layers.forEach(layer => layer.classList.remove('active'));
+    layers[index].classList.add('active');
+  }
+
+  nextBtn.addEventListener('click', () => {
+    current = (current + 1) % layers.length;
+    showLayer(current);
+  });
+
+  prevBtn.addEventListener('click', () => {
+    current = (current - 1 + layers.length) % layers.length;
+    showLayer(current);
+  });
+
+  setInterval(() => {
+    current = (current + 1) % layers.length;
+    showLayer(current);
+  }, 4000);
+
 });
-
-prevBtn.addEventListener('click', () => {
-  current = (current - 1 + layers.length) % layers.length;
-  showLayer(current);
-});
-
-setInterval(() => {
-  current = (current + 1) % layers.length;
-  showLayer(current);
-}, 4000);
