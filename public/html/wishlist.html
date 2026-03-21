@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Wishlist - ShopHub</title>
+  <link rel="stylesheet" href="/css/wishlist.css">
+</head>
+<body>
+  <div class="navbar">
+    <div class="nav-bar-left">
+      <a href="/" class="shophub-nav"><h1 class="gradient-text">ShopHub</h1></a>
+    </div>
+    <div class="nav-bar-right">
+      <a href="/serve/cart" aria-label="Cart">
+        <svg class="icons-svg-nav" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.7" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 8h15l-2 11H7L5 4H3"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 0 1 6 0v2"/>
+          <circle cx="9" cy="21" r="1.25"/>
+          <circle cx="17" cy="21" r="1.25"/>
+        </svg>
+      </a>
+      <a href="/serve/profile" aria-label="Profile">
+        <svg class="icons-svg-nav" fill="none" stroke="#000" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zM6 20c0-3.31 2.69-6 6-6s6 2.69 6 6H6z"/>
+        </svg>
+      </a>
+<div class="hamburger" onclick="toggleMenu()">
+    <svg class="icons-svg-nav" fill="none" stroke="#000" stroke-width="1.5" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+    </svg>
+</div>
+
+<div class="quickies">
+    <a href="/">
+        <svg class="menu-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M3 10.5 12 3l9 7.5"/>
+            <path d="M5 9.5V21h14V9.5"/>
+        </svg>
+        <span>Home</span>
+    </a>
+
+    <a href="/#categories">
+        <svg class="menu-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="3" y="3" width="7" height="7"/>
+            <rect x="14" y="3" width="7" height="7"/>
+            <rect x="3" y="14" width="7" height="7"/>
+            <rect x="14" y="14" width="7" height="7"/>
+        </svg>
+        <span>Categories</span>
+    </a>
+
+    <a href="/serve/cart">
+        <svg class="menu-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M6 8h15l-2 11H7L5 4H3"/>
+            <path d="M9 8V6a3 3 0 0 1 6 0v2"/>
+        </svg>
+        <span>Cart</span>
+    </a>
+
+    <a href="/serve/wishlist">
+        <svg class="menu-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/>
+        </svg>
+        <span>Wishlist</span>
+    </a>
+
+    <a href="/serve/contact">
+        <svg class="menu-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M3 5h18v12H7l-4 4z"/>
+            <path d="M7 9h10M7 13h7"/>
+        </svg>
+        <span>Contact</span>
+    </a>
+</div>
+    </div>
+  </div>
+
+  <main class="wishlist-page">
+    <section class="wishlist-header">
+      <h2>My Wishlist</h2>
+      <p>Save products you love and add them to cart anytime.</p>
+    </section>
+    <section class="wishlist-products" id="wishlistProducts"></section>
+  </main>
+
+<footer class="footers">
+  <div class="footer-gradient-line"></div>
+  <div class="footer-container">
+    <div class="footer-section about">
+      <h3 class="head-footers">XYZ Business</h3>
+      <p class="side-footers">
+        Explore products and updates easily. Submit your concerns and stay updated with trending topics.
+      </p>
+    </div>
+    <div class="footer-section quick-links">
+      <h3 class="head-footers">Quick Links</h3>
+      <a href="/" class="footer-nav">Home</a>
+      <a href="/serve/wishlist" class="footer-nav">Wishlist</a>
+      <a href="/serve/cart" class="footer-nav">Cart</a>
+    </div>
+    <div class="footer-section contact">
+      <h3 class="head-footers">Get in Touch</h3>
+      <p class="side-footers">
+        Business Email: <a href="mailto:business@arjungautam0018.com">arjungautam0018@gmail.com</a>
+      </p>
+    </div>
+  </div>
+  <div class="copyrights">&copy; 2026 XYZ Business. All rights reserved.</div>
+</footer>
+
+  <script src="/js/wishlist.js"></script>
+</body>
+</html>

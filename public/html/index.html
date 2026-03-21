@@ -1,268 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShopHub - Mobile Web App</title>
-    <link rel="stylesheet" href="/css/index.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopHub - Mobile Web App</title>
+  <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
-    <div class="body-part">
-        <!-- Navbar -->
-<!-- Navbar -->
-<!-- Navbar -->
-<div class="navbar">
+  <div class="navbar">
     <div class="nav-bar-left">
-        <a href="/" class="shophub-nav">
-
-<h1 class="gradient-text" style="background: linear-gradient(135deg, #8e2de2, #4a00e0); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">ShopHub</h1>
-        </a>
+      <a href="/" class="shophub-nav">
+        <h1 class="gradient-text">ShopHub</h1>
+      </a>
     </div>
 
     <div class="nav-bar-right">
-        <!-- Theme / Night -->
-         <a>
+      <a href="#" aria-label="Toggle theme">
+        <svg class="icons-svg-nav" fill="none" stroke="#000" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+        </svg>
+      </a>
 
-             <svg class="icons-svg-nav" fill="none" stroke="#000" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
-             </svg>
-         </a>
+      <a href="/serve/cart" aria-label="Cart">
+        <svg class="icons-svg-nav" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.7" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 8h15l-2 11H7L5 4H3"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 0 1 6 0v2"/>
+          <circle cx="9" cy="21" r="1.25"/>
+          <circle cx="17" cy="21" r="1.25"/>
+        </svg>
+      </a>
 
-        <!-- Cart -->
-         <a href="/serve/cart">
+      <a href="/serve/profile" aria-label="Profile">
+        <svg class="icons-svg-nav" fill="none" stroke="#000" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zM6 20c0-3.31 2.69-6 6-6s6 2.69 6 6H6z"/>
+        </svg>
+      </a>
 
-             <svg class="icons-svg-nav" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.7" xmlns="http://www.w3.org/2000/svg">
-                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 8h15l-2 11H7L5 4H3"/>
-                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 0 1 6 0v2"/>
-                 <circle cx="9" cy="21" r="1.25"/>
-                 <circle cx="17" cy="21" r="1.25"/>
-             </svg>
-         </a>
-
-        <!-- Profile -->
-         <a href="/serve/profile">
-
-             <svg class="icons-svg-nav" fill="none" stroke="#000" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zM6 20c0-3.31 2.69-6 6-6s6 2.69 6 6H6z"/>
-             </svg>
-         </a>
-
-        <!-- Hamburger Menu -->
-        
-<!-- Hamburger Menu -->
-<div class="hamburger" onclick="toggleMenu()">
+      <div class="hamburger" onclick="toggleMenu()">
     <svg class="icons-svg-nav" fill="none" stroke="#000" stroke-width="1.5" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
     </svg>
 </div>
 
-<!-- Dropdown Menu -->
 <div class="quickies">
-    <a href="#">Home</a>
-    <a href="#">Categories</a>
-    <a href="/serve/cart">Cart</a>
-    <a href="#">Profile</a>
-    <a href="#">Logout</a>
-</div>
-        
-    </div>
-</div>
+    <a href="/">
+        <svg class="menu-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M3 10.5 12 3l9 7.5"/>
+            <path d="M5 9.5V21h14V9.5"/>
+        </svg>
+        <span>Home</span>
+    </a>
 
-        <!-- Main Content -->
-<div class="main-content">
-<section class="hero-banner">
-  <div class="hero-inner">
-    <div class="hero-text">
-      <p class="hero-pill">New in • Curated for you</p>
-      <h1>Spring drops you<br>won&rsquo;t find anywhere else.</h1>
-      <p class="hero-subtitle">
-        Discover hand‑picked gifts, office essentials and custom pieces for every occasion.
-      </p>
-      <div class="hero-actions">
-        <button class="hero-primary-btn" type="button">Shop New Arrivals</button>
-        <button class="hero-secondary-btn" type="button">Browse Categories</button>
+    <a href="/#categories">
+        <svg class="menu-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="3" y="3" width="7" height="7"/>
+            <rect x="14" y="3" width="7" height="7"/>
+            <rect x="3" y="14" width="7" height="7"/>
+            <rect x="14" y="14" width="7" height="7"/>
+        </svg>
+        <span>Categories</span>
+    </a>
+
+    <a href="/serve/cart">
+        <svg class="menu-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M6 8h15l-2 11H7L5 4H3"/>
+            <path d="M9 8V6a3 3 0 0 1 6 0v2"/>
+        </svg>
+        <span>Cart</span>
+    </a>
+
+    <a href="/serve/wishlist">
+        <svg class="menu-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/>
+        </svg>
+        <span>Wishlist</span>
+    </a>
+
+    <a href="/serve/contact">
+        <svg class="menu-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M3 5h18v12H7l-4 4z"/>
+            <path d="M7 9h10M7 13h7"/>
+        </svg>
+        <span>Contact</span>
+    </a>
+</div>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <section class="hero-banner">
+      <div class="hero-inner">
+        <div class="hero-text">
+          <p class="hero-pill">New in • Curated for you</p>
+          <h1>Spring drops you<br>won&rsquo;t find anywhere else.</h1>
+          <p class="hero-subtitle">
+            Discover hand-picked gifts, office essentials and custom pieces for every occasion.
+          </p>
+          <div class="hero-actions">
+            <button class="hero-primary-btn" type="button">Shop New Arrivals</button>
+            <button class="hero-secondary-btn" type="button">Browse Categories</button>
+          </div>
+          <div class="hero-meta">
+            <span>⭐ 4.8 rating</span>
+            <span>🚚 Free shipping over Rs.2,000</span>
+          </div>
+        </div>
+        <div class="hero-media">
+          <div class="hero-slider">
+            <div class="carousel-layer active">
+              <img src="/resources/frame1.jpg" alt="Featured custom frame" class="hero-main-image">
+            </div>
+            <div class="carousel-layer">
+              <img src="/resources/frame3.webp" alt="Featured event frame" class="hero-main-image">
+            </div>
+            <div class="carousel-layer">
+              <img src="/resources/stamp.jpg" alt="Featured stamp set" class="hero-main-image">
+            </div>
+            <button class="carousel-btn prev" type="button" aria-label="Previous image">&lt;</button>
+            <button class="carousel-btn next" type="button" aria-label="Next image">&gt;</button>
+          </div>
+        </div>
       </div>
-      <div class="hero-meta">
-        <span>⭐ 4.8 rating</span>
-        <span>🚚 Free shipping over Rs.2,000</span>
-      </div>
-    </div>
-    <div class="hero-media">
-<div class="hero-media">
+    </section>
 
-  <!-- Slides -->
-  <div class="carousel-layer active">
-    <img src="/resources/sublimation_cup.webp" class="hero-main-image">
-  </div>
-
-  <div class="carousel-layer">
-    <img src="/resources/frame1.jpg" class="hero-main-image">
-  </div>
-
-  <div class="carousel-layer">
-    <img src="/resources/stamp.jpg" class="hero-main-image">
-  </div>
-
-  <!-- Arrows -->
-<button class="carousel-btn prev">
-  <
-</button>
-
-<button class="carousel-btn next">
-  >
-</button>
-</div>
-    </div>
-  </div>
-</section>
-
-  <!-- Top products -->
-   <div class="top-products">
-    <div class="text-top-products">
+    <div class="top-products">
+      <div class="text-top-products">
         <h2>Top Products</h2>
         <p>Our best-selling items</p>
-    </div>
-
-    <!-- Products -->
-     <div class="products">
-<div class="product-card" style="background: #fefefe; border: 1px solid rgba(124,58,237,0.3); border-radius: 12px; box-shadow: 0 4px 14px rgba(124,58,237,0.1); transition: all 0.2s ease;">
-                <img class="products_images" src="/resources/sublimation_cup.webp" alt="Product 1">
-            <div class="product-inform">
-
-                <h3>Sublimation Cup</h3>
-                <p class="desc-product">A premium ceramic cup with a smooth oval surface, perfect for custom sublimation printing. </p>
-                <p class="price-product">Rs.5,999</p>
-            </div>
-            <div class="add-to-cart">
-                <button>
-                    <i class="fa-solid fa-cart-shopping"></i>
-                        Add to Cart
-                </button>
-            </div>
-        </div>
-     </div>
-
-    </div>
-    <!-- Categories -->
-     <div class="categories">
-       <div class="categories-heading">
-           <h2>Categories</h2>
-           <p>Shop by category</p>
-       </div>
-       <div class="categories-option">
-        <!-- Gifts -->
-           <div class="category cat-gifts">
-                <svg class="svg-category" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M20 12v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8"/>
-                  <path d="M2 7h20v5H2z"/>
-                  <path d="M12 7v15"/>
-                  <path d="M12 7H8.5a2.5 2.5 0 1 1 0-5C10.5 2 12 4.5 12 7z"/>
-                  <path d="M12 7h3.5a2.5 2.5 0 1 0 0-5C13.5 2 12 4.5 12 7z"/>
-                </svg>
-                <p>Gifts</p>
-           </div>
-           <!-- Events -->
-           <div class="category cat-events">
-            <svg class="svg-category" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M8 2v3M16 2v3"/>
-              <path d="M3 7h18"/>
-              <path d="M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/>
-              <path d="m9.5 14.5 1.7 1.7 3.8-3.8"/>
-            </svg>
-            <p>Events</p>
-            <!-- Offices -->
-        </div>
-           <div class="category cat-office">
-           <svg class="svg-category" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-             <path d="M9 6V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1"/>
-             <path d="M3 8h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8z"/>
-             <path d="M3 12h18"/>
-           </svg>
-           <p>Office</p>
-           <!-- Custom -->
-        </div>
-           <div class="category cat-custom">
-            <svg class="svg-category" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M15 4l5 5"/>
-              <path d="M14 6l4 4"/>
-              <path d="M3 21l6-2 11-11a2 2 0 0 0 0-3l-1-1a2 2 0 0 0-3 0L5 15l-2 6z"/>
-              <path d="M5 15l4 4"/>
-            </svg>
-            <p>Custom</p>
-        </div>
-       </div>
-     </div>
-
-     <!-- Suggested Products for you! -->
-      <div class="top-products">
-        <div class="text-top-products">
-            <h2>Explore more</h2>
-            <p>Featured products just for you!</p>
-        </div>
-
-        <div class="products products2">
-            <div class="product-card">
-                <img class="products_images" src="/resources/sublimation_cup.webp" alt="Product 1">
-                <div class="product-inform">
-
-                    <h3>Sublimation Cup</h3>
-                    <p class="desc-product">A premium ceramic cup with a smooth oval surface, perfect for custom sublimation printing. </p>
-                    <p class="price-product">Rs.5,999</p>
-                </div>
-                <div class="add-to-cart">
-                    <button>
-                        <i class="fa-solid fa-cart-shopping"></i>
-                            Add to Cart
-                    </button>
-            </div>
-        </div>
       </div>
-</div>
-<!-- Footer -->
-</div>
-
-</div>
-<footer class="footers">
-  <!-- Gradient top line -->
-  <div class="footer-gradient-line"></div>
-
-  <div class="footer-container">
-
-    <!-- About / Intro -->
-    <div class="footer-section about">
-      <h3 class="head-footers">XYZ Business</h3>
-      <p class="side-footers">
-        Explore products and updates easily. Submit your concerns and stay updated with trending topics.
-      </p>
+      <div class="products"></div>
     </div>
 
-    <!-- Quick Links -->
-    <div class="footer-section quick-links">
-      <h3 class="head-footers">Quick Links</h3>
-      <a href="#" class="footer-nav">Home</a>
-      <a href="#" class="footer-nav">Products</a>
-      <a href="/serve/cart" class="footer-nav">Cart</a>
+    <div class="categories" id="categories">
+      <div class="categories-heading">
+        <h2>Categories</h2>
+        <p>Shop by category</p>
+      </div>
+      <div class="categories-option">
+        <a class="category cat-gifts" href="/serve/category/gifts">
+          <svg class="svg-category" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 12v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8"/>
+            <path d="M2 7h20v5H2z"/>
+            <path d="M12 7v15"/>
+            <path d="M12 7H8.5a2.5 2.5 0 1 1 0-5C10.5 2 12 4.5 12 7z"/>
+            <path d="M12 7h3.5a2.5 2.5 0 1 0 0-5C13.5 2 12 4.5 12 7z"/>
+          </svg>
+          <p>Gifts</p>
+        </a>
+        <a class="category cat-events" href="/serve/category/events">
+          <svg class="svg-category" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 2v3M16 2v3"/>
+            <path d="M3 7h18"/>
+            <path d="M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/>
+            <path d="m9.5 14.5 1.7 1.7 3.8-3.8"/>
+          </svg>
+          <p>Events</p>
+        </a>
+        <a class="category cat-office" href="/serve/category/office">
+          <svg class="svg-category" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 6V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1"/>
+            <path d="M3 8h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8z"/>
+            <path d="M3 12h18"/>
+          </svg>
+          <p>Office</p>
+        </a>
+        <a class="category cat-custom" href="/serve/category/custom">
+          <svg class="svg-category" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 4l5 5"/>
+            <path d="M14 6l4 4"/>
+            <path d="M3 21l6-2 11-11a2 2 0 0 0 0-3l-1-1a2 2 0 0 0-3 0L5 15l-2 6z"/>
+            <path d="M5 15l4 4"/>
+          </svg>
+          <p>Custom</p>
+        </a>
+      </div>
     </div>
 
-    <!-- Get in Touch -->
-    <div class="footer-section contact">
-      <h3 class="head-footers">Get in Touch</h3>
-      <p class="side-footers">Business Email: <a href="mailto:business@arjungautam0018.com">arjungautam0018@gmail.com</a></p>
-      <p class="side-footers">We appreciate your feedback! Share your thoughts or report issues.</p>
-      <button id="send-feed-foot">Send Feedback</button>
+    <div class="top-products">
+      <div class="text-top-products">
+        <h2>Explore more</h2>
+        <p>Featured products just for you!</p>
+      </div>
+      <div class="products products2"></div>
     </div>
-
   </div>
 
-  <!-- Copyright -->
-  <div class="copyrights">
-    &copy; 2026 XYZ Business. All rights reserved.
-  </div>
-</footer>
+  <footer class="footers">
+    <div class="footer-gradient-line"></div>
+    <div class="footer-container">
+      <div class="footer-section about">
+        <h3 class="head-footers">XYZ Business</h3>
+        <p class="side-footers">Explore products and updates easily. Submit your concerns and stay updated with trending topics.</p>
+      </div>
+      <div class="footer-section quick-links">
+        <h3 class="head-footers">Quick Links</h3>
+        <a href="/" class="footer-nav">Home</a>
+        <a href="/serve/wishlist" class="footer-nav">Wishlist</a>
+        <a href="/serve/cart" class="footer-nav">Cart</a>
+      </div>
+      <div class="footer-section contact">
+        <h3 class="head-footers">Get in Touch</h3>
+        <p class="side-footers">Business Email: <a href="mailto:business@arjungautam0018.com">arjungautam0018@gmail.com</a></p>
+        <p class="side-footers">We appreciate your feedback! Share your thoughts or report issues.</p>
+      </div>
     </div>
+    <div class="copyrights">&copy; 2026 XYZ Business. All rights reserved.</div>
+  </footer>
 
-
+  <script src="/js/index.js"></script>
 </body>
-
-<script src="/js/index.js"></script>
 </html>

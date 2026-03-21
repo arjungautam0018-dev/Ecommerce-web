@@ -61,58 +61,88 @@ body {
     display: flex;
     align-items: center;
     cursor: pointer;
+      justify-content: center; /* center the SVG */
+    width: 24px;  /* control container width */
+    height: 24px; /* control container height */
+    padding: 0;   /* remove any extra spacing */
+    cursor: pointer;
 }
 
 /* Dropdown */
+/* Hamburger icon */
+.hamburger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+}
+
+/* Dropdown menu */
 .quickies {
     position: absolute;
-    top: 60px; /* matches navbar height */
-    right: 0;
+    top: 60px;
+    right: 10px;
 
-    width: 150px;
-
+    width: 180px;
     background: #fff;
-    border-radius: 10px;
 
-    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
 
     display: flex;
     flex-direction: column;
 
     opacity: 0;
-    transform: translateY(-8px);
+    transform: translateY(-10px);
     pointer-events: none;
 
-    transition: all 0.2s ease;
+    transition: all 0.25s ease;
+    z-index: 999;
 }
 
-/* Show menu */
 .quickies.show {
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
 }
 
+
+
 /* Links */
 .quickies a {
     padding: 10px 12px;
-    font-size: 1rem; /* readable on mobile */
+    font-size: 0.95rem;
     text-decoration: none;
     color: #333;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
 
     border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
-/* Last item */
+/* Remove last border */
 .quickies a:last-child {
     border-bottom: none;
 }
 
-/* Tap feedback */
-.quickies a:active {
-    background: #f2f2f2;
+/* Hover / click */
+.quickies a:hover {
+    background: #f5f5f5;
 }
 
+.quickies a:active {
+    background: #ececec;
+}
+
+/* Icons inside menu */
+.menu-item-icon {
+    width: 16px;
+    height: 16px;
+}
 
 /* Hero banner (Footshop-like, mobile-first) */
 .hero-banner{
@@ -475,7 +505,7 @@ body {
 
 @media (max-width: 520px){
     .categories-option{
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
     }
 }
 
@@ -487,69 +517,7 @@ body {
 }
 
 /* Dropdown container */
-.quickies {
-    position: absolute;
-    top: 65px; /* below navbar */
-    right: 15px;
 
-    width: 180px;
-    background: white;
-
-    border-radius: 10px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-
-    display: flex;
-    flex-direction: column;
-
-    opacity: 0;
-    transform: translateY(-10px);
-    pointer-events: none;
-
-    transition: all 0.25s ease;
-    z-index: 999;
-}
-
-/* Show menu */
-.quickies.show {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-}
-
-/* Menu links */
-.quickies a {
-    padding: 12px 16px;
-    text-decoration: none;
-    color: #333;
-    font-size: 0.95rem;
-    font-family: 'Poppins', 'Manrope', sans-serif;
-
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-    transition: background 0.2s ease;
-}
-
-/* Remove last border */
-.quickies a:last-child {
-    border-bottom: none;
-}
-
-/* Hover effect */
-.quickies a:hover {
-    background-color: #f5f5f5;
-}
-
-/* Mobile improvement */
-@media (max-width: 480px) {
-    .quickies {
-        width: 160px;
-        right: 10px;
-    }
-
-    .quickies a {
-        padding: 10px 14px;
-        font-size: 0.9rem;
-    }
-}
 
 
 /* Footer base */
@@ -660,6 +628,245 @@ body {
   }
 }
 
+.category {
+  text-decoration: none;
+}
+
+.card-actions {
+  display: grid;
+  gap: 8px;
+  padding-bottom: 12px;
+}
+
+.wishlist-action {
+  padding: 0 12px;
+}
+
+.wishlist-btn {
+  width: 100%;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid rgba(2, 16, 36, 0.18);
+  background: #fff;
+  color: #052659;
+  font-weight: 600;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.wishlist-btn.active {
+  border-color: rgba(5, 38, 89, 0.6);
+  background: linear-gradient(135deg, #C1E8FF, #EAF6FF);
+}
+
+.category-chip {
+  margin: 0 0 8px;
+  display: inline-flex;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #052659;
+  background: rgba(193, 232, 255, 0.8);
+}
+
+.main-content {
+  min-height: 100vh;
+}
+
+body.theme-dark {
+  background: #0b1220;
+  color: #e5e7eb;
+}
+
+body.theme-dark .navbar {
+  background: #111827;
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+body.theme-dark .quickies {
+  background: #111827;
+}
+
+body.theme-dark .quickies a {
+  color: #e5e7eb;
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+body.theme-dark .hero-banner {
+  background: radial-gradient(circle at top, #1f2937 0%, #111827 65%, #020617 100%);
+}
+
+body.theme-dark .hero-text {
+  color: #f9fafb;
+}
+
+body.theme-dark .hero-subtitle,
+body.theme-dark .hero-meta {
+  color: rgba(229, 231, 235, 0.9);
+}
+
+body.theme-dark .hero-card {
+  background: linear-gradient(145deg, #1f2937 0%, #0f172a 100%);
+}
+
+body.theme-dark .hero-card-body h2,
+body.theme-dark .hero-card-desc,
+body.theme-dark .hero-card-price {
+  color: #e5e7eb;
+}
+
+body.theme-dark .product-card,
+body.theme-dark .category {
+  background: #111827;
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+body.theme-dark .product-card h3,
+body.theme-dark .desc-product,
+body.theme-dark .category p,
+body.theme-dark .categories h2,
+body.theme-dark .text-top-products h2 {
+  color: #e5e7eb;
+}
+
+body.theme-dark .price-product {
+  color: #7da0ca;
+}
+
+body.theme-dark .wishlist-btn {
+  background: #1f2937;
+  color: #dbeafe;
+  border-color: rgba(125, 160, 202, 0.5);
+}
+
+/* final home overrides */
+.hero-slider {
+  width: 100%;
+  max-width: 280px;
+  height: 260px;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 14px 36px rgba(2, 16, 36, 0.22);
+}
+
+.hero-slider .carousel-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: none;
+  transition: opacity 0.4s ease;
+}
+
+.hero-slider .carousel-layer.active {
+  opacity: 1;
+  position: absolute;
+}
+
+.hero-slider .hero-main-image {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  filter: none;
+}
+
+.hero-slider .carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(2, 16, 36, 0.5);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.hero-slider .carousel-btn.prev { left: 8px; }
+.hero-slider .carousel-btn.next { right: 8px; }
+
+.card-actions {
+  gap: 6px;
+  padding: 0 12px 12px;
+}
+
+.wishlist-action {
+  padding: 0;
+}
+
+.card-actions .add-to-cart button {
+  width: 100%;
+  margin: 0;
+}
+
+/* request-based overrides */
+.icons-svg-nav {
+  width: 24px;
+  height: 24px;
+}
+
+.nav-bar-right > a:first-child {
+  margin-right: 8px;
+}
+
+
+
+.menu-item-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.buy-row {
+  display: grid;
+  grid-template-columns: 2fr 3fr; /* 40:60 */
+  gap: 8px;
+}
+
+.buy-row button {
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid rgba(2,16,36,0.2);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.buy-now-btn {
+  background: #fff;
+  color: #0f4c81;
+}
+
+.quick-add-btn {
+  background: #0f4c81;
+  color: #fff;
+  border-color: #0f4c81;
+}
+
+.buy-now-btn:hover {
+  background: #eff6ff;
+}
+
+.quick-add-btn:hover {
+  background: #1f6aa8;
+}
+
+.add-to-cart button {
+  background: #0f4c81;
+  box-shadow: none;
+}
+
+.add-to-cart button:hover {
+  background: #1f6aa8;
+  filter: none;
+}
+
 
 .hero-media {
   display: flex;
@@ -765,3 +972,26 @@ body {
 }
 
 
+.icon-home {
+  width: 22px;
+  height: 22px;
+  color: #021024; /* controls icon color */
+}
+.icon-home:hover {
+  color: #5483B3;
+}
+.icon-home:active {
+  color: #7DA0CA;
+}
+
+.nav-bar-right .hamburger {
+    width: 28px;       /* desired width */
+    height: 28px;      /* desired height */
+    padding: 0;        /* remove extra space */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;    /* prevent shrinking to auto */
+    flex-grow: 0;      /* prevent growing */
+}

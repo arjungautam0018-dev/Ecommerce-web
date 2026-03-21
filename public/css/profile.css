@@ -45,8 +45,8 @@ body {
 
 /* Icons */
 .icons-svg-nav {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     stroke-width: 1.6;
 
     cursor: pointer;
@@ -103,6 +103,14 @@ body {
     color: #333;
 
     border-bottom: 1px solid rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.menu-item-icon {
+    width: 16px;
+    height: 16px;
 }
 
 /* Last item */

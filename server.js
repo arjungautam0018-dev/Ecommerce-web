@@ -18,6 +18,27 @@ app.get("/serve/cart", (req,res)=>{
 app.get("/serve/profile", (req,res)=>{
     res.sendFile(__dirname+"/public/html/profile.html")
 })
+//Serve Wishlist
+app.get("/serve/wishlist", (req,res)=>{
+    res.sendFile(__dirname+"/public/html/wishlist.html")
+})
+//Serve Contact
+app.get("/serve/contact", (req,res)=>{
+    res.sendFile(__dirname+"/public/html/contact.html")
+})
+//Serve Categories
+app.get("/serve/category/gifts", (req,res)=>{
+    res.sendFile(__dirname+"/public/html/category-gifts.html")
+})
+app.get("/serve/category/events", (req,res)=>{
+    res.sendFile(__dirname+"/public/html/category-events.html")
+})
+app.get("/serve/category/office", (req,res)=>{
+    res.sendFile(__dirname+"/public/html/category-office.html")
+})
+app.get("/serve/category/custom", (req,res)=>{
+    res.sendFile(__dirname+"/public/html/category-custom.html")
+})
 //Start Server
 app.listen(3000, () => {
     console.log("Server is running on port 3000");
