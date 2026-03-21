@@ -7,6 +7,13 @@ const PRODUCTS = [
     category: "Gifts"
   },
   {
+    title: "Custom Frame",
+    desc: "A personalized frame for photos or artwork, perfect as a gift or for home decoration.",
+    price: "Rs.2,499",
+    img: "/resources/frame.jpg",
+    category: "Gifts"
+  },
+  {
     title: "Custom Wall Frame",
     desc: "Elegant customizable wall frame with premium print finish.",
     price: "Rs.3,499",
@@ -66,7 +73,9 @@ function createProductCard(product) {
   const card = document.createElement("div");
   card.className = "product-card";
   card.innerHTML = `
-    <img class="products_images" src="${product.img}" alt="${product.title}">
+    <div class="product-card-thumb">
+      <img class="products_images" src="${product.img}" alt="${product.title}">
+    </div>
     <div class="product-inform">
       <h3>${product.title}</h3>
       <p class="desc-product">${product.desc}</p>

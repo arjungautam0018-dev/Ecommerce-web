@@ -45,7 +45,9 @@ function renderCards(categoryKey) {
     const card = document.createElement("article");
     card.className = "product-card";
     card.innerHTML = `
-      <img src="${item.img}" alt="${item.title}">
+      <div class="product-card-thumb">
+        <img src="${item.img}" alt="${item.title}">
+      </div>
       <div class="product-inform">
         <h3>${item.title}</h3>
         <p>${item.desc}</p>

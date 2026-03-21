@@ -156,23 +156,47 @@ body {
     border: 1px solid rgba(0,0,0,0.1);
     margin: 5px 0px 5px 5px;
 }
-.delete-product{
-    margin-left: auto;
-    cursor: pointer;
+.details {
+    flex: 1;
+    min-width: 0;
+    padding-right: 4px;
 }
-.delete-product svg{
-    width: 20px;
-    height: 20px;
-    stroke-width: 1.5;
-    position: relative;
-    bottom: 14px;
+.details-price-row {
     display: flex;
-    padding-right: 10px;
-
-
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 6px;
 }
-.delete-product svg:active{
-    transform: scale(1.2);
+.details-price-row p {
+    margin: 0;
+    flex: 1;
+    min-width: 0;
+    color: #333;
+}
+.delete-product {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    margin: -4px -4px -4px 0;
+    border: none;
+    background: transparent;
+    color: #6b7280;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: color 0.15s ease, background 0.15s ease;
+}
+.delete-product:hover {
+    color: #b91c1c;
+    background: rgba(185, 28, 28, 0.08);
+}
+.delete-product:active {
+    transform: scale(1.05);
+}
+.delete-product svg {
+    display: block;
 }
 .details-product {
     display: flex;
@@ -182,10 +206,7 @@ body {
 .details h3 {
     margin: 0;
     font-size: 16px;
-}
-.details p{
-    margin-top: 4px;
-    color: #333;
+    padding-right: 2px;
 }
 
 
@@ -558,6 +579,33 @@ body {
   .item-check {
     display: none;
   }
+
+  /* Mobile: vertical rhythm (half of previous bump) */
+  .details-price-row {
+    margin-top: 7px;
+    margin-bottom: 3px;
+  }
+  .details-price-row p {
+    color: #052659;
+    font-weight: 600;
+  }
+  .details-product {
+    padding-bottom: 2px;
+  }
+  .add-item {
+    margin-top: 7px;
+    padding-top: 5px;
+  }
+  .quantity {
+    margin: -17px 0 0 80px;
+  }
+  .total {
+    padding-top: 5px;
+  }
+
+  body.theme-dark .details-price-row p {
+    color: #93c5fd;
+  }
 }
 
 body.theme-dark {
@@ -592,6 +640,21 @@ body.theme-dark .details h3,
 body.theme-dark .details p,
 body.theme-dark .total h3 {
   color: #e5e7eb;
+}
+
+/* Desktop dark: keep “each” line same as body text */
+@media (min-width: 1024px) {
+  body.theme-dark .details-price-row p {
+    color: #e5e7eb;
+  }
+}
+
+body.theme-dark .delete-product {
+  color: #9ca3af;
+}
+body.theme-dark .delete-product:hover {
+  color: #fca5a5;
+  background: rgba(248, 113, 113, 0.12);
 }
 
 body.theme-dark .checkout-box {
@@ -676,7 +739,8 @@ body.theme-dark .total-line {
     margin-bottom: 4px;
   }
 
-  .details p {
+  .details p,
+  .details-price-row p {
     margin: 0;
     color: #4b5563;
   }
@@ -790,6 +854,20 @@ body.theme-dark .total-line {
   .cart-product .details p,
   .cart-product .total h3 {
       color: #fff;
+  }
+
+  /* “Each” price: distinct from title, still readable on gradient */
+  .cart-product .details-price-row p {
+      color: #c1e8ff;
+      font-weight: 600;
+  }
+
+  .cart-product .delete-product {
+      color: rgba(255, 255, 255, 0.75);
+  }
+  .cart-product .delete-product:hover {
+      color: #fecaca;
+      background: rgba(255, 255, 255, 0.1);
   }
 
   .quantity button {

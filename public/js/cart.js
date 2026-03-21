@@ -97,7 +97,17 @@ function renderCart() {
         <div class="img-product"><img src="${item.img}" alt="${item.title}"></div>
         <div class="details">
           <h3>${item.title}</h3>
-          <p>Rs.${item.price.toLocaleString()} each</p>
+          <div class="details-price-row">
+            <p>Rs.${item.price.toLocaleString()} each</p>
+            <button type="button" class="delete-product" aria-label="Remove from cart">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                <line x1="10" y1="11" x2="10" y2="17"></line>
+                <line x1="14" y1="11" x2="14" y2="17"></line>
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
       <div class="add-item">
@@ -146,6 +156,20 @@ function bindCartEvents() {
     card.querySelector(".decrease")?.addEventListener("click", () => {
       if (cart[index].quantity > 1) cart[index].quantity -= 1;
       writeJson("cart", cart);
+      renderCart();
+    });
+
+    card.querySelector(".delete-product")?.addEventListener("click", (event) => {
+      event.stopPropagation();
+      const next = readJson("cart", []);
+      next.splice(index, 1);
+      writeJson("cart", next);
+      const rebuilt = new Set();
+      selectedIndexes.forEach((i) => {
+        if (i === index) return;
+        rebuilt.add(i > index ? i - 1 : i);
+      });
+      selectedIndexes = rebuilt;
       renderCart();
     });
   });
