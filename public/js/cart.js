@@ -1,244 +1,158 @@
-document.addEventListener('DOMContentLoaded', () => {
-
-    // Toggle menu
-    function toggleMenu() {
-        document.querySelector(".quickies").classList.toggle("show");
-    }
-    document.querySelector(".hamburger").addEventListener('click', toggleMenu);
-
-    document.addEventListener("click", function(e){
-        const menu = document.querySelector(".quickies");
-        const hamburger = document.querySelector(".hamburger");
-
-        if (!hamburger.contains(e.target) && !menu.contains(e.target)) {
-            menu.classList.remove("show");
-        }
-    });
-
-    // Cart products
-    const cartProducts = document.querySelectorAll('.cart-product');
-
-    cartProducts.forEach(product => {
-        const decreaseBtn = product.querySelector('.decrease');
-        const increaseBtn = product.querySelector('.increase');
-        const quantityValue = product.querySelector('.quantity-value');
-        const totalPrice = product.querySelector('.total h3');
-        const priceText = product.querySelector('.details p').textContent;
-
-        // Extract unit price correctly
-        let unitPrice = parseInt(priceText.replace(/\D/g, ''));
-
-        // Update the total price
-        const updateTotal = () => {
-            const quantity = parseInt(quantityValue.textContent);
-            const total = unitPrice * quantity;
-            totalPrice.textContent = `Total: Rs.${total.toLocaleString()}`;
-        }
-
-        // Increase quantity
-        increaseBtn.addEventListener('click', () => {
-            let quantity = parseInt(quantityValue.textContent);
-            quantity++;
-            quantityValue.textContent = quantity;
-            updateTotal();
-        });
-
-        // Decrease quantity
-        decreaseBtn.addEventListener('click', () => {
-            let quantity = parseInt(quantityValue.textContent);
-            if (quantity > 1) {
-                quantity--;
-                quantityValue.textContent = quantity;
-                updateTotal();
-            }
-        });
-
-        // Initialize total price on page load
-        updateTotal();
-    });
-
-});
-
-
-// cart.js
-
-document.addEventListener('DOMContentLoaded', () => {
-    const cartContainer = document.querySelector('.cart-products');
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-    cartContainer.innerHTML = ''; // clear placeholder
-
-    cart.forEach((item, index) => {
-        const productHTML = `
-        <div class="cart-product" data-index="${index}">
-            <div class="details-product">
-                <div class="img-product">
-                    <img src="${item.img}" alt="${item.title}">
-                </div>
-                <div class="details">
-                    <h3>${item.title}</h3>
-                    <p>Rs.${item.price} each</p>
-                </div>
-                <div class="delete-product">
-                    <svg fill="none" stroke="#000" stroke-width="1.5" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
-                </div>
-            </div>
-            <div class="add-item">
-                <div class="quantity">
-                    <button class="decrease">-</button>
-                    <span class="quantity-value">${item.quantity}</span>
-                    <button class="increase">+</button>
-                </div>
-            </div>
-            <div class="total">
-                <h3>Total: Rs.${item.price * item.quantity}</h3>
-            </div>
-        </div>
-        `;
-        cartContainer.insertAdjacentHTML('beforeend', productHTML);
-    });
-
-    updateCartEvents();
-});
-
-function updateCartEvents() {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-    document.querySelectorAll('.cart-product').forEach(product => {
-        const index = product.dataset.index;
-        const quantityValue = product.querySelector('.quantity-value');
-        const increaseBtn = product.querySelector('.increase');
-        const decreaseBtn = product.querySelector('.decrease');
-        const deleteBtn = product.querySelector('.delete-product');
-        const totalPrice = product.querySelector('.total h3');
-
-        // Increase quantity
-        increaseBtn.addEventListener('click', () => {
-            cart[index].quantity += 1;
-            quantityValue.textContent = cart[index].quantity;
-            totalPrice.textContent = `Total: Rs.${cart[index].price * cart[index].quantity}`;
-            localStorage.setItem('cart', JSON.stringify(cart));
-        });
-
-        // Decrease quantity
-        decreaseBtn.addEventListener('click', () => {
-            if (cart[index].quantity > 1) {
-                cart[index].quantity -= 1;
-                quantityValue.textContent = cart[index].quantity;
-                totalPrice.textContent = `Total: Rs.${cart[index].price * cart[index].quantity}`;
-                localStorage.setItem('cart', JSON.stringify(cart));
-            }
-        });
-
-        // Delete product
-        deleteBtn.addEventListener('click', () => {
-            cart.splice(index, 1);
-            localStorage.setItem('cart', JSON.stringify(cart));
-            product.remove();
-            // Re-run event listeners to refresh indices
-            updateCartEvents();
-        });
-    });
+function readJson(key, fallback) {
+  try {
+    const value = localStorage.getItem(key);
+    return value ? JSON.parse(value) : fallback;
+  } catch {
+    return fallback;
+  }
 }
 
+function writeJson(key, value) {
+  localStorage.setItem(key, JSON.stringify(value));
+}
 
-document.addEventListener('DOMContentLoaded', () => {
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  const itemsContainer = document.querySelector('.checkout-items');
+window.toggleMenu = function toggleMenu() {
+  const menu = document.querySelector(".quickies");
+  if (menu) menu.classList.toggle("show");
+};
+
+function setupMenuClose() {
+  document.addEventListener("click", (event) => {
+    const menu = document.querySelector(".quickies");
+    const hamburger = document.querySelector(".hamburger");
+    if (!menu || !hamburger) return;
+    if (!hamburger.contains(event.target) && !menu.contains(event.target)) {
+      menu.classList.remove("show");
+    }
+  });
+}
+
+function setupThemeToggle() {
+  const themeButton = document.querySelector(".nav-bar-right a");
+  if (!themeButton) return;
+  if (localStorage.getItem("theme") === "dark") document.body.classList.add("theme-dark");
+  themeButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    document.body.classList.toggle("theme-dark");
+    localStorage.setItem("theme", document.body.classList.contains("theme-dark") ? "dark" : "light");
+  });
+}
+
+let selectedIndexes = new Set();
+
+function renderSummary() {
+  const cart = readJson("cart", []);
+  const itemsContainer = document.querySelector(".checkout-items");
+  if (!itemsContainer) return;
+  itemsContainer.innerHTML = "";
 
   let subtotal = 0;
-  itemsContainer.innerHTML = '';
-
-  cart.forEach(item => {
-    const totalItemPrice = item.price * item.quantity;
-    subtotal += totalItemPrice;
-
-    const itemHTML = `
+  selectedIndexes.forEach((index) => {
+    const item = cart[index];
+    if (!item) return;
+    const total = item.price * item.quantity;
+    subtotal += total;
+    itemsContainer.insertAdjacentHTML("beforeend", `
       <div class="checkout-item">
         <img src="${item.img}" alt="${item.title}">
         <div class="checkout-item-details">
           <h4>${item.title}</h4>
-          <p>${item.quantity} x Rs.${item.price.toLocaleString()} = Rs.${totalItemPrice.toLocaleString()}</p>
+          <p>${item.quantity} x Rs.${item.price.toLocaleString()} = Rs.${total.toLocaleString()}</p>
         </div>
       </div>
-    `;
-    itemsContainer.insertAdjacentHTML('beforeend', itemHTML);
+    `);
   });
 
-  const tax = Math.round(subtotal * 0.13); // 13% tax example
+  const tax = Math.round(subtotal * 0.13);
   const total = subtotal + tax;
-
-  document.getElementById('subtotal').textContent = `Rs.${subtotal.toLocaleString()}`;
-  document.getElementById('tax').textContent = `Rs.${tax.toLocaleString()}`;
-  document.getElementById('total').textContent = `Rs.${total.toLocaleString()}`;
-
-  document.getElementById('proceed-checkout').addEventListener('click', () => {
-    alert('Proceeding to payment...');
-  });
-
-  document.getElementById('continue-shopping').addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  // Make products selectable
-const cartProductsElements = document.querySelectorAll('.cart-product');
-let selectedIndexes = []; // store indices of selected products
-
-cartProductsElements.forEach(product => {
-  product.addEventListener('click', (e) => {
-    // prevent clicks on +, -, delete buttons from toggling selection
-    if (e.target.closest('.increase') || e.target.closest('.decrease') || e.target.closest('.delete-product')) return;
-
-    const index = parseInt(product.dataset.index);
-
-    if (selectedIndexes.includes(index)) {
-      // deselect
-      selectedIndexes = selectedIndexes.filter(i => i !== index);
-      product.classList.remove('selected');
-    } else {
-      // select
-      selectedIndexes.push(index);
-      product.classList.add('selected');
-    }
-
-    updateCheckoutSummary();
-  });
-});
-
-// Function to update checkout summary based on selected products
-function updateCheckoutSummary() {
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  const itemsContainer = document.querySelector('.checkout-items');
-  itemsContainer.innerHTML = '';
-
-  let subtotal = 0;
-  selectedIndexes.forEach(i => {
-    const item = cart[i];
-    const totalItemPrice = item.price * item.quantity;
-    subtotal += totalItemPrice;
-
-    const itemHTML = `
-      <div class="checkout-item">
-        <img src="${item.img}" alt="${item.title}">
-        <div class="checkout-item-details">
-          <h4>${item.title}</h4>
-          <p>${item.quantity} x Rs.${item.price.toLocaleString()} = Rs.${totalItemPrice.toLocaleString()}</p>
-        </div>
-      </div>
-    `;
-    itemsContainer.insertAdjacentHTML('beforeend', itemHTML);
-  });
-
-  const tax = Math.round(subtotal * 0.13); // example 13% tax
-  const total = subtotal + tax;
-
-  document.getElementById('subtotal').textContent = `Rs.${subtotal.toLocaleString()}`;
-  document.getElementById('tax').textContent = `Rs.${tax.toLocaleString()}`;
-  document.getElementById('total').textContent = `Rs.${total.toLocaleString()}`;
+  document.getElementById("subtotal").textContent = `Rs.${subtotal.toLocaleString()}`;
+  document.getElementById("tax").textContent = `Rs.${tax.toLocaleString()}`;
+  document.getElementById("total").textContent = `Rs.${total.toLocaleString()}`;
 }
 
-// Initialize: no selection at first
-updateCheckoutSummary();
+function renderCart() {
+  const cart = readJson("cart", []);
+  const container = document.querySelector(".cart-products");
+  if (!container) return;
+
+  selectedIndexes = new Set([...selectedIndexes].filter((i) => i < cart.length));
+  container.innerHTML = "";
+
+  if (!cart.length) {
+    container.innerHTML = `<div class="cart-empty">Your cart is empty.</div>`;
+    renderSummary();
+    return;
+  }
+
+  cart.forEach((item, index) => {
+    const isSelected = selectedIndexes.has(index);
+    const card = document.createElement("div");
+    card.className = `cart-product ${isSelected ? "selected" : ""}`;
+    card.dataset.index = String(index);
+    card.innerHTML = `
+      <div class="details-product">
+        <label class="item-check">
+          <input type="checkbox" class="item-checkbox" ${isSelected ? "checked" : ""}>
+        </label>
+        <div class="img-product"><img src="${item.img}" alt="${item.title}"></div>
+        <div class="details">
+          <h3>${item.title}</h3>
+          <p>Rs.${item.price.toLocaleString()} each</p>
+        </div>
+      </div>
+      <div class="add-item">
+        <div class="quantity">
+          <button class="decrease">-</button>
+          <span class="quantity-value">${item.quantity}</span>
+          <button class="increase">+</button>
+        </div>
+      </div>
+      <div class="total"><h3>Total: Rs.${(item.price * item.quantity).toLocaleString()}</h3></div>
+    `;
+    container.appendChild(card);
+  });
+
+  bindCartEvents();
+  renderSummary();
+}
+
+function bindCartEvents() {
+  const cart = readJson("cart", []);
+  document.querySelectorAll(".cart-product").forEach((card) => {
+    const index = Number(card.dataset.index);
+
+    card.querySelector(".item-checkbox")?.addEventListener("change", (event) => {
+      if (event.target.checked) selectedIndexes.add(index);
+      else selectedIndexes.delete(index);
+      card.classList.toggle("selected", event.target.checked);
+      renderSummary();
+    });
+
+    card.addEventListener("click", (event) => {
+      if (!window.matchMedia("(min-width: 1024px)").matches) return;
+      if (event.target.closest("button") || event.target.closest(".item-check")) return;
+      const cb = card.querySelector(".item-checkbox");
+      if (!cb) return;
+      cb.checked = !cb.checked;
+      cb.dispatchEvent(new Event("change"));
+    });
+
+    card.querySelector(".increase")?.addEventListener("click", () => {
+      cart[index].quantity += 1;
+      writeJson("cart", cart);
+      renderCart();
+    });
+
+    card.querySelector(".decrease")?.addEventListener("click", () => {
+      if (cart[index].quantity > 1) cart[index].quantity -= 1;
+      writeJson("cart", cart);
+      renderCart();
+    });
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  setupMenuClose();
+  setupThemeToggle();
+  renderCart();
 });

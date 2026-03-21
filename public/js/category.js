@@ -52,10 +52,6 @@ function renderCards(categoryKey) {
         <p class="price-product">Rs.${item.price.toLocaleString()}</p>
       </div>
       <div class="card-actions">
-        <div class="buy-row">
-          <button type="button" class="buy-now-btn">Buy Now</button>
-          <button type="button" class="quick-add-btn">Add to Cart</button>
-        </div>
         <div class="add-to-cart"><button type="button">Add to Cart</button></div>
         <button type="button" class="wishlist-btn">Wishlist</button>
       </div>
@@ -71,20 +67,6 @@ function renderCards(categoryKey) {
       }
       writeJson("cart", cart);
       alert(`${item.title} added to cart`);
-    });
-
-    card.querySelector(".quick-add-btn")?.addEventListener("click", () => {
-      const cart = readJson("cart", []);
-      const existing = cart.find((product) => product.title === item.title);
-      if (existing) existing.quantity += 1;
-      else cart.push({ title: item.title, price: item.price, img: item.img, quantity: 1 });
-      writeJson("cart", cart);
-      alert(`${item.title} added to cart`);
-    });
-
-    card.querySelector(".buy-now-btn")?.addEventListener("click", () => {
-      writeJson("cart", [{ title: item.title, price: item.price, img: item.img, quantity: 1 }]);
-      window.location.href = "/serve/cart";
     });
 
     card.querySelector(".wishlist-btn")?.addEventListener("click", (event) => {
@@ -127,6 +109,14 @@ function closeMenuOnOutsideClick() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  const themeButton = document.querySelector(".nav-bar-right a");
+  if (localStorage.getItem("theme") === "dark") document.body.classList.add("theme-dark");
+  themeButton?.addEventListener("click", function(event){
+    event.preventDefault();
+    document.body.classList.toggle("theme-dark");
+    localStorage.setItem("theme", document.body.classList.contains("theme-dark") ? "dark" : "light");
+  });
+
   const categoryKey = document.body.getAttribute("data-category") || "gifts";
   renderCards(categoryKey);
   syncWishlistState();

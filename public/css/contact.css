@@ -230,3 +230,84 @@ body {
     font-size: 0.9rem;
   }
 }
+
+/* ===========================
+   Desktop Optimization
+   =========================== */
+@media (min-width: 1024px) {
+  .navbar {
+    padding: 18px 28px;
+  }
+
+  .contact-page {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 28px 24px 34px;
+  }
+
+  .contact-head h2 {
+    font-size: 2rem;
+  }
+
+  .contact-head p {
+    max-width: 760px;
+    font-size: 1rem;
+  }
+
+  .contact-card {
+    grid-template-columns: 1.45fr 1fr;
+    gap: 24px;
+    padding: 20px;
+  }
+
+  .contact-form button {
+    width: 220px;
+  }
+
+  .footer-container {
+    max-width: 1240px;
+    margin: 0 auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr;
+    gap: 28px;
+    padding: 28px;
+  }
+}
+
+body.theme-dark {
+  background: #0b1220;
+  color: #e5e7eb;
+}
+
+body.theme-dark .navbar {
+  background: #111827;
+  border-bottom-color: rgba(255,255,255,0.12);
+}
+
+body.theme-dark .icons-svg-nav,
+body.theme-dark .menu-item-icon {
+  stroke: #fff;
+  color: #fff;
+}
+
+body.theme-dark .quickies {
+  background: #111827;
+}
+
+body.theme-dark .quickies a {
+  color: #e5e7eb;
+  border-bottom-color: rgba(255,255,255,0.1);
+}
+
+body.theme-dark .contact-card,
+body.theme-dark .contact-info {
+  background: #1f2937;
+  border-color: rgba(255,255,255,0.16);
+}
+
+body.theme-dark .contact-head p,
+body.theme-dark .contact-info p,
+body.theme-dark .contact-info h3 {
+  color: #e5e7eb;
+}

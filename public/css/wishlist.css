@@ -257,3 +257,93 @@ body {
     font-size: 0.9rem;
   }
 }
+
+/* ===========================
+   Desktop Optimization
+   =========================== */
+@media (min-width: 1024px) {
+  .navbar {
+    padding: 18px 28px;
+  }
+
+  .wishlist-page {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 28px 24px 34px;
+  }
+
+  .wishlist-header h2 {
+    font-size: 2rem;
+  }
+
+  .wishlist-products {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .wishlist-card {
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .wishlist-card img {
+    height: 180px;
+  }
+
+  .wishlist-card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .wishlist-actions {
+    margin-top: auto;
+  }
+
+  .footer-container {
+    max-width: 1240px;
+    margin: 0 auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr;
+    gap: 28px;
+    padding: 28px;
+  }
+}
+
+body.theme-dark {
+  background: #0b1220;
+  color: #e5e7eb;
+}
+
+body.theme-dark .navbar {
+  background: #111827;
+  border-bottom-color: rgba(255,255,255,0.12);
+}
+
+body.theme-dark .icons-svg-nav,
+body.theme-dark .menu-item-icon {
+  stroke: #fff;
+  color: #fff;
+}
+
+body.theme-dark .quickies {
+  background: #111827;
+}
+
+body.theme-dark .quickies a {
+  color: #e5e7eb;
+  border-bottom-color: rgba(255,255,255,0.1);
+}
+
+body.theme-dark .wishlist-card {
+  background: #1f2937;
+  border-color: rgba(255,255,255,0.16);
+}
+
+body.theme-dark .wishlist-card-body h3,
+body.theme-dark .wishlist-card-body p,
+body.theme-dark .wishlist-price {
+  color: #e5e7eb;
+}

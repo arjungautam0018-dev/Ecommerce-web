@@ -88,6 +88,14 @@ function renderWishlist() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  const themeButton = document.querySelector(".nav-bar-right a");
+  if (localStorage.getItem("theme") === "dark") document.body.classList.add("theme-dark");
+  themeButton?.addEventListener("click", function(event){
+    event.preventDefault();
+    document.body.classList.toggle("theme-dark");
+    localStorage.setItem("theme", document.body.classList.contains("theme-dark") ? "dark" : "light");
+  });
+
   closeMenuOnOutsideClick();
   renderWishlist();
 });

@@ -659,3 +659,84 @@ body{
         transform: none;
     }
 }
+
+/* ===========================
+   Desktop Optimization
+   =========================== */
+@media (min-width: 1024px){
+    .navbar{
+        padding: 18px 28px;
+    }
+
+    .profile-container{
+        max-width: 1240px;
+        padding: 44px 24px;
+    }
+
+    .profile-card-body{
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+
+    .content-grid{
+        gap: 30px;
+        align-items: start;
+    }
+
+    .fields-grid{
+        gap: 20px 24px;
+    }
+
+    .card-body{
+        padding: 14px 24px 24px;
+    }
+}
+
+body.theme-dark {
+    background: #0b1220;
+    color: #e5e7eb;
+}
+
+body.theme-dark .navbar {
+    background: #111827;
+    border-bottom-color: rgba(255,255,255,0.12);
+}
+
+body.theme-dark .icons-svg-nav,
+body.theme-dark .menu-item-icon {
+    stroke: #fff;
+    color: #fff;
+}
+
+body.theme-dark .quickies {
+    background: #111827;
+}
+
+body.theme-dark .quickies a {
+    color: #e5e7eb;
+    border-bottom-color: rgba(255,255,255,0.1);
+}
+
+body.theme-dark .card,
+body.theme-dark .profile-card,
+body.theme-dark .stat-card {
+    background: #1f2937;
+    border-color: rgba(255,255,255,0.16);
+}
+
+body.theme-dark .profile-subtitle,
+body.theme-dark .profile-email,
+body.theme-dark .stat-label,
+body.theme-dark .muted,
+body.theme-dark .field-label,
+body.theme-dark .status-left,
+body.theme-dark .status-right,
+body.theme-dark .card-title h4 {
+    color: #e5e7eb;
+}
+
+body.theme-dark .field-view {
+    background: #111827;
+    border-color: rgba(255,255,255,0.14);
+    color: #e5e7eb;
+}
