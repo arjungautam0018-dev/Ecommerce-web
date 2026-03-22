@@ -5,6 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>See your cart.</title>
     <link rel="stylesheet" href="/css/cart.css">
+    <style>
+        .quantity {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: -24px 0 0 80px; /* KEEP your current position */
+}
+
+/* Button base */
+.quantity button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%; /* circle like that site */
+    border: none;
+    background: #021024;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: all 0.2s ease;
+}
+
+/* Hover effect (PC) */
+.quantity button:hover {
+    background: #052659;
+}
+
+/* Click effect */
+.quantity button:active {
+    transform: scale(0.9);
+}
+
+/* Number in middle */
+.quantity-value {
+    font-size: 15px;
+    font-weight: 600;
+    min-width: 28px;
+    text-align: center;
+}
+@media (max-width: 480px) {
+    .quantity {
+        margin: -18px 0 0 80px; /* slightly tighter */
+        gap: 5px;
+    }
+
+    .quantity button {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+    }
+
+    .quantity-value {
+        font-size: 14px;
+        min-width: 24px;
+    }
+}
+    </style>
 </head>
 <body>
     <div class="navbar">
@@ -97,6 +159,9 @@
         
     </div>
 </div>
+<div class="main-cart-wrapper">
+
+
     <div class="cart-container">
         <div class="text-cart">
             <h2>My Cart</h2>
@@ -168,37 +233,26 @@
     <button id="continue-shopping">Continue Shopping</button>
   </div>
 </div>
+</div>
 
 <footer class="footers">
   <!-- Gradient top line -->
   <div class="footer-gradient-line"></div>
 
-  <div class="footer-container">
-
-    <!-- About / Intro -->
-    <div class="footer-section about">
-      <h3 class="head-footers">XYZ Business</h3>
-      <p class="side-footers">
-        Explore products and updates easily. Submit your concerns and stay updated with trending topics.
+  <div class="footer-container footer-container--single">
+    <div class="footer-section footer-get-in-touch">
+      <h3 class="head-footers">Get in touch</h3>
+      <p class="side-footers footer-lead">
+        We&rsquo;re here to help with orders, custom requests, and anything about our products. Reach out anytime&mdash;we read every message and aim to reply within one business day.
       </p>
+      <p class="side-footers">
+        <strong>Email:</strong> <a href="mailto:arjungautam0018@gmail.com">arjungautam0018@gmail.com</a>
+      </p>
+      <p class="side-footers">
+        Prefer the site? Visit <a href="/">Home</a>, your <a href="/serve/cart">Cart</a>, or <a href="/serve/contact">Contact</a> for more ways to connect.
+      </p>
+      <p class="side-footers footer-tagline">&copy; 2026 XYZ Business &middot; Quality gifts, office essentials &amp; custom pieces.</p>
     </div>
-
-    <!-- Quick Links -->
-    <div class="footer-section quick-links">
-      <h3 class="head-footers">Quick Links</h3>
-      <a href="#" class="footer-nav">Home</a>
-      <a href="#" class="footer-nav">Products</a>
-      <a href="/serve/cart" class="footer-nav">Cart</a>
-    </div>
-
-    <!-- Get in Touch -->
-    <div class="footer-section contact">
-      <h3 class="head-footers">Get in Touch</h3>
-      <p class="side-footers">Business Email: <a href="mailto:business@arjungautam0018.com">arjungautam0018@gmail.com</a></p>
-      <p class="side-footers">We appreciate your feedback! Share your thoughts or report issues.</p>
-      <button id="send-feed-foot">Send Feedback</button>
-    </div>
-
   </div>
 
   <!-- Copyright -->

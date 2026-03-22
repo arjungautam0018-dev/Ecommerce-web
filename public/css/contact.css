@@ -13,8 +13,9 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 16px;
-  background: #fff;
-  border-bottom: 1px solid rgba(2, 16, 36, 0.08);
+  background: linear-gradient(180deg, #f5f8fc 0%, #eef3f9 100%);
+  border-bottom: 1px solid rgba(15, 38, 68, 0.1);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
 }
 
 .shophub-nav { text-decoration: none; }
@@ -171,6 +172,32 @@ body {
   padding: 24px 16px;
 }
 
+.footer-container--single {
+  display: block;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 36px 20px 40px;
+}
+
+.footer-get-in-touch .head-footers {
+  font-size: 1.45rem;
+  margin-bottom: 12px;
+}
+
+.footer-get-in-touch .footer-lead {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.footer-get-in-touch .footer-tagline {
+  margin-top: 22px;
+  margin-bottom: 0;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
 /* Section heading */
 .footer-section h3.head-footers {
   font-size: 1.2rem;
@@ -273,6 +300,13 @@ body {
     gap: 28px;
     padding: 28px;
   }
+
+  .footer-container.footer-container--single {
+    display: block;
+    max-width: 820px;
+    grid-template-columns: unset;
+    padding: 48px 28px 52px;
+  }
 }
 
 body.theme-dark {
@@ -281,8 +315,9 @@ body.theme-dark {
 }
 
 body.theme-dark .navbar {
-  background: #111827;
-  border-bottom-color: rgba(255,255,255,0.12);
+  background: linear-gradient(180deg, #111827 0%, #0f172a 100%);
+  border-bottom-color: rgba(255,255,255,0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
 }
 
 body.theme-dark .icons-svg-nav,

@@ -27,8 +27,12 @@ app.get("/serve/contact", (req,res)=>{
     res.sendFile(__dirname+"/public/html/contact.html")
 })
 //Serve Categories
+app.get("/serve/category/sports", (req,res)=>{
+    res.sendFile(__dirname+"/public/html/category-sports.html")
+})
+// Old URL → new Sports category
 app.get("/serve/category/gifts", (req,res)=>{
-    res.sendFile(__dirname+"/public/html/category-gifts.html")
+    res.redirect(301, "/serve/category/sports");
 })
 app.get("/serve/category/events", (req,res)=>{
     res.sendFile(__dirname+"/public/html/category-events.html")

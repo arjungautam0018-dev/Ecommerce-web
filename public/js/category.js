@@ -1,7 +1,9 @@
 const CATEGORY_PRODUCTS = {
-  gifts: [
-    { title: "Custom Frame", desc: "Personalized frame for memories and gifting.", price: 2499, img: "/resources/frame1.jpg", category: "Gifts" },
-    { title: "Gift Frame Premium", desc: "Modern premium frame style for special occasions.", price: 3299, img: "/resources/frame3.webp", category: "Gifts" }
+  sports: [
+    { title: "Sport Medals", desc: "Custom engraved medals for tournaments, schools, and clubs.", price: 899, img: "/resources/frame1.jpg", category: "Sports" },
+    { title: "Trophies", desc: "Classic and modern trophy designs for winners and MVPs.", price: 3499, img: "/resources/frame3.webp", category: "Sports" },
+    { title: "Token of Love", desc: "Keepsake tokens and commemorative pieces for special moments.", price: 1299, img: "/resources/frame.webp", category: "Sports" },
+    { title: "Khada", desc: "Traditional ceremonial scarves — honor guests and champions.", price: 599, img: "/resources/sublimation_cup.webp", category: "Sports" }
   ],
   events: [
     { title: "Event Frame", desc: "Display event moments with a polished finish frame.", price: 2999, img: "/resources/frame3.webp", category: "Events" },
@@ -54,8 +56,8 @@ function renderCards(categoryKey) {
         <p class="price-product">Rs.${item.price.toLocaleString()}</p>
       </div>
       <div class="card-actions">
+        <div class="buy-now-wrap"><button type="button" class="buy-now-btn">Buy Now</button></div>
         <div class="add-to-cart"><button type="button">Add to Cart</button></div>
-        <button type="button" class="wishlist-btn">Wishlist</button>
       </div>
     `;
 
@@ -71,31 +73,12 @@ function renderCards(categoryKey) {
       alert(`${item.title} added to cart`);
     });
 
-    card.querySelector(".wishlist-btn")?.addEventListener("click", (event) => {
-      const wishlist = readJson("wishlist", []);
-      const index = wishlist.findIndex((product) => product.title === item.title);
-      if (index > -1) {
-        wishlist.splice(index, 1);
-      } else {
-        wishlist.push(item);
-      }
-      writeJson("wishlist", wishlist);
-      syncWishlistState();
-      event.currentTarget.blur();
+    card.querySelector(".buy-now-btn")?.addEventListener("click", () => {
+      writeJson("cart", [{ title: item.title, price: item.price, img: item.img, quantity: 1 }]);
+      window.location.href = "/serve/cart";
     });
 
     grid.appendChild(card);
-  });
-}
-
-function syncWishlistState() {
-  const wishlist = readJson("wishlist", []);
-  const titles = new Set(wishlist.map((item) => item.title));
-  document.querySelectorAll(".product-card").forEach((card) => {
-    const title = card.querySelector("h3")?.textContent || "";
-    const button = card.querySelector(".wishlist-btn");
-    if (!button) return;
-    button.classList.toggle("active", titles.has(title));
   });
 }
 
@@ -119,8 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("theme", document.body.classList.contains("theme-dark") ? "dark" : "light");
   });
 
-  const categoryKey = document.body.getAttribute("data-category") || "gifts";
+  const categoryKey = document.body.getAttribute("data-category") || "sports";
   renderCards(categoryKey);
-  syncWishlistState();
   closeMenuOnOutsideClick();
 });

@@ -4,14 +4,14 @@ const PRODUCTS = [
     desc: "A personalized frame for photos or artwork, perfect as a gift or for home decoration.",
     price: "Rs.2,499",
     img: "/resources/frame1.jpg",
-    category: "Gifts"
+    category: "Sports"
   },
   {
     title: "Custom Frame",
     desc: "A personalized frame for photos or artwork, perfect as a gift or for home decoration.",
     price: "Rs.2,499",
     img: "/resources/frame.jpg",
-    category: "Gifts"
+    category: "Sports"
   },
   {
     title: "Custom Wall Frame",
@@ -84,10 +84,10 @@ function createProductCard(product) {
     </div>
     <div class="card-actions">
 
-      <div class="wishlist-action">
-        <button type="button" class="wishlist-btn">
-          <i class="fa-regular fa-heart"></i>
-          Wishlist
+      <div class="buy-now-action">
+        <button type="button" class="buy-now-btn">
+          <i class="fa-solid fa-bolt"></i>
+          Buy Now
         </button>
       </div>
       <div class="add-to-cart">
@@ -150,53 +150,6 @@ function setupBuyNowButtons() {
   });
 }
 
-function updateWishlistButtons() {
-  const wishlist = safeJsonRead("wishlist", []);
-  const wishlistTitles = new Set(wishlist.map((item) => item.title));
-
-  document.querySelectorAll(".wishlist-btn").forEach((button) => {
-    const card = button.closest(".product-card");
-    const title = card?.querySelector("h3")?.textContent || "";
-    const icon = button.querySelector("i");
-
-    if (wishlistTitles.has(title)) {
-      button.classList.add("active");
-      if (icon) icon.className = "fa-solid fa-heart";
-    } else {
-      button.classList.remove("active");
-      if (icon) icon.className = "fa-regular fa-heart";
-    }
-  });
-}
-
-function setupWishlistButtons() {
-  document.querySelectorAll(".wishlist-btn").forEach((button) => {
-    button.addEventListener("click", () => {
-      const card = button.closest(".product-card");
-      if (!card) return;
-
-      const title = card.querySelector("h3")?.textContent || "";
-      const priceText = card.querySelector(".price-product")?.textContent || "0";
-      const img = card.querySelector(".products_images")?.src || "";
-      const category = card.querySelector(".category-chip")?.textContent || "General";
-      const desc = card.querySelector(".desc-product")?.textContent || "";
-      const price = parsePrice(priceText);
-
-      const wishlist = safeJsonRead("wishlist", []);
-      const existsIndex = wishlist.findIndex((item) => item.title === title);
-
-      if (existsIndex > -1) {
-        wishlist.splice(existsIndex, 1);
-      } else {
-        wishlist.push({ title, price, img, category, desc });
-      }
-
-      safeJsonWrite("wishlist", wishlist);
-      updateWishlistButtons();
-    });
-  });
-}
-
 function setupThemeToggle() {
   const themeButton = document.querySelector(".nav-bar-right a");
   if (!themeButton) return;
@@ -246,8 +199,6 @@ document.addEventListener("DOMContentLoaded", () => {
   closeMenuOnOutsideClick();
   renderProducts();
   setupCartButtons();
-  setupWishlistButtons();
-  updateWishlistButtons();
   setupThemeToggle();
   setupHeroSlider();
   setupBuyNowButtons();

@@ -18,8 +18,9 @@ body {
 
     padding: 18px 16px; /* taller navbar */
 
-    background: #ffffff;
-    border-bottom: 1px solid rgba(0,0,0,0.06);
+    background: linear-gradient(180deg, #f5f8fc 0%, #eef3f9 100%);
+    border-bottom: 1px solid rgba(15, 38, 68, 0.1);
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
 }
 .shophub-nav{
     text-decoration: none;
@@ -698,8 +699,9 @@ body.theme-dark {
 }
 
 body.theme-dark .navbar {
-    background: #111827;
-    border-bottom-color: rgba(255,255,255,0.12);
+    background: linear-gradient(180deg, #111827 0%, #0f172a 100%);
+    border-bottom-color: rgba(255,255,255,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
 }
 
 body.theme-dark .icons-svg-nav,

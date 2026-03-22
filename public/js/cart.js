@@ -40,6 +40,15 @@ function setupThemeToggle() {
 
 let selectedIndexes = new Set();
 
+function rebuildSelectedAfterRemove(removedIndex) {
+  const next = new Set();
+  selectedIndexes.forEach((i) => {
+    if (i === removedIndex) return;
+    next.add(i > removedIndex ? i - 1 : i);
+  });
+  selectedIndexes = next;
+}
+
 function renderSummary() {
   const cart = readJson("cart", []);
   const itemsContainer = document.querySelector(".checkout-items");
@@ -57,7 +66,7 @@ function renderSummary() {
         <img src="${item.img}" alt="${item.title}">
         <div class="checkout-item-details">
           <h4>${item.title}</h4>
-          <p>${item.quantity} x Rs.${item.price.toLocaleString()} = Rs.${total.toLocaleString()}</p>
+          <p class="checkout-line-price">${item.quantity} x Rs.${item.price.toLocaleString()} = Rs.${total.toLocaleString()}</p>
         </div>
       </div>
     `);
@@ -65,9 +74,12 @@ function renderSummary() {
 
   const tax = Math.round(subtotal * 0.13);
   const total = subtotal + tax;
-  document.getElementById("subtotal").textContent = `Rs.${subtotal.toLocaleString()}`;
-  document.getElementById("tax").textContent = `Rs.${tax.toLocaleString()}`;
-  document.getElementById("total").textContent = `Rs.${total.toLocaleString()}`;
+  const subEl = document.getElementById("subtotal");
+  const taxEl = document.getElementById("tax");
+  const totalEl = document.getElementById("total");
+  if (subEl) subEl.textContent = `Rs.${subtotal.toLocaleString()}`;
+  if (taxEl) taxEl.textContent = `Rs.${tax.toLocaleString()}`;
+  if (totalEl) totalEl.textContent = `Rs.${total.toLocaleString()}`;
 }
 
 function renderCart() {
@@ -90,34 +102,45 @@ function renderCart() {
     card.className = `cart-product ${isSelected ? "selected" : ""}`;
     card.dataset.index = String(index);
     card.innerHTML = `
-      <div class="details-product">
-        <label class="item-check">
-          <input type="checkbox" class="item-checkbox" ${isSelected ? "checked" : ""}>
-        </label>
-        <div class="img-product"><img src="${item.img}" alt="${item.title}"></div>
-        <div class="details">
-          <h3>${item.title}</h3>
-          <div class="details-price-row">
-            <p>Rs.${item.price.toLocaleString()} each</p>
-            <button type="button" class="delete-product" aria-label="Remove from cart">
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <polyline points="3 6 5 6 21 6"></polyline>
-                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                <line x1="10" y1="11" x2="10" y2="17"></line>
-                <line x1="14" y1="11" x2="14" y2="17"></line>
-              </svg>
-            </button>
+      <div class="cart-product-top">
+        <div class="details-product">
+          <label class="item-check">
+            <input type="checkbox" class="item-checkbox" ${isSelected ? "checked" : ""}>
+          </label>
+          <div class="img-product"><img src="${item.img}" alt="${item.title}"></div>
+          <div class="details">
+            <h3>${item.title}</h3>
+            <div class="details-price-row">
+              <p class="cart-price-each">Rs.${item.price.toLocaleString()} each</p>
+              <div class="details-row-actions">
+                <button type="button" class="cart-wishlist-btn" aria-label="Move to wishlist" title="Wishlist">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/>
+                  </svg>
+                </button>
+                <button type="button" class="delete-product" aria-label="Remove from cart">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                  </svg>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="add-item">
-        <div class="quantity">
-          <button class="decrease">-</button>
-          <span class="quantity-value">${item.quantity}</span>
-          <button class="increase">+</button>
+        <div class="cart-item-side">
+          <div class="add-item">
+            <div class="quantity">
+              <button type="button" class="decrease">-</button>
+              <span class="quantity-value">${item.quantity}</span>
+              <button type="button" class="increase">+</button>
+            </div>
+          </div>
+          <div class="total"><h3 class="cart-line-total">Total: Rs.${(item.price * item.quantity).toLocaleString()}</h3></div>
         </div>
       </div>
-      <div class="total"><h3>Total: Rs.${(item.price * item.quantity).toLocaleString()}</h3></div>
     `;
     container.appendChild(card);
   });
@@ -127,7 +150,6 @@ function renderCart() {
 }
 
 function bindCartEvents() {
-  const cart = readJson("cart", []);
   document.querySelectorAll(".cart-product").forEach((card) => {
     const index = Number(card.dataset.index);
 
@@ -139,23 +161,46 @@ function bindCartEvents() {
     });
 
     card.addEventListener("click", (event) => {
-      if (!window.matchMedia("(min-width: 1024px)").matches) return;
-      if (event.target.closest("button") || event.target.closest(".item-check")) return;
+      if (event.target.closest("button") || event.target.closest(".item-check") || event.target.closest(".cart-item-side")) {
+        return;
+      }
+      const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
       const cb = card.querySelector(".item-checkbox");
-      if (!cb) return;
-      cb.checked = !cb.checked;
-      cb.dispatchEvent(new Event("change"));
+
+      if (isDesktop && cb) {
+        cb.checked = !cb.checked;
+        cb.dispatchEvent(new Event("change"));
+        return;
+      }
+
+      if (!isDesktop) {
+        if (selectedIndexes.has(index)) {
+          selectedIndexes.delete(index);
+          card.classList.remove("selected");
+        } else {
+          selectedIndexes.add(index);
+          card.classList.add("selected");
+        }
+        if (cb) cb.checked = selectedIndexes.has(index);
+        renderSummary();
+      }
     });
 
-    card.querySelector(".increase")?.addEventListener("click", () => {
-      cart[index].quantity += 1;
-      writeJson("cart", cart);
+    card.querySelector(".increase")?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const latest = readJson("cart", []);
+      if (!latest[index]) return;
+      latest[index].quantity += 1;
+      writeJson("cart", latest);
       renderCart();
     });
 
-    card.querySelector(".decrease")?.addEventListener("click", () => {
-      if (cart[index].quantity > 1) cart[index].quantity -= 1;
-      writeJson("cart", cart);
+    card.querySelector(".decrease")?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const latest = readJson("cart", []);
+      if (!latest[index]) return;
+      if (latest[index].quantity > 1) latest[index].quantity -= 1;
+      writeJson("cart", latest);
       renderCart();
     });
 
@@ -164,12 +209,27 @@ function bindCartEvents() {
       const next = readJson("cart", []);
       next.splice(index, 1);
       writeJson("cart", next);
-      const rebuilt = new Set();
-      selectedIndexes.forEach((i) => {
-        if (i === index) return;
-        rebuilt.add(i > index ? i - 1 : i);
+      rebuildSelectedAfterRemove(index);
+      renderCart();
+    });
+
+    card.querySelector(".cart-wishlist-btn")?.addEventListener("click", (event) => {
+      event.stopPropagation();
+      const current = readJson("cart", []);
+      const item = current[index];
+      if (!item) return;
+      const wishlist = readJson("wishlist", []);
+      wishlist.push({
+        title: item.title,
+        price: item.price,
+        img: item.img,
+        category: item.category || "General",
+        desc: item.desc || "Saved from cart."
       });
-      selectedIndexes = rebuilt;
+      writeJson("wishlist", wishlist);
+      current.splice(index, 1);
+      writeJson("cart", current);
+      rebuildSelectedAfterRemove(index);
       renderCart();
     });
   });
@@ -178,5 +238,9 @@ function bindCartEvents() {
 document.addEventListener("DOMContentLoaded", () => {
   setupMenuClose();
   setupThemeToggle();
+  const initialCart = readJson("cart", []);
+  if (initialCart.length) {
+    selectedIndexes = new Set(initialCart.map((_, i) => i));
+  }
   renderCart();
 });
