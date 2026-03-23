@@ -43,6 +43,11 @@ app.get("/serve/category/office", (req,res)=>{
 app.get("/serve/category/custom", (req,res)=>{
     res.sendFile(__dirname+"/public/html/category-custom.html")
 })
+
+//Serve payment successful
+app.get("/success", (req,res)=>{
+    res.sendFile(__dirname+"/public/html/payment_success.html")
+})
 //Start Server
 app.listen(3000, () => {
     console.log("Server is running on port 3000");

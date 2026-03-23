@@ -24,14 +24,13 @@ body {
     text-decoration: none;
 }
 /* Logo */
-.nav-bar-left h1 {
-    margin: 0;
-    font-size: 1.6rem; /* larger, scales with rem */
-    font-weight: 700;
-
-    background: linear-gradient(135deg, #021024, #052659);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+.shophub-nav { text-decoration: none; }
+.gradient-text {
+  margin: 0;
+  font-size: 1.6rem;
+  background: linear-gradient(135deg, #021024, #5483B3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Right icons */
@@ -438,14 +437,11 @@ body {
     cursor: pointer;
     transition: transform 0.12s ease, box-shadow 0.2s ease, filter 0.2s ease;
     width: calc(100% - 24px);
-    margin: 12px 12px 14px;
+    margin: 0;
     box-shadow: 0 12px 28px rgba(2, 16, 36, 0.35);
 }
 
-.add-to-cart button:hover{
-  filter: brightness(1.04);
-  box-shadow: 0 16px 36px rgba(2, 16, 36, 0.45);
-}
+
 .add-to-cart button:active{
   transform: scale(0.985);
 }
@@ -764,10 +760,10 @@ body {
   transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
 
-.card-actions .buy-now-btn:hover {
+/* .card-actions .buy-now-btn:hover {
   background: #f8fafc;
   border-color: rgba(5, 38, 89, 0.35);
-}
+} */
 
 .category-chip {
   margin: 0 0 8px;
@@ -1225,3 +1221,31 @@ body.theme-dark .category:hover .svg-category {
     grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
   }
 }
+
+
+.card-actions button {
+      box-sizing: border-box;
+
+  display: flex;                /* same for both */
+  align-items: center;
+  justify-content: center;
+  height: 44px;                 /* fixed height */
+  min-height: 44px;
+  padding: 0 12px;              /* same horizontal padding */
+  gap: 8px;                     /* same gap between icon/text */
+  box-sizing: border-box;       /* include border in height */
+}
+
+.card-actions .buy-now-btn,
+.card-actions .add-to-cart button {
+    display: flex;           /* make them identical */
+    align-items: center;
+    justify-content: center;
+    height: 44px;            /* same height */
+    min-height: 44px;
+    padding: 0 12px;         /* horizontal padding */
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+

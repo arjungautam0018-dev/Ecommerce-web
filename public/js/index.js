@@ -2,42 +2,42 @@ const PRODUCTS = [
   {
     title: "Custom Frame",
     desc: "A personalized frame for photos or artwork, perfect as a gift or for home decoration.",
-    price: "Rs.2,499",
+    price: "रू.2,499",
     img: "/resources/frame1.jpg",
-    category: "Sports"
+    
   },
   {
     title: "Custom Frame",
     desc: "A personalized frame for photos or artwork, perfect as a gift or for home decoration.",
-    price: "Rs.2,499",
+    price: "रू.2,499",
     img: "/resources/frame.jpg",
-    category: "Sports"
+    
   },
   {
     title: "Custom Wall Frame",
     desc: "Elegant customizable wall frame with premium print finish.",
-    price: "Rs.3,499",
+    price: "रू.3,499",
     img: "/resources/frame.webp",
-    category: "Custom"
+    
   },
   {
     title: "Stamp Set",
     desc: "Official stamp set suitable for badge programs and office use.",
-    price: "Rs.1,299",
+    price: "रू.1,299",
     img: "/resources/stamp.jpg",
-    category: "Office"
+    
   },
   {
     title: "Event Frame",
     desc: "A modern showcase frame designed for event photos and memories.",
-    price: "Rs.2,999",
+    price: "रू.2,999",
     img: "/resources/frame3.webp",
-    category: "Events"
+    
   },
-   { title: "Sport Medals", desc: "Custom engraved medals for tournaments, schools, and clubs.", price:"Rs.899", img: "/resources/medal.jpg", category: "Sports" },
-    { title: "Trophies", desc: "Classic and modern trophy designs for winners and MVPs.", price:"Rs.3,499", img: "/resources/trophies.jpg", category: "Sports" },
-    { title: "Token of Love", desc: "Keepsake tokens and commemorative pieces for special moments.", price:"Rs.1,299", img: "/resources/token.jpg", category: "Sports" },
-    { title: "Khada", desc: "Traditional ceremonial scarves — honor guests and champions.", price:"Rs.499", img: "/resources/khada.jpg", category: "Sports" }
+   { title: "Sport Medals", desc: "Custom engraved medals for tournaments, schools, and clubs.", price:"रू .899", img: "/resources/medal.jpg" },
+    { title: "Trophies", desc: "Classic and modern trophy designs for winners and MVPs.", price:"रू .3,499", img: "/resources/trophies.jpg" },
+    { title: "Token of Love", desc: "Keepsake tokens and commemorative pieces for special moments.", price:"रू .1,299", img: "/resources/token.jpg" },
+    { title: "Khada", desc: "Traditional ceremonial scarves — honor guests and champions.", price:"रू .499", img: "/resources/khada.jpg" }
 ];
 
 function safeJsonRead(key, fallback) {
@@ -84,7 +84,6 @@ function createProductCard(product) {
       <h3>${product.title}</h3>
       <p class="desc-product">${product.desc}</p>
       <p class="price-product">${product.price}</p>
-      <p class="category-chip">${product.category}</p>
     </div>
     <div class="card-actions">
 
