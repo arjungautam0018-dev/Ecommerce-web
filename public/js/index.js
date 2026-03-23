@@ -33,7 +33,11 @@ const PRODUCTS = [
     price: "Rs.2,999",
     img: "/resources/frame3.webp",
     category: "Events"
-  }
+  },
+   { title: "Sport Medals", desc: "Custom engraved medals for tournaments, schools, and clubs.", price: 899, img: "/resources/medal.jpg", category: "Sports" },
+    { title: "Trophies", desc: "Classic and modern trophy designs for winners and MVPs.", price: 3499, img: "/resources/trophies.jpg", category: "Sports" },
+    { title: "Token of Love", desc: "Keepsake tokens and commemorative pieces for special moments.", price: 1299, img: "/resources/token.jpg", category: "Sports" },
+    { title: "Khada", desc: "Traditional ceremonial scarves — honor guests and champions.", price: 599, img: "/resources/khada.jpg", category: "Sports" }
 ];
 
 function safeJsonRead(key, fallback) {
