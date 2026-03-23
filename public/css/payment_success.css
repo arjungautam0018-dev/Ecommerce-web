@@ -116,6 +116,7 @@
     padding-top: 80px; 
   padding-left: 20px;
   padding-right: 20px;
+  
 }
 
   .success-circle {
@@ -156,12 +157,16 @@
     transform: rotate(-45deg) translate(5px, -5px);
   }
 
-  .text {
+  .text-h1 {
     font-size: 24px;
     font-weight: bold;
     color: #2c3e50;
+    margin-top: -30px;
   }
-
+.text-h1 p{
+    margin-bottom: 0px;
+    margin-top: -20px;
+}
   @keyframes pulse {
     0% { transform: scale(1); }
     50% { transform: scale(1.4); }
@@ -174,5 +179,113 @@
   @media (max-width: 480px) {
     .navbar { padding: 14px 12px; }
     .shophub-nav h1 { font-size: 1.4rem; }
-    .text { font-size: 20px; }
+    .text { font-size: 18px; }
+
   }
+
+  /* ===============================
+   Order Details Card Styles
+   =============================== */
+.order-card {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 450px;
+  margin: 30px auto 20px;
+  padding: 10px 24px;
+  text-align: left;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.order-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 18px 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.order-info-block {
+  padding: 18px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.order-info-block.no-border {
+  border-bottom: none;
+}
+
+.info-label {
+  font-size: 0.9rem;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.info-value, .bold-text {
+  font-weight: 400;
+  color: #021024;
+  margin-left: 28px; /* Aligns text under the label, skipping the icon width */
+}
+
+.bold-text { margin-left: 0; } /* Reset for top rows */
+
+/* ===============================
+   Buttons & Footer
+   =============================== */
+.btn {
+  width: 100%;
+  max-width: 500px;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: all 0.2s ease;
+  border: none;
+  font-family: inherit;
+}
+
+.btn-primary {
+  background: #021024;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-primary:hover {
+  background: #051a3a;
+}
+
+.btn-secondary {
+  background: white;
+  color: #021024;
+  border: 1px solid #ddd;
+}
+
+.btn-secondary:hover {
+  background: #f9f9f9;
+}
+
+.support-text {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 20px;
+}
+
+.support-text a {
+  color: #5483B3;
+  text-decoration: underline;
+}
+
+.lower-version{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
