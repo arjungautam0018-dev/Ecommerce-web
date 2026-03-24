@@ -1,3 +1,32 @@
+function showToast(message) {
+  const container = document.getElementById("toast-container");
+  if (!container) return;
+
+  const toast = document.createElement("div");
+  toast.className = "toast";
+
+  toast.innerHTML = `
+    <div class="toast-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+      </svg>
+    </div>
+    <span>${message}</span>
+  `;
+
+  container.appendChild(toast);
+
+  // show animation
+  setTimeout(() => toast.classList.add("show"), 50);
+
+  // stay longer (3.5s)
+  setTimeout(() => {
+    toast.classList.remove("show");
+    toast.classList.add("hide");
+
+    setTimeout(() => toast.remove(), 500);
+  }, 3500);
+}
 const PRODUCTS = [
   {
     title: "Custom Frame",
@@ -132,7 +161,7 @@ function setupCartButtons() {
         cart.push({ title, price, img, quantity: 1 });
       }
       safeJsonWrite("cart", cart);
-      alert(`${title} added to cart`);
+      showToast(`${title} added to cart`);
     });
   });
 }
@@ -142,19 +171,34 @@ function setupBuyNowButtons() {
     button.addEventListener("click", () => {
       const card = button.closest(".product-card");
       if (!card) return;
+
       const title = card.querySelector("h3")?.textContent || "";
       const priceText = card.querySelector(".price-product")?.textContent || "0";
       const img = card.querySelector(".products_images")?.src || "";
       const price = parsePrice(priceText);
-      const cart = [{ title, price, img, quantity: 1 }];
+
+      // 1️⃣ Read existing cart
+      const cart = safeJsonRead("cart", []);
+
+      // 2️⃣ Add item if not already in cart
+      let index = cart.findIndex((item) => item.title === title);
+      if (index === -1) {
+        cart.push({ title, price, img, quantity: 1 });
+        index = cart.length - 1;
+      }
+
       safeJsonWrite("cart", cart);
+
+      // 3️⃣ Save selected index in localStorage
+      safeJsonWrite("selectedIndexes", [index]);
+
+      // 4️⃣ Redirect to cart
       window.location.href = "/serve/cart";
     });
   });
 }
-
 function setupThemeToggle() {
-  const themeButton = document.querySelector(".nav-bar-right a");
+  const themeButton = document.querySelector(".theme-toggle");
   if (!themeButton) return;
 
   const savedTheme = localStorage.getItem("theme");
@@ -163,6 +207,7 @@ function setupThemeToggle() {
   themeButton.addEventListener("click", (event) => {
     event.preventDefault();
     document.body.classList.toggle("theme-dark");
+
     const activeTheme = document.body.classList.contains("theme-dark") ? "dark" : "light";
     localStorage.setItem("theme", activeTheme);
   });

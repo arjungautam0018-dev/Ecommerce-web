@@ -422,6 +422,7 @@ body{
     grid-template-columns: 1fr;
     gap: 16px;
     margin-bottom: 32px;
+    margin-top: 32px;
 }
 
 @media (min-width: 640px){
@@ -742,3 +743,4 @@ body.theme-dark .field-view {
     border-color: rgba(255,255,255,0.14);
     color: #e5e7eb;
 }
+

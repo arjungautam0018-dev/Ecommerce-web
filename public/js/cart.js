@@ -1,3 +1,33 @@
+function showToast(message) {
+  const container = document.getElementById("toast-container");
+  if (!container) return;
+
+  const toast = document.createElement("div");
+  toast.className = "toast";
+
+  toast.innerHTML = `
+    <div class="toast-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+      </svg>
+    </div>
+    <span>${message}</span>
+  `;
+
+  container.appendChild(toast);
+
+  // show animation
+  setTimeout(() => toast.classList.add("show"), 50);
+
+  // stay longer (3.5s)
+  setTimeout(() => {
+    toast.classList.remove("show");
+    toast.classList.add("hide");
+
+    setTimeout(() => toast.remove(), 500);
+  }, 3500);
+}
+
 function readJson(key, fallback) {
   try {
     const value = localStorage.getItem(key);
@@ -15,6 +45,7 @@ window.toggleMenu = function toggleMenu() {
   const menu = document.querySelector(".quickies");
   if (menu) menu.classList.toggle("show");
 };
+
 
 function setupMenuClose() {
   document.addEventListener("click", (event) => {
@@ -63,11 +94,11 @@ function renderSummary() {
     subtotal += total;
     itemsContainer.insertAdjacentHTML("beforeend", `
       <div class="checkout-item">
-        <img src="${item.img}" alt="${item.title}">
-        <div class="checkout-item-details">
+        
+        
           <h4>${item.title}</h4>
           <p class="checkout-line-price">${item.quantity} x Rs.${item.price.toLocaleString()} = Rs.${total.toLocaleString()}</p>
-        </div>
+        
       </div>
     `);
   });
@@ -111,7 +142,7 @@ function renderCart() {
           <div class="details">
             <h3>${item.title}</h3>
             <div class="details-price-row">
-              <p class="cart-price-each">Rs.${item.price.toLocaleString()} each</p>
+              <p class="cart-price-each">Rs.${item.price.toLocaleString()} piece</p>
               <div class="details-row-actions">
                 <button type="button" class="cart-wishlist-btn" aria-label="Move to wishlist" title="Wishlist">
                   <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -144,6 +175,12 @@ function renderCart() {
     `;
     container.appendChild(card);
   });
+  const checkoutBtn = document.getElementById("proceed-checkout");
+if (checkoutBtn) {
+checkoutBtn.disabled = cart.length === 0;
+checkoutBtn.style.opacity = cart.length === 0 ? "0.5" : "1";
+checkoutBtn.style.cursor = cart.length === 0 ? "not-allowed" : "pointer";
+}
 
   bindCartEvents();
   renderSummary();
@@ -158,6 +195,7 @@ function bindCartEvents() {
       else selectedIndexes.delete(index);
       card.classList.toggle("selected", event.target.checked);
       renderSummary();
+
     });
 
     card.addEventListener("click", (event) => {
@@ -204,34 +242,49 @@ function bindCartEvents() {
       renderCart();
     });
 
-    card.querySelector(".delete-product")?.addEventListener("click", (event) => {
-      event.stopPropagation();
-      const next = readJson("cart", []);
-      next.splice(index, 1);
-      writeJson("cart", next);
-      rebuildSelectedAfterRemove(index);
-      renderCart();
-    });
+card.querySelector(".delete-product")?.addEventListener("click", (event) => {
+  event.stopPropagation();
 
-    card.querySelector(".cart-wishlist-btn")?.addEventListener("click", (event) => {
-      event.stopPropagation();
-      const current = readJson("cart", []);
-      const item = current[index];
-      if (!item) return;
-      const wishlist = readJson("wishlist", []);
-      wishlist.push({
-        title: item.title,
-        price: item.price,
-        img: item.img,
-        category: item.category || "General",
-        desc: item.desc || "Saved from cart."
-      });
-      writeJson("wishlist", wishlist);
-      current.splice(index, 1);
-      writeJson("cart", current);
-      rebuildSelectedAfterRemove(index);
-      renderCart();
-    });
+  const next = readJson("cart", []);
+  const item = next[index]; // 👈 get item before delete
+
+  next.splice(index, 1);
+  writeJson("cart", next);
+
+  rebuildSelectedAfterRemove(index);
+  renderCart();
+
+  // ✅ correct usage
+  showToast(`${item.title} removed from cart`);
+});
+card.querySelector(".cart-wishlist-btn")?.addEventListener("click", (event) => {
+  event.stopPropagation();
+
+  const current = readJson("cart", []);
+  const item = current[index];
+  if (!item) return;
+
+  const wishlist = readJson("wishlist", []);
+  wishlist.push({
+    title: item.title,
+    price: item.price,
+    img: item.img,
+    category: item.category || "General",
+    desc: item.desc || "Saved from cart."
+  });
+
+  writeJson("wishlist", wishlist);
+
+  // remove from cart
+  current.splice(index, 1);
+  writeJson("cart", current);
+
+  rebuildSelectedAfterRemove(index);
+  renderCart();
+
+  // ✅ SHOW TOAST HERE
+  showToast(`${item.title} moved to wishlist`);
+});
   });
 }
 
@@ -239,8 +292,54 @@ document.addEventListener("DOMContentLoaded", () => {
   setupMenuClose();
   setupThemeToggle();
   const initialCart = readJson("cart", []);
-  if (initialCart.length) {
-    selectedIndexes = new Set(initialCart.map((_, i) => i));
-  }
+
   renderCart();
+  const checkoutBtn = document.getElementById("proceed-checkout");
+
+checkoutBtn?.addEventListener("click", () => {
+  const cart = readJson("cart", []);
+
+  // ❌ Cart empty
+  if (cart.length === 0) {
+    showPopup("Your cart is empty!");
+    return;
+  }
+
+  // ❌ Nothing selected
+  if (selectedIndexes.size === 0) {
+    showPopup("Please select at least one product!");
+    return;
+  }
+
+  // ✅ Proceed
+  showPopup("Proceeding to checkout...");
+  // OR redirect:
+  // window.location.href = "/checkout";
 });
+});
+
+function showPopup(message, type = "info") {
+  const popup = document.getElementById("popup");
+  const msg = document.getElementById("popup-message");
+
+  if (!popup || !msg) return;
+
+  msg.textContent = message;
+
+  // reset classes
+  popup.classList.remove("success", "error", "info");
+
+  popup.classList.add("show", type);
+
+  // auto close for success
+  if (type === "success") {
+    setTimeout(() => {
+      popup.classList.remove("show");
+    }, 1500);
+  }
+}
+
+function closePopup() {
+  document.getElementById("popup")?.classList.remove("show");
+}
+
