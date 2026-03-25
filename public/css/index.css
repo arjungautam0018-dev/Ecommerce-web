@@ -39,7 +39,7 @@ body {
 .nav-bar-right {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 10px;
     position: relative;
 }
 
@@ -1137,7 +1137,9 @@ body.theme-dark .category:hover .svg-category {
   .navbar {
     padding: 18px 28px;
   }
-
+  .nav-bar-right{
+    gap: 16px;
+  }
   .main-content {
     max-width: 1240px;
     margin: 0 auto;
@@ -1321,4 +1323,172 @@ body.theme-dark .category:hover .svg-category {
   width: 14px;
   height: 14px;
   stroke: #fff;
+}
+
+
+
+
+
+
+/* ===========================
+   🌙 DARK THEME IMPROVED
+   =========================== */
+
+body.theme-dark {
+  background: #020617; /* deeper black */
+  color: #e5e7eb;
+}
+
+/* Navbar */
+body.theme-dark .navbar {
+  background: linear-gradient(180deg, #020617, #020617);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  box-shadow: none;
+}
+
+/* Logo */
+body.theme-dark .gradient-text {
+  background: linear-gradient(135deg, #7dd3fc, #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Icons */
+body.theme-dark .icons-svg-nav {
+  stroke: #e5e7eb;
+}
+
+/* Dropdown */
+body.theme-dark .quickies {
+  background: #020617;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+body.theme-dark .quickies a {
+  color: #e5e7eb;
+}
+
+body.theme-dark .quickies a:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+/* Hero */
+body.theme-dark .hero-banner {
+  background: radial-gradient(circle at top, #0f172a, #020617);
+}
+
+body.theme-dark .hero-pill {
+  background: rgba(59,130,246,0.15);
+  border-color: rgba(96,165,250,0.3);
+}
+
+body.theme-dark .hero-primary-btn {
+  background: linear-gradient(135deg, #2563eb, #1e3a8a);
+  color: #fff;
+}
+
+body.theme-dark .hero-secondary-btn {
+  background: #020617;
+  color: #cbd5f5;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* Product Cards */
+body.theme-dark .product-card {
+  background: #020617;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+}
+
+body.theme-dark .product-card-thumb {
+  background: #0f172a;
+}
+
+body.theme-dark .product-card h3 {
+  color: #f9fafb;
+}
+
+body.theme-dark .desc-product {
+  color: #9ca3af;
+}
+
+body.theme-dark .price-product {
+  color: #f9fafb;
+}
+
+/* Buttons */
+body.theme-dark .add-to-cart button {
+  background: #2563eb;
+  box-shadow: 0 6px 20px rgba(37,99,235,0.5);
+}
+
+body.theme-dark .add-to-cart button:hover {
+  background: #1d4ed8;
+}
+
+body.theme-dark .buy-now-btn {
+  background: transparent;
+  color: #60a5fa;
+  border: 1px solid rgba(96,165,250,0.5);
+}
+
+body.theme-dark .buy-now-btn:hover {
+  background: rgba(96,165,250,0.1);
+}
+
+/* Categories */
+body.theme-dark .categories {
+  background: #020617;
+}
+
+body.theme-dark .category {
+  background: #020617;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+body.theme-dark .category p {
+  color: #e5e7eb;
+}
+
+body.theme-dark .svg-category {
+  color: #e5e7eb;
+  stroke: #e5e7eb;
+}
+
+/* Footer */
+body.theme-dark .footers {
+  background: #000;
+}
+
+body.theme-dark .copyrights {
+  background: #000;
+}
+
+/* Toast */
+body.theme-dark .toast {
+  background: #020617;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Scrollbar (optional premium touch) */
+body.theme-dark::-webkit-scrollbar {
+  width: 8px;
+}
+
+body.theme-dark::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 10px;
+}
+
+
+.quickies a:last-child {
+  color: #ef4444; /* red */
+}
+
+.quickies a:last-child:hover {
+  background: rgba(239,68,68,0.1);
+}
+
+body.theme-dark .quickies a:last-child {
+  color: #f87171;
 }
