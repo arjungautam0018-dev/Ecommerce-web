@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded",()=>{
-    const themeButton = document.querySelector(".nav-bar-right a");
+const themeButton = document.querySelector(".theme-toggle");  if (!themeButton) return;
     if (localStorage.getItem("theme") === "dark") document.body.classList.add("theme-dark");
     themeButton?.addEventListener("click", function(event){
         event.preventDefault();

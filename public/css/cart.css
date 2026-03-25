@@ -3,16 +3,8 @@ body {
     margin: 0;
     font-family: 'Poppins', 'Manrope', sans-serif;
 }
-* {
-    box-sizing: border-box;
-}
 
-html, body {
-    overflow-x: hidden; /* Stops the horizontal scroll entirely */
-    width: 100%;
-}
-
-/* Navbar — soft cool gray / blue tint (matches shop palette) */
+/* Navbar */
 .navbar {
     position: sticky;
     top: 0;
@@ -22,38 +14,39 @@ html, body {
     justify-content: space-between;
     align-items: center;
 
-    padding: 18px 16px; /* taller navbar */
+    padding: 24px 24px; /* taller navbar */
 
     background: linear-gradient(180deg, #f5f8fc 0%, #eef3f9 100%);
     border-bottom: 1px solid rgba(15, 38, 68, 0.1);
     box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+    min-height: 40px;
 }
 .shophub-nav{
     text-decoration: none;
 }
 /* Logo */
-.nav-bar-left h1 {
-    margin: 0;
-    font-size: 1.6rem; /* larger, scales with rem */
-    font-weight: 700;
-
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+.shophub-nav { text-decoration: none; }
+.gradient-text {
+  margin: 0;
+  font-size: 1.6rem;
+  background: linear-gradient(135deg, #021024, #5483B3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+   font-size: 2rem;      /* bigger text */    
 }
 
 /* Right icons */
 .nav-bar-right {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
     position: relative;
 }
 
 /* Icons */
 .icons-svg-nav {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px; 
     stroke-width: 1.6;
 
     cursor: pointer;
@@ -65,7 +58,21 @@ html, body {
     transform: scale(1.15);
 }
 
+/* Hamburger */
+.hamburger {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+      justify-content: center; /* center the SVG */
+    width: 24px;  /* control container width */
+    height: 24px; /* control container height */
+    padding: 0;   /* remove any extra spacing */
+    cursor: pointer;
+}
+
+/* Dropdown */
 /* Hamburger icon */
+
 .hamburger {
     display: flex;
     align-items: center;
@@ -74,47 +81,62 @@ html, body {
     height: 28px;
     cursor: pointer;
 }
+body.theme-dark .icons-svg-nav {
+    stroke: #e5e7eb;
+}
+.quickies a:last-child {
+  color: #ef4444; /* red */
+}
+
+.quickies a:last-child:hover {
+  background: rgba(239,68,68,0.1);
+}
+
+body.theme-dark .quickies a:last-child {
+  color: #f87171;
+}
 
 /* Dropdown menu */
 .quickies {
     position: absolute;
     top: 60px;
-    right: 0;
+    right: 10px;
 
-    width: 160px;
+    width: 180px;
     background: #fff;
 
-    border-radius: 10px;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
 
     display: flex;
     flex-direction: column;
 
     opacity: 0;
-    transform: translateY(-8px);
+    transform: translateY(-10px);
     pointer-events: none;
 
-    transition: all 0.2s ease;
+    transition: all 0.25s ease;
     z-index: 999;
 }
 
-/* Show menu */
 .quickies.show {
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
 }
 
+
+
 /* Links */
 .quickies a {
-    padding: 10px 12px;
-    font-size: 0.95rem;
+    padding: 14px 16px;
+    font-size: 1.1rem;
     text-decoration: none;
     color: #333;
 
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 11px;
 
     border-bottom: 1px solid rgba(0,0,0,0.05);
 }
@@ -137,8 +159,8 @@ html, body {
 .menu-item-icon {
     width: 16px;
     height: 16px;
+    transform: scale(1.5);
 }
-
 
 .text-cart h2{
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -1428,4 +1450,185 @@ body.theme-dark .total-line {
   width: 14px;
   height: 14px;
   stroke: #fff;
+}
+
+
+
+
+/* =========================
+   GLOBAL DARK UPGRADE
+   ========================= */
+body.theme-dark {
+  background: #0a0f1c;
+  color: #e5e7eb;
+}
+
+/* Navbar (more premium look) */
+body.theme-dark .navbar {
+  background: linear-gradient(180deg, #0f172a 0%, #020617 100%);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+}
+
+/* Icons */
+body.theme-dark .icons-svg-nav {
+  stroke: #e5e7eb;
+  opacity: 0.9;
+}
+
+/* =========================
+   DROPDOWN MENU (FIXED)
+   ========================= */
+body.theme-dark .quickies {
+  background: rgba(17, 24, 39, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+body.theme-dark .quickies a:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+/* =========================
+   CART CARD (MORE DEPTH)
+   ========================= */
+body.theme-dark .cart-product {
+  background: linear-gradient(145deg, #111827, #020617);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.45);
+}
+
+/* Selected card highlight */
+body.theme-dark .cart-product.selected {
+  border: 1px solid #3b82f6;
+  box-shadow: 0 0 0 1px rgba(59,130,246,0.3),
+              0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* =========================
+   TEXT FIXES
+   ========================= */
+body.theme-dark .details h3 {
+  color: #f9fafb;
+}
+
+body.theme-dark .details p,
+body.theme-dark .cart-price-each,
+body.theme-dark .cart-line-total {
+  color: #cbd5e1;
+}
+
+/* =========================
+   QUANTITY (MATCH SITE STYLE)
+   ========================= */
+body.theme-dark .quantity {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+body.theme-dark .quantity button {
+  background: linear-gradient(145deg, #1f2937, #111827);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+body.theme-dark .quantity button:hover {
+  background: #374151;
+}
+
+body.theme-dark .quantity-value {
+  color: #f9fafb;
+}
+
+/* =========================
+   CHECKOUT BOX (MATCH YOUR MAIN PAGE)
+   ========================= */
+body.theme-dark .checkout-box {
+  background: linear-gradient(145deg, #0f172a, #020617);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+}
+
+body.theme-dark .label {
+  color: #94a3b8;
+}
+
+body.theme-dark .value,
+body.theme-dark #subtotal,
+body.theme-dark #tax,
+body.theme-dark #total {
+  color: #f9fafb;
+}
+
+/* =========================
+   BUTTONS (IMPORTANT FIX)
+   ========================= */
+body.theme-dark #proceed-checkout {
+  background: linear-gradient(135deg, #2563eb, #1e3a8a);
+  color: #fff;
+}
+
+body.theme-dark #proceed-checkout:hover {
+  background: linear-gradient(135deg, #3b82f6, #1e40af);
+}
+
+body.theme-dark #continue-shopping {
+  background: rgba(255,255,255,0.08);
+  color: #e5e7eb;
+}
+
+body.theme-dark #continue-shopping:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+/* =========================
+   POPUP (YOU MISSED THIS)
+   ========================= */
+body.theme-dark .popup-content {
+  background: #111827;
+  color: #f9fafb;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+body.theme-dark .popup-content button {
+  background: #2563eb;
+}
+
+/* =========================
+   TOAST (IMPORTANT 🔥)
+   ========================= */
+body.theme-dark .toast {
+  background: linear-gradient(145deg, #020617, #0f172a);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #e5e7eb;
+}
+
+body.theme-dark .toast-icon {
+  background: #22c55e;
+}
+
+/* =========================
+   SCROLLBAR (PREMIUM TOUCH)
+   ========================= */
+body.theme-dark ::-webkit-scrollbar {
+  width: 6px;
+}
+body.theme-dark .gradient-text {
+  background: none;
+  -webkit-text-fill-color: #f9fafb;
+  color: #f9fafb;
+}
+body.theme-dark ::-webkit-scrollbar-thumb {
+  background: #1f2937;
+  border-radius: 10px;
+}
+
+/* Desktop nav bar opt */
+@media (min-width:1024px){
+    .navbar {
+    padding: 18px 28px;
+  }
+  .nav-bar-right{
+    gap: 16px;
+  }
 }

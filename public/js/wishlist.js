@@ -51,7 +51,6 @@ function renderWishlist() {
       <div class="wishlist-card-body">
         <h3>${item.title}</h3>
         <p>${item.desc || "Saved item from your product list."}</p>
-        <span class="wishlist-category">${item.category || "General"}</span>
         <div class="wishlist-price">Rs.${(item.price || 0).toLocaleString()}</div>
         <div class="wishlist-actions">
           <button type="button" class="move-cart-btn">Add to Cart</button>
@@ -88,7 +87,7 @@ function renderWishlist() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const themeButton = document.querySelector(".nav-bar-right a");
+const themeButton = document.querySelector(".theme-toggle");  if (!themeButton) return;
   if (localStorage.getItem("theme") === "dark") document.body.classList.add("theme-dark");
   themeButton?.addEventListener("click", function(event){
     event.preventDefault();
