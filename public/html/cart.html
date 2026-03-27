@@ -5,68 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>See your cart.</title>
     <link rel="stylesheet" href="/css/cart.css">
-    <style>
-        .quantity {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin: -24px 0 0 80px; /* KEEP your current position */
-}
 
-/* Button base */
-.quantity button {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%; /* circle like that site */
-    border: none;
-    background: #021024;
-    color: #fff;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    transition: all 0.2s ease;
-}
-
-/* Hover effect (PC) */
-.quantity button:hover {
-    background: #052659;
-}
-
-/* Click effect */
-.quantity button:active {
-    transform: scale(0.9);
-}
-
-/* Number in middle */
-.quantity-value {
-    font-size: 15px;
-    font-weight: 600;
-    min-width: 28px;
-    text-align: center;
-}
-@media (max-width: 480px) {
-    .quantity {
-        margin: -18px 0 0 80px; /* slightly tighter */
-        gap: 5px;
-    }
-
-    .quantity button {
-        width: 28px;
-        height: 28px;
-        font-size: 14px;
-    }
-
-    .quantity-value {
-        font-size: 14px;
-        min-width: 24px;
-    }
-}
-    </style>
 </head>
 <body>
   <div class="navbar">

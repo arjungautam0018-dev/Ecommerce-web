@@ -58,6 +58,16 @@ app.get("/orders", (req,res)=>{
 //Serve Nepal Details
 app.get("/api/nepal-data", (req,res)=>{
     res.sendFile(__dirname+"/public/resources/nepal-address.json")
+});
+
+//Serve login page
+app.get("/login", (req,res)=>{
+    res.sendFile(__dirname+"/public/html/login.html")
+});
+
+//Serve signup member
+app.get("/signup", (req,res)=>{
+    res.sendFile(__dirname+"/public/html/signup.html")
 })
 //Start Server
 app.listen(3000, () => {
