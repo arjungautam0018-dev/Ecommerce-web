@@ -1,103 +1,165 @@
-  /* ===============================
-     Global Reset & Fonts
-     =============================== */
-  body {
+/* Reset */
+body {
     margin: 0;
-    font-family: 'Manrope', 'Poppins', sans-serif;
-    background: #eef5fb;
-    color: #021024;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
+    font-family: 'Poppins', 'Manrope', sans-serif;
+}
 
-  a { text-decoration: none; color: inherit; }
-
-  /* ===============================
-     Navbar Styles
-     =============================== */
-  .navbar {
+/* Navbar */
+.navbar {
     position: sticky;
     top: 0;
     z-index: 1000;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px 20px;
+
+    padding: 24px 24px; /* taller navbar */
+
     background: linear-gradient(180deg, #f5f8fc 0%, #eef3f9 100%);
     border-bottom: 1px solid rgba(15, 38, 68, 0.1);
     box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
-  }
+    min-height: 40px;
+}
+.shophub-nav{
+    text-decoration: none;
+}
+/* Logo */
+.shophub-nav { text-decoration: none; }
+.gradient-text {
+  margin: 0;
+  font-size: 1.6rem;
+  background: linear-gradient(135deg, #021024, #5483B3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+   font-size: 2rem;      /* bigger text */    
+}
 
-  .shophub-nav h1 {
-    margin: 0;
-    font-size: 1.6rem;
-    background: linear-gradient(135deg, #021024, #5483B3);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .nav-bar-right {
+/* Right icons */
+.nav-bar-right {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     position: relative;
-  }
+}
 
-  .icons-svg-nav {
-    width: 24px;
-    height: 24px;
-  }
+/* Icons */
+.icons-svg-nav {
+    width: 30px !important;
+    height: 30px !important; 
+    stroke-width: 1.6;
 
-  /* Hamburger & Dropdown */
-  .hamburger {
+    cursor: pointer;
+    transition: transform 0.15s ease;
+}
+
+/* Tap effect */
+.icons-svg-nav:active {
+    transform: scale(1.15);
+}
+
+/* Hamburger */
+.hamburger {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+      justify-content: center; /* center the SVG */
+    width: 24px;  /* control container width */
+    height: 24px; /* control container height */
+    padding: 0;   /* remove any extra spacing */
+    cursor: pointer;
+}
+
+/* Dropdown */
+/* Hamburger icon */
+.hamburger {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 28px;
     height: 28px;
     cursor: pointer;
-  }
+}
 
-  .quickies {
+/* Dropdown menu */
+.quickies {
     position: absolute;
     top: 60px;
-    right: 0;
-    width: 160px;
+    right: 10px;
+
+    width: 180px;
     background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+
     display: flex;
     flex-direction: column;
-    opacity: 0;
-    transform: translateY(-8px);
-    pointer-events: none;
-    transition: all 0.2s ease;
-    z-index: 999;
-  }
 
-  .quickies.show {
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+
+    transition: all 0.25s ease;
+    z-index: 999;
+}
+
+.quickies.show {
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
-  }
+}
 
-  .quickies a {
-    padding: 10px 12px;
-    font-size: 0.95rem;
+
+
+/* Links */
+.quickies a {
+    padding: 14px 16px;
+    font-size: 1.1rem;
+    text-decoration: none;
     color: #333;
+
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 11px;
+
     border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+/* Remove last border */
+.quickies a:last-child {
+    border-bottom: none;
+}
+.quickies a:last-child {
+  color: #ef4444; /* red */
+}
+
+/* Hover / click */
+.quickies a:hover {
+    background: #f5f5f5;
+}
+
+.quickies a:active {
+    background: #ececec;
+}
+
+/* Icons inside menu */
+.menu-item-icon {
+    width: 16px;
+    height: 16px;
+    transform: scale(1.5);
+}
+
+  /* Desktop nav bar opt */
+@media (min-width:1024px){
+    .navbar {
+    padding: 18px 28px;
+  }
+  .nav-bar-right{
+    gap: 16px;
   }
 
-  .quickies a:last-child { border-bottom: none; }
-
-  .quickies a:hover { background: #f5f5f5; }
-  .quickies a:active { background: #ececec; }
-
-  .menu-item-icon { width: 16px; height: 16px; }
+}
 
   /* ===============================
      Payment Success Styles
@@ -178,8 +240,71 @@
      =============================== */
   @media (max-width: 480px) {
     .navbar { padding: 14px 12px; }
-    .shophub-nav h1 { font-size: 1.4rem; }
-    .text { font-size: 18px; }
+    .shophub-nav h1 { font-size: 1.5rem; }
+    .text { font-size: 1.4rem; }
+    /* ===============================
+   Enhanced Mobile Responsiveness
+   =============================== */
+
+  /* Container adjustment */
+  .container {
+    padding-top: 40px; /* Reduced top gap for smaller screens */
+    
+     
+    gap: 40px; /* If you're using flexbox, this controls the space between circle and text */
+  
+  }
+
+  /* Sync Card and Button Widths */
+  .order-card, 
+  .lower-version {
+    width: 92%; /* Consistent width for both elements */
+    max-width: none; /* Override desktop constraints */
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+  }
+
+  /* Order Card Internal Spacing */
+  .order-card {
+    padding: 8px 16px; /* Reduced side padding so text doesn't feel cramped */
+    margin-top: 15px;
+    margin-bottom: 25px;
+  }
+
+  .order-row {
+    padding: 12px 0;
+    font-size: 0.88rem; /* Slightly smaller text for fit */
+  }
+
+  .info-value {
+    margin-left: 24px; /* Tighter alignment under icons */
+    font-size: 0.88rem;
+  }
+
+  /* Button Adjustments */
+  .btn {
+    width: 100%; /* Spans the full 92% of the parent */
+    padding: 15px; /* Larger hit area for thumbs */
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+  }
+
+  .text-h1 h1 {
+    font-size: 1.4rem; /* Clear, bold heading */
+    margin: 0;         /* Removes the big gap above/below */
+    padding-bottom: 4px; /* Tiny controlled gap between the two lines */
+    line-height: 1.2;
+  }
+
+  .text-h1 p {
+    font-size: 1rem;
+    margin: 0;         /* Prevents the paragraph from pushing the card away */
+    color: #555;
+    line-height: 1.2;
+  }
+
+
 
   }
 

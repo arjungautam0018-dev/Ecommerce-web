@@ -508,3 +508,7 @@ input:focus {
     flex-direction: column;
     gap: 20px; /* This keeps the spacing consistent */
 }
+
+.submit-button{
+    margin-top: 30px;
+}
