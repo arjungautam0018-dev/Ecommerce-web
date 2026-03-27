@@ -205,4 +205,149 @@ const themeButton = document.querySelector(".theme-toggle");  if (!themeButton) 
     }
 
     initProfile();
-})
+});
+// profile.js
+// profile.js
+
+// Select elements
+const provinceSelect = document.getElementById('provinceInput');
+const districtSelect = document.getElementById('districtInput');
+const municipalitySelect = document.getElementById('municipalityInput');
+const wardInput = document.getElementById('wardInput');
+const detailsInput = document.getElementById('detailsInput');
+
+const editBtn = document.getElementById('editBtn');
+let saveBtn = document.getElementById('saveBtn'); // we'll create it dynamically
+const fieldViews = document.querySelectorAll('.field-view');
+
+let addressData = []; // store provinceList
+
+// Load address from API
+async function loadAddress() {
+    try {
+        const response = await fetch('/api/nepal-data'); // API endpoint
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        
+        const data = await response.json();
+        addressData = data.provinceList;
+        populateProvinces();
+        console.log('Data loaded from API:', data);
+    } catch (err) {
+        console.error('Error loading address:', err);
+    }
+}
+
+// Populate province dropdown
+function populateProvinces() {
+    provinceSelect.innerHTML = '<option value="" disabled selected>Select Province</option>';
+    addressData.forEach(province => {
+        const option = document.createElement('option');
+        option.value = province.name;
+        option.textContent = province.name;
+        provinceSelect.appendChild(option);
+    });
+}
+
+// Province → districts
+provinceSelect.addEventListener('change', () => {
+    const selectedProvince = addressData.find(p => p.name === provinceSelect.value);
+
+    districtSelect.innerHTML = '<option value="" disabled selected>Select District</option>';
+    municipalitySelect.innerHTML = '<option value="" disabled selected>Select Municipality</option>';
+
+    if (selectedProvince) {
+        selectedProvince.districtList.forEach(district => {
+            const option = document.createElement('option');
+            option.value = district.name;
+            option.textContent = district.name;
+            districtSelect.appendChild(option);
+        });
+    }
+
+    updateFieldView('province', provinceSelect.value);
+    updateFieldView('district', 'Missing');
+    updateFieldView('municipality', 'Missing');
+});
+
+// District → municipalities
+districtSelect.addEventListener('change', () => {
+    const selectedProvince = addressData.find(p => p.name === provinceSelect.value);
+    const selectedDistrict = selectedProvince?.districtList.find(d => d.name === districtSelect.value);
+
+    municipalitySelect.innerHTML = '<option value="" disabled selected>Select Municipality</option>';
+
+    if (selectedDistrict) {
+        selectedDistrict.municipalityList.forEach(muni => {
+            const option = document.createElement('option');
+            option.value = muni.name;
+            option.textContent = muni.name;
+            municipalitySelect.appendChild(option);
+        });
+    }
+
+    updateFieldView('district', districtSelect.value);
+    updateFieldView('municipality', 'Missing');
+});
+
+// Municipality → update view
+municipalitySelect.addEventListener('change', () => {
+    updateFieldView('municipality', municipalitySelect.value);
+});
+
+// Update span
+function updateFieldView(field, value) {
+    const span = document.querySelector(`.field-view[data-field="${field}"]`);
+    if (span) span.textContent = value;
+}
+
+// EDIT button → show selects & inputs, hide spans
+editBtn.addEventListener('click', () => {
+    document.querySelectorAll('.field-input').forEach(input => input.hidden = false);
+    document.querySelectorAll('.field-view').forEach(view => view.style.display = 'none');
+    editBtn.style.display = 'none';
+
+    // Add Save button if not exist
+    if (!saveBtn) {
+        saveBtn = document.createElement('button');
+        saveBtn.textContent = 'Save';
+        saveBtn.id = 'saveBtn';
+        saveBtn.className = 'edit-btn';
+        editBtn.parentElement.appendChild(saveBtn);
+
+        saveBtn.addEventListener('click', saveAddress);
+    }
+    saveBtn.style.display = 'inline-block';
+});
+
+// SAVE button → hide inputs, show spans, update view
+function saveAddress() {
+    const provinceVal = provinceSelect.value || 'Missing';
+    const districtVal = districtSelect.value || 'Missing';
+    const municipalityVal = municipalitySelect.value || 'Missing';
+    const wardVal = wardInput.value || 'Missing';
+    const detailsVal = detailsInput.value || 'Missing';
+
+    updateFieldView('province', provinceVal);
+    updateFieldView('district', districtVal);
+    updateFieldView('municipality', municipalityVal);
+    updateFieldView('ward', wardVal);
+    updateFieldView('addressDetails', detailsVal);
+
+    // Hide inputs, show spans
+    document.querySelectorAll('.field-input').forEach(input => input.hidden = true);
+    document.querySelectorAll('.field-view').forEach(view => view.style.display = 'inline');
+    
+    saveBtn.style.display = 'none';
+    editBtn.style.display = 'inline-block';
+
+    console.log('Address saved:', {
+        province: provinceVal,
+        district: districtVal,
+        municipality: municipalityVal,
+        ward: wardVal,
+        details: detailsVal
+    });
+}
+
+// Initialize
+loadAddress();

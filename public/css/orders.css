@@ -1,0 +1,445 @@
+
+/* Reset */
+body {
+  margin: 0;
+  font-family: 'Poppins', 'Manrope', sans-serif;
+
+  background: #f1f5f9; /* 🔥 better than plain white */
+}
+/* Navbar */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 24px 24px; /* taller navbar */
+
+    background: linear-gradient(180deg, #f5f8fc 0%, #eef3f9 100%);
+    border-bottom: 1px solid rgba(15, 38, 68, 0.1);
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+    min-height: 40px;
+}
+.shophub-nav{
+    text-decoration: none;
+}
+/* Logo */
+.shophub-nav { text-decoration: none; }
+.gradient-text {
+  margin: 0;
+  font-size: 1.6rem;
+  background: linear-gradient(135deg, #021024, #5483B3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+   font-size: 2rem;      /* bigger text */    
+}
+
+/* Right icons */
+.nav-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+}
+
+/* Icons */
+.icons-svg-nav {
+    width: 30px !important;
+    height: 30px !important; 
+    stroke-width: 1.6;
+
+    cursor: pointer;
+    transition: transform 0.15s ease;
+}
+
+/* Tap effect */
+.icons-svg-nav:active {
+    transform: scale(1.15);
+}
+
+/* Hamburger */
+.hamburger {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+      justify-content: center; /* center the SVG */
+    width: 24px;  /* control container width */
+    height: 24px; /* control container height */
+    padding: 0;   /* remove any extra spacing */
+    cursor: pointer;
+}
+
+/* Dropdown */
+/* Hamburger icon */
+.hamburger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+}
+
+/* Dropdown menu */
+.quickies {
+    position: absolute;
+    top: 60px;
+    right: 10px;
+
+    width: 180px;
+    background: #fff;
+
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+
+    display: flex;
+    flex-direction: column;
+
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+
+    transition: all 0.25s ease;
+    z-index: 999;
+}
+
+.quickies.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+
+
+/* Links */
+.quickies a {
+    padding: 14px 16px;
+    font-size: 1.1rem;
+    text-decoration: none;
+    color: #333;
+
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+/* Remove last border */
+.quickies a:last-child {
+    border-bottom: none;
+}
+.quickies a:last-child {
+  color: #ef4444; /* red */
+}
+
+/* Hover / click */
+.quickies a:hover {
+    background: #f5f5f5;
+}
+
+.quickies a:active {
+    background: #ececec;
+}
+
+/* Icons inside menu */
+.menu-item-icon {
+    width: 16px;
+    height: 16px;
+    transform: scale(1.5);
+}
+@media (min-width:1024px){
+    .navbar {
+    padding: 18px 28px;
+  }
+  .nav-bar-right{
+    gap: 16px;
+  }
+}
+/* PAGE */
+.orders-page {
+  padding: 16px;
+}
+
+.orders-page h2 {
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+
+/* LIST */
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* CARD */
+.order-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px;
+ /* 🔥 better separation */
+  box-shadow: 
+    0 2px 6px rgba(0,0,0,0.04),
+    0 8px 20px rgba(0,0,0,0.06);
+
+  border: 1px solid rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* TOP */
+.order-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.status {
+  font-weight: 600;
+}
+
+.status.pending {
+  color: #ff9800;
+}
+
+/* ITEMS */
+.order-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.item img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.details {
+  font-size: 12px;
+  color: #666;
+}
+
+/* INFO */
+.order-info {
+  font-size: 12.5px;
+  color: #555;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.order-info p {
+  margin: 0;
+  line-height: 1.4;
+}
+/* BOTTOM */
+.order-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.payment {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.payment.paid {
+  color: #4caf50;
+}
+
+.payment.cash {
+  color: #f44336;
+}
+
+.total {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* DESKTOP */
+/* ORDER INFO GRID FIX */
+@media (min-width: 768px) {
+  .order-card {
+    display: grid;
+    grid-template-columns: 
+      auto      /* order id + status */
+      2fr       /* items */
+      1.8fr     /* info */
+      1fr;      /* payment */
+    align-items: start;
+    gap: 16px;
+    padding: 16px 20px;
+    min-height: 110px; /* slightly smaller */
+    align-items: center;
+  }
+
+  /* Order Top (ID + Status) */
+  .order-top {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    min-width: 140px;
+  }
+
+  .order-top span:first-child {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  .status.pending {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  /* ITEMS */
+  .order-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .item img {
+    width: 58px;
+    height: 58px;
+  }
+
+  .name {
+    font-size: 15px;
+  }
+
+  .details {
+    font-size: 13px;
+  }
+
+  /* ORDER INFO GRID */
+  .order-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 16px;
+    font-size: 14px;
+    margin-left: -70px;
+  }
+
+  /* Ensure Street doesn't drop down unnecessarily */
+  .street {
+    min-width: 120px; /* wide enough */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* PAYMENT RIGHT SIDE */
+  .order-bottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 6px;
+    text-align: right;
+  }
+
+  .payment {
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .total {
+    font-size: 18px;
+    font-weight: 800;
+  }
+
+  /* Container width */
+  .orders-page {
+    max-width: 1100px;
+    margin: auto;
+  }
+}
+
+/* DARK MODE ROOT */
+body.dark {
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+/* NAVBAR */
+body.dark .navbar {
+  background: linear-gradient(180deg, #0f172a, #020617);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+/* LOGO */
+body.dark .gradient-text {
+  background: none;
+  -webkit-text-fill-color: #f9fafb;
+  color: #f9fafb;
+}
+
+/* ICONS */
+body.dark .icons-svg-nav {
+  stroke: #e2e8f0;
+}
+
+/* DROPDOWN */
+body.dark .quickies {
+  background: #1e293b;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+
+body.dark .quickies a {
+  color: #e2e8f0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+body.dark .quickies a:hover {
+  background: #334155;
+}
+
+/* CARDS */
+body.dark .order-card {
+  background: #1e293b;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+}
+
+/* TEXT */
+body.dark .details {
+  color: #94a3b8;
+}
+
+body.dark .order-info {
+  color: #cbd5f5;
+}
+
+/* STATUS COLORS (slightly softer for dark) */
+body.dark .status.pending {
+  color: #facc15;
+}
+
+body.dark .payment.paid {
+  color: #22c55e;
+}
+
+body.dark .payment.cash {
+  color: #ef4444;
+}

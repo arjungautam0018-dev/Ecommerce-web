@@ -590,6 +590,9 @@ body{
     align-items: center;
     font-weight: 600;
     font-size: 0.95rem;
+        display: flex;             /* flex container */
+    align-items: center;       /* center vertically */
+    height: 100%;              /* match parent height */
 }
 
 .field-input{
@@ -792,4 +795,156 @@ body.theme-dark .gradient-text {
 body.theme-dark .quickies a:hover {
   background: rgba(255, 255, 255, 0.06);
   border-radius: 8px;
+}
+
+
+
+
+.profile-section {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    margin-top: 30px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* light theme */
+
+}
+
+/* Header */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.section-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* Status Badge */
+.status-badge {
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    background: #ffe5e5;
+    color: #d33;
+}
+
+/* Edit Button */
+.edit-btn {
+    margin-left: 10px;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 8px;
+    background: #111;
+    color: #fff;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+.edit-btn:hover {
+    opacity: 0.85;
+}
+
+/* Grid */
+.address-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* Row */
+.row-flex {
+    display: flex;
+    gap: 12px;
+}
+
+.field-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.field-group.small {
+    flex: 0.4;
+}
+
+.field-group.large {
+    flex: 1;
+}
+
+/* Label */
+label {
+    font-size: 12px;
+    color: #666;
+}
+
+/* Input */
+.field-input {
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s;
+    align-items: center;
+    vertical-align: middle;
+}
+
+.field-input:focus {
+    border-color: #000;
+}
+
+/* View Mode */
+.field-view {
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: #f6f6f6;
+    font-size: 14px;
+}
+
+/* Hidden toggle helper */
+.hidden {
+    display: none;
+}
+
+/* Dark theme for delivery/address section */
+body.theme-dark .profile-section,
+
+
+body.theme-dark .field-view {
+    background: #1f2937; /* dark card background */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5); /* consistent shadow */
+    border-radius: 16px; 
+    color: #f3f4f6; /* text color for inputs/view */
+}
+
+/* Labels and small text inside */
+body.theme-dark label,
+body.theme-dark .status-badge {
+    color: #f3f4f6; /* white/light color for small text */
+    background: transparent; /* remove colored background if any */
+}
+
+/* Inputs and view mode */
+body.theme-dark .field-input {
+    background: #111827; /* dark input background */
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #f3f4f6;
+}
+
+body.theme-dark .field-view {
+    background: #111827; /* dark view background */
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #f3f4f6;
+}
+
+/* Remove extra gradient/overlay backgrounds in content */
+body.theme-dark .content-grid,
+body.theme-dark .profile-container {
+    background: none;
 }

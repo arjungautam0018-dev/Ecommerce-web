@@ -47,6 +47,17 @@ app.get("/serve/category/custom", (req,res)=>{
 //Serve payment successful
 app.get("/success", (req,res)=>{
     res.sendFile(__dirname+"/public/html/payment_success.html")
+});
+
+//Serve order tracking
+app.get("/orders", (req,res)=>{
+    res.sendFile(__dirname+"/public/html/orders.html"
+    )
+});
+
+//Serve Nepal Details
+app.get("/api/nepal-data", (req,res)=>{
+    res.sendFile(__dirname+"/public/resources/nepal-address.json")
 })
 //Start Server
 app.listen(3000, () => {

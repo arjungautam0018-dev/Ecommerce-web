@@ -245,7 +245,63 @@
 
             </div>
         </section>
-        
+        <!-- Billing address -->
+<div class="profile-section">
+<div class="section-header">
+    <h3>Delivery Address</h3>
+    <div>
+        <span class="status-badge" id="addressStatus">Missing</span>
+        <button id="editBtn" class="edit-btn">Edit</button>
+        <!-- Save button will appear dynamically -->
+    </div>
+</div>
+
+    <div class="address-grid">
+        <div class="field-group">
+            <label>Province</label>
+            <select id="provinceInput" class="field-input" hidden>
+                <option value="" disabled selected>Select Province</option>
+                <option value="Koshi">Koshi Province</option>
+                <option value="Madhesh">Madhesh Province</option>
+                <option value="Bagmati">Bagmati Province</option>
+                <option value="Gandaki">Gandaki Province</option>
+                <option value="Lumbini">Lumbini Province</option>
+                <option value="Karnali">Karnali Province</option>
+                <option value="Sudurpashchim">Sudurpashchim Province</option>
+            </select>
+            <span class="field-view" data-field="province">—</span>
+        </div>
+
+        <div class="field-group">
+            <label>District</label>
+            <select id="districtInput" class="field-input" hidden>
+                <option value="" disabled selected>Select District</option>
+            </select>
+            <span class="field-view" data-field="district">Missing</span>
+        </div>
+
+        <div class="field-group">
+            <label>Municipality / Local Level</label>
+            <select id="municipalityInput" class="field-input" hidden>
+                <option value="" disabled selected>Select Municipality</option>
+            </select>
+            <span class="field-view" data-field="municipality">Missing</span>
+        </div>
+
+        <div class="row-flex">
+            <div class="field-group small">
+                <label>Ward No.</label>
+                <input type="number" id="wardInput" class="field-input" placeholder="e.g. 10" hidden>
+                <span class="field-view" data-field="ward">Missing</span>
+            </div>
+            <div class="field-group large">
+                <label>Address Details</label>
+                <input type="text" id="detailsInput" class="field-input" placeholder="House no, Street name, Landmark..." hidden>
+                <span class="field-view" data-field="addressDetails">Missing</span>
+            </div>
+        </div>
+    </div>
+</div>
         <section class="stats-grid" aria-label="Account statistics">
             <article class="stat-card" data-animate="stat" style="--delay: 0.1s;">
                 <div class="stat-inner">
