@@ -346,3 +346,56 @@ body.theme-dark .contact-info p,
 body.theme-dark .contact-info h3 {
   color: #e5e7eb;
 }
+
+
+/* Wrapper */
+.social-icons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+/* Click area */
+.social-icons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+}
+
+/* Image size (mobile) */
+.social-icons img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
+}
+@media (min-width: 600px) {
+  .social-icons {
+    gap: 14px;
+  }
+
+  .social-icons a {
+    padding: 7px;
+  }
+
+  .social-icons img {
+    width: 28px;
+    height: 28px;
+  }
+}
+@media (min-width: 1024px) {
+  .social-icons {
+    gap: 18px;
+  }
+
+  .social-icons a {
+    padding: 8px;
+  }
+
+  .social-icons img {
+    width: 36px;   /* bigger for PC */
+    height: 36px;
+  }
+}

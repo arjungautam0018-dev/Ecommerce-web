@@ -89,41 +89,37 @@
             <p class="profile-subtitle">Manage your account information</p>
         </header>
 
-        <section class="profile-card" aria-label="Profile overview" data-animate="profile-card">
-            <div class="profile-card-banner"></div>
-            <div class="profile-card-body">
-                <div class="profile-header-row">
-                    <div class="profile-avatar-wrap">
-                        <div class="profile-avatar" id="profileAvatar" aria-label="Profile avatar">
-                            <span class="profile-avatar-letter" id="profileAvatarLetter">A</span>
-                            <button class="avatar-camera-btn" id="avatarCameraBtn" type="button" aria-label="Change profile photo" hidden>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="btn-icon">
-                                    <path d="M14.5 4h-5L7.8 6H5.5A2.5 2.5 0 0 0 3 8.5v9A2.5 2.5 0 0 0 5.5 20h13A2.5 2.5 0 0 0 21 17.5v-9A2.5 2.5 0 0 0 18.5 6h-2.3L14.5 4z"/>
-                                    <path d="M12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
+<!-- 
+  REPLACE the entire <section class="profile-card" ...> block in your HTML with this.
+  Everything else in your HTML stays exactly the same.
+-->
 
-                    <div class="profile-identity">
-                        <h3 class="profile-name" id="profileNameHeading">Abhishek</h3>
-                        <p class="profile-email" id="profileEmailHeading">abhishek@example.com</p>
-                    </div>
+<section class="profile-card" aria-label="Profile overview" data-animate="profile-card">
+    <div class="profile-card-body profile-card-body--minimal">
+        <div class="profile-header-row profile-header-row--minimal">
 
-                    <div class="profile-actions">
-                        <button class="btn btn-primary btn-lg" id="editProfileBtn" type="button">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="btn-icon">
-                                <path d="M12 20h9"/>
-                                <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/>
-                            </svg>
-                            Edit Profile
-                        </button>
-
-
-                    </div>
+            <!-- Small avatar logo -->
+            <div class="profile-avatar-wrap">
+                <div class="profile-avatar profile-avatar--sm" id="profileAvatar" aria-label="Profile avatar">
+                    <span class="profile-avatar-letter" id="profileAvatarLetter">A</span>
+                    <button class="avatar-camera-btn" id="avatarCameraBtn" type="button" aria-label="Change profile photo" hidden>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="btn-icon">
+                            <path d="M14.5 4h-5L7.8 6H5.5A2.5 2.5 0 0 0 3 8.5v9A2.5 2.5 0 0 0 5.5 20h13A2.5 2.5 0 0 0 21 17.5v-9A2.5 2.5 0 0 0 18.5 6h-2.3L14.5 4z"/>
+                            <path d="M12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
-        </section>
+
+            <!-- Greeting + email -->
+            <div class="profile-identity profile-identity--minimal">
+                <p class="profile-greeting" id="profileGreeting">Hi! <span id="profileNameHeading">Abhishek</span> 👋</p>
+                <p class="profile-email" id="profileEmailHeading">abhishek@example.com</p>
+            </div>
+
+        </div>
+    </div>
+</section>
 
 
         <section class="content-grid" aria-label="Profile details">
@@ -211,7 +207,7 @@
                     <div class="card-body">
                         <div class="quick-actions">
                             <a class="btn btn-outline btn-block btn-lg" href="/serve/orders" role="button">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="btn-icon" aria-hidden="true">
+                                <svg  class="svg-icons-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="btn-icon" aria-hidden="true">
                                     <path d="m7.5 4.27 9 0"/>
                                     <path d="M6 7h12l-1 14H7L6 7z"/>
                                     <path d="M9 7V5a3 3 0 0 1 6 0v2"/>
@@ -219,25 +215,23 @@
                                 Order History
                             </a>
                             <a class="btn btn-outline btn-block btn-lg" href="/serve/wishlist" role="button">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="btn-icon" aria-hidden="true">
+                                <svg class="svg-icons-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="btn-icon" aria-hidden="true">
                                     <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/>
                                 </svg>
                                 My Wishlist
                             </a>
-                            <a class="btn btn-outline btn-block btn-lg" href="/serve/settings" role="button">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="btn-icon" aria-hidden="true">
-                                    <path d="M12 1v2"/>
-                                    <path d="M12 21v2"/>
-                                    <path d="M4.22 4.22l1.42 1.42"/>
-                                    <path d="M18.36 18.36l1.42 1.42"/>
-                                    <path d="M1 12h2"/>
-                                    <path d="M21 12h2"/>
-                                    <path d="M4.22 19.78l1.42-1.42"/>
-                                    <path d="M18.36 5.64l1.42-1.42"/>
-                                    <path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/>
-                                </svg>
-                                Account Settings
-                            </a>
+<div class="account-dropdown">
+  <button class="btn btn-outline btn-block btn-lg dropdown-toggle" onclick="toggleAccountDropdown()">
+
+    <span id="accountTypeText">Account type: Customer</span>
+  </button>
+
+  <div class="account-menu" id="accountMenu">
+    <div onclick="changeAccountType('Customer')">Customer</div>
+    <div onclick="changeAccountType('Freelancer')">Freelancer</div>
+    <div onclick="changeAccountType('Studio')">Studio</div>
+  </div>
+</div>
                         </div>
                     </div>
                 </article>

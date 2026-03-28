@@ -94,9 +94,9 @@ function renderSummary() {
     itemsContainer.insertAdjacentHTML("beforeend", `
       <div class="checkout-item">
         
-        
+        <img src=${item.img}>
           <h4>${item.title}</h4>
-          <p class="checkout-line-price">${item.quantity} x Rs.${item.price.toLocaleString()} = Rs.${total.toLocaleString()}</p>
+          <p class="checkout-line-price">रू.${total.toLocaleString()}</p>
         
       </div>
     `);
@@ -132,45 +132,45 @@ function renderCart() {
     card.className = `cart-product ${isSelected ? "selected" : ""}`;
     card.dataset.index = String(index);
     card.innerHTML = `
-      <div class="cart-product-top">
-        <div class="details-product">
-          <label class="item-check">
-            <input type="checkbox" class="item-checkbox" ${isSelected ? "checked" : ""}>
-          </label>
-          <div class="img-product"><img src="${item.img}" alt="${item.title}"></div>
-          <div class="details">
-            <h3>${item.title}</h3>
-            <div class="details-price-row">
-              <p class="cart-price-each">Rs.${item.price.toLocaleString()} piece</p>
-              <div class="details-row-actions">
-                <button type="button" class="cart-wishlist-btn" aria-label="Move to wishlist" title="Wishlist">
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/>
-                  </svg>
-                </button>
-                <button type="button" class="delete-product" aria-label="Remove from cart">
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <polyline points="3 6 5 6 21 6"></polyline>
-                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="cart-item-side">
-          <div class="add-item">
-            <div class="quantity">
-              <button type="button" class="decrease">-</button>
-              <span class="quantity-value">${item.quantity}</span>
-              <button type="button" class="increase">+</button>
-            </div>
-          </div>
-          <div class="total"><h3 class="cart-line-total">Total: Rs.${(item.price * item.quantity).toLocaleString()}</h3></div>
-        </div>
-      </div>
+<div class="cart-product-top">
+<div class="details-product">
+<label class="item-check">
+<input type="checkbox" class="item-checkbox" ${isSelected ? "checked" : ""}>
+</label>
+<div class="img-product"><img src="${item.img}" alt="${item.title}"></div>
+<div class="details">
+<h3>${item.title}</h3>
+<div class="details-price-row">
+<p class="cart-price-each">रू.${item.price.toLocaleString()} /piece</p>
+<div class="details-row-actions">
+<div class="first-btn">
+
+<div class="quantity">
+<button type="button" class="decrease">-</button>
+<span class="quantity-value">${item.quantity}</span>
+<button type="button" class="increase">+</button>
+</div>
+<div class="wish-del">
+<button type="button" class="cart-wishlist-btn">
+<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+</button>
+<button type="button" class="delete-product">
+<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="cart-item-side">
+
+<h3 class="cart-line-total">
+  ${item.quantity} × रू.${item.price.toLocaleString()} = रू.${(item.price * item.quantity).toLocaleString()}
+</h3></div>
+</div>
+
     `;
     container.appendChild(card);
   });

@@ -87,7 +87,7 @@ body {
     top: 60px;
     right: 10px;
 
-    width: 180px;
+    width: 200px;
     background: #fff;
 
     border-radius: 12px;
@@ -115,7 +115,7 @@ body {
 /* Links */
 .quickies a {
     padding: 14px 16px;
-    font-size: 1.1rem;
+    font-size: 0.8rem;
     text-decoration: none;
     color: #333;
 
