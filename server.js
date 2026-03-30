@@ -1,8 +1,36 @@
 const express = require("express");
 const app = express();
+const mongoose = require("mongoose");
+require("dotenv").config();
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
 
 //Middleware
 app.use(express.static("public"));
+app.use(express.json()); // ✅ parse JSON body
+app.use(express.urlencoded({ extended: true })); // ✅ parse form data if sent
+app.use(cookieParser());
+
+//Connect to database
+const {connectDb_submit} = require("./db/db");
+connectDb_submit();
+
+//Session Setup
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false, 
+    saveUninitialized: false, 
+    cookie: {
+      httpOnly: true, // prevents browser From accessing cookie
+      secure: false, 
+      maxAge: 1000 * 60 * 60, //Limit of 1 hour
+      sameSite: "strict",
+    },
+  })
+);
+
 
 //Serve HTML file
 
@@ -68,7 +96,22 @@ app.get("/login", (req,res)=>{
 //Serve signup member
 app.get("/signup", (req,res)=>{
     res.sendFile(__dirname+"/public/html/signup.html")
-})
+});
+
+//Serve registration route
+const registerRoute = require("./routes/register.routes");
+app.use("/api", registerRoute);
+
+//Serve login route
+const loginRoute = require("./routes/login.routes");
+app.use("/api", loginRoute);
+
+//Serve cart route
+const cartRoute = require("./routes/cart.routes");
+app.use("/api", cartRoute);
+
+
+
 //Start Server
 app.listen(3000, () => {
     console.log("Server is running on port 3000");

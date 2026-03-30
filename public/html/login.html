@@ -116,7 +116,7 @@
                 <span class="text2 right-panel-txt">Enter your credentials to continue</span>
             </div>
 
-            <form action="/login_verify" method="post" class="credentials-form">
+            <form action="/api/login" method="post" class="credentials-form">
                 <!-- USERNAME -->
                 <div class="username input-box credentials-field">
                     <label for="username1">Email Address</label>
@@ -174,6 +174,8 @@
 
 
     </div>
-</body>
+    <div id="toast-container" style="position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px;"></div>
 
+</body>
+<script src="/js/login.js"></script>
 </html>

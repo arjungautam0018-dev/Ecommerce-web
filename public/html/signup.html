@@ -141,16 +141,16 @@
             </div>
 
             <div class="form">
-                <div class="acc-type">
-                    <label for="account_type">Account Type</label>
-                    <select id="account_type">
-                        <option value="customer" selected>Customer</option>
-                        <option value="studio">Studio</option>
-                        <option value="freelancer">Freelancer</option>
-                    </select>
-                </div>
-
-                <form class="signup-form" action="/create_acc" method="post">
+                
+                <form id="registerForm" class="signup-form" action="/api/register" method="post">
+                    <div class="acc-type">
+                        <label for="account_type">Account Type</label>
+                        <select id="account_type" name="role">
+                            <option value="customer" selected>Customer</option>
+                            <option value="studio">Studio</option>
+                            <option value="freelancer">Freelancer</option>
+                        </select>
+                    </div>
                     <div class="customerForm">
 
                         <div class="first-field">
@@ -217,7 +217,7 @@
 
                                 <!-- Keep your input exactly the same -->
                                 <input id="phone" type="text" class="email_address" placeholder="Phone Number"
-                                    name="email_address">
+                                    name="phone">
                             </div>
                         </div>
 
@@ -238,7 +238,7 @@
                                 </svg>
 
                                 <!-- KEEP your input exactly as it is -->
-                                <input id="password1" type="password" class="password" placeholder="......"
+                                <input id="password1" data-pair="1" type="password" class="password" placeholder="......"
                                     name="password">
                             </div>
                         </div>
@@ -260,7 +260,7 @@
                                 </svg>
 
                                 <!-- KEEP your input exactly as it is -->
-                                <input type="password" class="password" placeholder="......." id="password2">
+                                <input type="password" data-pair="1"  class="password" placeholder="......." id="password2">
                             </div>
                         </div>
 
@@ -311,6 +311,48 @@
             <input id="studio_location" type="text" placeholder="City, Street" name="studio_location">
         </div>
     </div>
+
+                            <!-- Password -->
+                        <div class="password fields">
+                            <label for="password1">Password</label>
+
+                            <div class="input-box">
+                                <!-- SVG ICON -->
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12 14.5V16.5M7 10.0288C7.47142 10 8.05259 10 8.8 10H15.2C15.9474 10 16.5286 10 17 10.0288M7 10.0288C6.41168 10.0647 5.99429 10.1455 5.63803 10.327C5.07354 10.6146 4.6146 11.0735 4.32698 11.638C4 12.2798 4 13.1198 4 14.8V16.2C4 17.8802 4 18.7202 4.32698 19.362C4.6146 19.9265 5.07354 20.3854 5.63803 20.673C6.27976 21 7.11984 21 8.8 21H15.2C16.8802 21 17.7202 21 18.362 20.673C18.9265 20.3854 19.3854 19.9265 19.673 19.362C20 18.7202 20 17.8802 20 16.2V14.8C20 13.1198 20 12.2798 19.673 11.638C19.3854 11.0735 18.9265 10.6146 18.362 10.327C18.0057 10.1455 17.5883 10.0647 17 10.0288M7 10.0288V8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8V10.0288"
+                                        stroke="#aebaca" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                    </path>
+                                </svg>
+
+                                <!-- KEEP your input exactly as it is -->
+                                <input id="password1" data-pair="2"  type="password" class="password" placeholder="......"
+                                    name="studio_password">
+                            </div>
+                        </div>
+
+
+                        <!-- Confirm Password -->
+                        <div class="password fields">
+                            <label for="password2">Confirm Password</label>
+
+                            <div class="input-box">
+                                <!-- SVG ICON (same as password) -->
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12 14.5V16.5M7 10.0288C7.47142 10 8.05259 10 8.8 10H15.2C15.9474 10 16.5286 10 17 10.0288M7 10.0288C6.41168 10.0647 5.99429 10.1455 5.63803 10.327C5.07354 10.6146 4.6146 11.0735 4.32698 11.638C4 12.2798 4 13.1198 4 14.8V16.2C4 17.8802 4 18.7202 4.32698 19.362C4.6146 19.9265 5.07354 20.3854 5.63803 20.673C6.27976 21 7.11984 21 8.8 21H15.2C16.8802 21 17.7202 21 18.362 20.673C18.9265 20.3854 19.3854 19.9265 19.673 19.362C20 18.7202 20 17.8802 20 16.2V14.8C20 13.1198 20 12.2798 19.673 11.638C19.3854 11.0735 18.9265 10.6146 18.362 10.327C18.0057 10.1455 17.5883 10.0647 17 10.0288M7 10.0288V8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8V10.0288"
+                                        stroke="#aebaca" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                    </path>
+                                </svg>
+
+                                <!-- KEEP your input exactly as it is -->
+                                <input type="password"  data-pair="2" class="password" placeholder="......." id="password2">
+                            </div>
+                        </div>
 </div>
 
 <div class="freelancerForm" style="display: none;">
@@ -353,7 +395,51 @@
             <input id="free_location" type="text" placeholder="City (Optional)" name="free_location">
         </div>
     </div>
+
+                            <!-- Password -->
+                        <div class="password fields">
+                            <label for="password1">Password</label>
+
+                            <div class="input-box">
+                                <!-- SVG ICON -->
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12 14.5V16.5M7 10.0288C7.47142 10 8.05259 10 8.8 10H15.2C15.9474 10 16.5286 10 17 10.0288M7 10.0288C6.41168 10.0647 5.99429 10.1455 5.63803 10.327C5.07354 10.6146 4.6146 11.0735 4.32698 11.638C4 12.2798 4 13.1198 4 14.8V16.2C4 17.8802 4 18.7202 4.32698 19.362C4.6146 19.9265 5.07354 20.3854 5.63803 20.673C6.27976 21 7.11984 21 8.8 21H15.2C16.8802 21 17.7202 21 18.362 20.673C18.9265 20.3854 19.3854 19.9265 19.673 19.362C20 18.7202 20 17.8802 20 16.2V14.8C20 13.1198 20 12.2798 19.673 11.638C19.3854 11.0735 18.9265 10.6146 18.362 10.327C18.0057 10.1455 17.5883 10.0647 17 10.0288M7 10.0288V8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8V10.0288"
+                                        stroke="#aebaca" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                    </path>
+                                </svg>
+
+                                <!-- KEEP your input exactly as it is -->
+                                <input id="password1" data-pair="3" type="password" class="password" placeholder="......"
+                                    name="free_password">
+                            </div>
+                        </div>
+
+
+                        <!-- Confirm Password -->
+                        <div class="password fields">
+                            <label for="password2">Confirm Password</label>
+
+                            <div class="input-box">
+                                <!-- SVG ICON (same as password) -->
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12 14.5V16.5M7 10.0288C7.47142 10 8.05259 10 8.8 10H15.2C15.9474 10 16.5286 10 17 10.0288M7 10.0288C6.41168 10.0647 5.99429 10.1455 5.63803 10.327C5.07354 10.6146 4.6146 11.0735 4.32698 11.638C4 12.2798 4 13.1198 4 14.8V16.2C4 17.8802 4 18.7202 4.32698 19.362C4.6146 19.9265 5.07354 20.3854 5.63803 20.673C6.27976 21 7.11984 21 8.8 21H15.2C16.8802 21 17.7202 21 18.362 20.673C18.9265 20.3854 19.3854 19.9265 19.673 19.362C20 18.7202 20 17.8802 20 16.2V14.8C20 13.1198 20 12.2798 19.673 11.638C19.3854 11.0735 18.9265 10.6146 18.362 10.327C18.0057 10.1455 17.5883 10.0647 17 10.0288M7 10.0288V8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8V10.0288"
+                                        stroke="#aebaca" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                    </path>
+                                </svg>
+
+                                <!-- KEEP your input exactly as it is -->
+                                <input type="password" data-pair="3" class="password" placeholder="......." id="password2">
+                            </div>
+                        </div>
 </div>
+
+
 <!-- Submit Button -->
 
 <div class="submit-button">
@@ -378,6 +464,13 @@
             
         </div>
     </div>
+
+
+
+    <!-- Toast -->
+<!-- Toast container -->
+<div id="toast-container" style="position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; font-family: 'Poppins', sans-serif;"></div>
+
 </body>
 <script src="/js/signup.js"></script>
 

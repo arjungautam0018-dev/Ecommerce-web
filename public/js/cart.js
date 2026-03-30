@@ -1,138 +1,239 @@
-function showToast(message) {
+// ============================================================
+// UTILITIES
+// ============================================================
+
+function showToast(message, type = "success") {
   const container = document.getElementById("toast-container");
   if (!container) return;
 
   const toast = document.createElement("div");
   toast.className = "toast";
 
+  const icon =
+    type === "success"
+      ? `<path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>`
+      : `<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>`;
+
   toast.innerHTML = `
     <div class="toast-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-      </svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">${icon}</svg>
     </div>
     <span>${message}</span>
   `;
 
   container.appendChild(toast);
-
-  // show animation
   setTimeout(() => toast.classList.add("show"), 50);
-
-  // stay longer (3.5s)
   setTimeout(() => {
     toast.classList.remove("show");
     toast.classList.add("hide");
-
     setTimeout(() => toast.remove(), 500);
   }, 3500);
 }
 
-function readJson(key, fallback) {
-  try {
-    const value = localStorage.getItem(key);
-    return value ? JSON.parse(value) : fallback;
-  } catch {
-    return fallback;
+function showPopup(message, type = "info") {
+  const popup = document.getElementById("popup");
+  const msg = document.getElementById("popup-message");
+  if (!popup || !msg) return;
+
+  msg.textContent = message;
+  popup.classList.remove("success", "error", "info");
+  popup.classList.add("show", type);
+
+  if (type === "success") {
+    setTimeout(() => popup.classList.remove("show"), 1500);
   }
 }
 
-function writeJson(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
+function closePopup() {
+  document.getElementById("popup")?.classList.remove("show");
 }
 
-window.toggleMenu = function toggleMenu() {
+// ============================================================
+// NAV
+// ============================================================
+
+window.toggleMenu = function () {
   const menu = document.querySelector(".quickies");
   if (menu) menu.classList.toggle("show");
 };
 
-
 function setupMenuClose() {
-  document.addEventListener("click", (event) => {
+  document.addEventListener("click", (e) => {
     const menu = document.querySelector(".quickies");
     const hamburger = document.querySelector(".hamburger");
     if (!menu || !hamburger) return;
-    if (!hamburger.contains(event.target) && !menu.contains(event.target)) {
+    if (!hamburger.contains(e.target) && !menu.contains(e.target)) {
       menu.classList.remove("show");
     }
   });
 }
 
+// ============================================================
+// THEME
+// ============================================================
+
 function setupThemeToggle() {
-const themeButton = document.querySelector(".theme-toggle");  if (!themeButton) return;
-  if (localStorage.getItem("theme") === "dark") document.body.classList.add("theme-dark");
-  themeButton.addEventListener("click", (event) => {
-    event.preventDefault();
+  const themeButton = document.querySelector(".theme-toggle");
+  if (!themeButton) return;
+
+  if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("theme-dark");
+  }
+
+  themeButton.addEventListener("click", (e) => {
+    e.preventDefault();
     document.body.classList.toggle("theme-dark");
-    localStorage.setItem("theme", document.body.classList.contains("theme-dark") ? "dark" : "light");
+    localStorage.setItem(
+      "theme",
+      document.body.classList.contains("theme-dark") ? "dark" : "light"
+    );
   });
 }
 
-let selectedIndexes = new Set();
+// ============================================================
+// API LAYER — DB-READY
+// ============================================================
 
-function rebuildSelectedAfterRemove(removedIndex) {
-  const next = new Set();
-  selectedIndexes.forEach((i) => {
-    if (i === removedIndex) return;
-    next.add(i > removedIndex ? i - 1 : i);
-  });
-  selectedIndexes = next;
+const API = {
+  /**
+   * GET /api/cart
+   * Returns the full cart for the logged-in user.
+   */
+  async getCart() {
+    const res = await fetch("/api/cart");
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      if (res.status === 401) handleUnauthorized(err);
+      throw new Error(err.message || "Failed to fetch cart");
+    }
+    return res.json(); // { cart: { items: [...] } }
+  },
+
+  /**
+   * PATCH /api/cart/item/:itemId/quantity
+   * Body: { quantity }
+   */
+  async updateQuantity(itemId, quantity) {
+    const res = await fetch(`/api/cart/item/${itemId}/quantity`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ quantity }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      if (res.status === 401) handleUnauthorized(err);
+      throw new Error(err.message || "Failed to update quantity");
+    }
+    return res.json();
+  },
+
+  /**
+   * DELETE /api/cart/item/:itemId
+   */
+  async removeItem(itemId) {
+    const res = await fetch(`/api/cart/item/${itemId}`, {
+      method: "DELETE",
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      if (res.status === 401) handleUnauthorized(err);
+      throw new Error(err.message || "Failed to remove item");
+    }
+    return res.json();
+  },
+};
+
+// ============================================================
+// 401 HANDLER
+// ============================================================
+
+function handleUnauthorized(data) {
+  if (!data?.redirectUrl) return;
+  showToast(data.message || "Please log in to continue.", "error");
+  setTimeout(() => {
+    window.location.href = data.redirectUrl;
+  }, data.redirectIn ?? 5000);
 }
+
+// ============================================================
+// STATE
+// ============================================================
+
+let cartItems = [];         // fetched from DB — array of item objects
+let selectedIds = new Set(); // Set of item._id strings
+
+// ============================================================
+// SUMMARY RENDERER
+// ============================================================
 
 function renderSummary() {
-  const cart = readJson("cart", []);
   const itemsContainer = document.querySelector(".checkout-items");
   if (!itemsContainer) return;
-  itemsContainer.innerHTML = "";
 
+  itemsContainer.innerHTML = "";
   let subtotal = 0;
-  selectedIndexes.forEach((index) => {
-    const item = cart[index];
+
+  selectedIds.forEach((id) => {
+    const item = cartItems.find((i) => String(i._id) === id);
     if (!item) return;
+
     const total = item.price * item.quantity;
     subtotal += total;
+
     itemsContainer.insertAdjacentHTML("beforeend", `
       <div class="checkout-item">
-        
-        <img src=${item.img}>
-          <h4>${item.title}</h4>
-          <p class="checkout-line-price">रू.${total.toLocaleString()}</p>
-        
+        <img src="${item.img}">
+        <h4>${item.title}</h4>
+        <p class="checkout-line-price">रू.${total.toLocaleString()}</p>
       </div>
     `);
   });
 
-  const tax = Math.round(subtotal * 0.13);
+  const tax   = Math.round(subtotal * 0.13);
   const total = subtotal + tax;
-  const subEl = document.getElementById("subtotal");
-  const taxEl = document.getElementById("tax");
+
+  const subEl   = document.getElementById("subtotal");
+  const taxEl   = document.getElementById("tax");
   const totalEl = document.getElementById("total");
-  if (subEl) subEl.textContent = `Rs.${subtotal.toLocaleString()}`;
-  if (taxEl) taxEl.textContent = `Rs.${tax.toLocaleString()}`;
+
+  if (subEl)   subEl.textContent   = `Rs.${subtotal.toLocaleString()}`;
+  if (taxEl)   taxEl.textContent   = `Rs.${tax.toLocaleString()}`;
   if (totalEl) totalEl.textContent = `Rs.${total.toLocaleString()}`;
 }
 
+// ============================================================
+// CART RENDERER
+// ============================================================
+
 function renderCart() {
-  const cart = readJson("cart", []);
   const container = document.querySelector(".cart-products");
   if (!container) return;
 
-  selectedIndexes = new Set([...selectedIndexes].filter((i) => i < cart.length));
+  // Clean up selectedIds — remove any that no longer exist in cart
+  const validIds = new Set(cartItems.map((i) => String(i._id)));
+  selectedIds.forEach((id) => {
+    if (!validIds.has(id)) selectedIds.delete(id);
+  });
+
   container.innerHTML = "";
 
-  if (!cart.length) {
+  if (!cartItems.length) {
     container.innerHTML = `<div class="cart-empty">Your cart is empty.</div>`;
     renderSummary();
+    updateCheckoutButton();
     return;
   }
 
-  cart.forEach((item, index) => {
-    const isSelected = selectedIndexes.has(index);
-    const card = document.createElement("div");
-    card.className = `cart-product ${isSelected ? "selected" : ""}`;
-    card.dataset.index = String(index);
-    card.innerHTML = `
-<div class="cart-product-top">
+  cartItems.forEach((item) => {
+    const id         = String(item._id);
+    const isSelected = selectedIds.has(id);
+    const card       = document.createElement("div");
+
+    card.className    = `cart-product ${isSelected ? "selected" : ""}`;
+    card.dataset.id   = id;
+
+    card.innerHTML = 
+    `<div class="cart-product-top">
 <div class="details-product">
 <label class="item-check">
 <input type="checkbox" class="item-checkbox" ${isSelected ? "checked" : ""}>
@@ -144,7 +245,7 @@ function renderCart() {
 <p class="cart-price-each">रू.${item.price.toLocaleString()} /piece</p>
 <div class="details-row-actions">
 <div class="first-btn">
-
+ 
 <div class="quantity">
 <button type="button" class="decrease">-</button>
 <span class="quantity-value">${item.quantity}</span>
@@ -163,44 +264,57 @@ function renderCart() {
 </div>
 </div>
 </div>
-
+</div>
+ 
 <div class="cart-item-side">
-
+ 
 <h3 class="cart-line-total">
   ${item.quantity} × रू.${item.price.toLocaleString()} = रू.${(item.price * item.quantity).toLocaleString()}
 </h3></div>
 </div>
-
     `;
+
     container.appendChild(card);
   });
-  const checkoutBtn = document.getElementById("proceed-checkout");
-if (checkoutBtn) {
-checkoutBtn.disabled = cart.length === 0;
-checkoutBtn.style.opacity = cart.length === 0 ? "0.5" : "1";
-checkoutBtn.style.cursor = cart.length === 0 ? "not-allowed" : "pointer";
-}
 
+  updateCheckoutButton();
   bindCartEvents();
   renderSummary();
 }
 
+function updateCheckoutButton() {
+  const checkoutBtn = document.getElementById("proceed-checkout");
+  if (!checkoutBtn) return;
+  const empty = cartItems.length === 0;
+  checkoutBtn.disabled      = empty;
+  checkoutBtn.style.opacity = empty ? "0.5" : "1";
+  checkoutBtn.style.cursor  = empty ? "not-allowed" : "pointer";
+}
+
+// ============================================================
+// CART EVENT BINDINGS
+// ============================================================
+
 function bindCartEvents() {
   document.querySelectorAll(".cart-product").forEach((card) => {
-    const index = Number(card.dataset.index);
+    const id = card.dataset.id;
 
-    card.querySelector(".item-checkbox")?.addEventListener("change", (event) => {
-      if (event.target.checked) selectedIndexes.add(index);
-      else selectedIndexes.delete(index);
-      card.classList.toggle("selected", event.target.checked);
+    // ── Checkbox ──
+    card.querySelector(".item-checkbox")?.addEventListener("change", (e) => {
+      if (e.target.checked) selectedIds.add(id);
+      else selectedIds.delete(id);
+      card.classList.toggle("selected", e.target.checked);
       renderSummary();
-
     });
 
-    card.addEventListener("click", (event) => {
-      if (event.target.closest("button") || event.target.closest(".item-check") || event.target.closest(".cart-item-side")) {
-        return;
-      }
+    // ── Card click (select toggle) ──
+    card.addEventListener("click", (e) => {
+      if (
+        e.target.closest("button") ||
+        e.target.closest(".item-check") ||
+        e.target.closest(".cart-item-side")
+      ) return;
+
       const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
       const cb = card.querySelector(".item-checkbox");
 
@@ -211,134 +325,107 @@ function bindCartEvents() {
       }
 
       if (!isDesktop) {
-        if (selectedIndexes.has(index)) {
-          selectedIndexes.delete(index);
+        if (selectedIds.has(id)) {
+          selectedIds.delete(id);
           card.classList.remove("selected");
         } else {
-          selectedIndexes.add(index);
+          selectedIds.add(id);
           card.classList.add("selected");
         }
-        if (cb) cb.checked = selectedIndexes.has(index);
+        if (cb) cb.checked = selectedIds.has(id);
         renderSummary();
       }
     });
 
-    card.querySelector(".increase")?.addEventListener("click", (e) => {
+    // ── Increase quantity ──
+    card.querySelector(".increase")?.addEventListener("click", async (e) => {
       e.stopPropagation();
-      const latest = readJson("cart", []);
-      if (!latest[index]) return;
-      latest[index].quantity += 1;
-      writeJson("cart", latest);
-      renderCart();
+      const item = cartItems.find((i) => String(i._id) === id);
+      if (!item) return;
+
+      try {
+        const data = await API.updateQuantity(id, item.quantity + 1);
+        cartItems = data.cart.items;
+        renderCart();
+      } catch (err) {
+        showToast(err.message, "error");
+      }
     });
 
-    card.querySelector(".decrease")?.addEventListener("click", (e) => {
+    // ── Decrease quantity ──
+    card.querySelector(".decrease")?.addEventListener("click", async (e) => {
       e.stopPropagation();
-      const latest = readJson("cart", []);
-      if (!latest[index]) return;
-      if (latest[index].quantity > 1) latest[index].quantity -= 1;
-      writeJson("cart", latest);
-      renderCart();
+      const item = cartItems.find((i) => String(i._id) === id);
+      if (!item || item.quantity <= 1) return;
+
+      try {
+        const data = await API.updateQuantity(id, item.quantity - 1);
+        cartItems = data.cart.items;
+        renderCart();
+      } catch (err) {
+        showToast(err.message, "error");
+      }
     });
 
-card.querySelector(".delete-product")?.addEventListener("click", (event) => {
-  event.stopPropagation();
+    // ── Delete item ──
+    card.querySelector(".delete-product")?.addEventListener("click", async (e) => {
+      e.stopPropagation();
+      const item = cartItems.find((i) => String(i._id) === id);
+      if (!item) return;
 
-  const next = readJson("cart", []);
-  const item = next[index]; // 👈 get item before delete
-
-  next.splice(index, 1);
-  writeJson("cart", next);
-
-  rebuildSelectedAfterRemove(index);
-  renderCart();
-
-  // ✅ correct usage
-  showToast(`${item.title} removed from cart`);
-});
-card.querySelector(".cart-wishlist-btn")?.addEventListener("click", (event) => {
-  event.stopPropagation();
-
-  const current = readJson("cart", []);
-  const item = current[index];
-  if (!item) return;
-
-  const wishlist = readJson("wishlist", []);
-  wishlist.push({
-    title: item.title,
-    price: item.price,
-    img: item.img,
-    category: item.category || "General",
-    desc: item.desc || "Saved from cart."
-  });
-
-  writeJson("wishlist", wishlist);
-
-  // remove from cart
-  current.splice(index, 1);
-  writeJson("cart", current);
-
-  rebuildSelectedAfterRemove(index);
-  renderCart();
-
-  // ✅ SHOW TOAST HERE
-  showToast(`${item.title} moved to wishlist`);
-});
+      try {
+        const data = await API.removeItem(id);
+        cartItems = data.cart.items;
+        selectedIds.delete(id);
+        renderCart();
+        showToast(`${item.title} removed from cart`);
+      } catch (err) {
+        showToast(err.message, "error");
+      }
+    });
   });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+// ============================================================
+// CHECKOUT
+// ============================================================
+
+function setupCheckout() {
+  const checkoutBtn = document.getElementById("proceed-checkout");
+  if (!checkoutBtn) return;
+
+  checkoutBtn.addEventListener("click", () => {
+    if (cartItems.length === 0) {
+      showPopup("Your cart is empty!");
+      return;
+    }
+    if (selectedIds.size === 0) {
+      showPopup("Please select at least one product!");
+      return;
+    }
+    // Pass selected IDs to checkout page
+    const params = new URLSearchParams();
+    selectedIds.forEach((id) => params.append("items", id));
+    window.location.href = `/serve/checkout?${params.toString()}`;
+  });
+}
+
+// ============================================================
+// INIT
+// ============================================================
+
+document.addEventListener("DOMContentLoaded", async () => {
   setupMenuClose();
   setupThemeToggle();
-  const initialCart = readJson("cart", []);
+  setupCheckout();
+
+  try {
+    const data = await API.getCart();
+    cartItems = data.cart?.items || [];
+  } catch (err) {
+    // handleUnauthorized already called inside API if 401
+    cartItems = [];
+  }
 
   renderCart();
-  const checkoutBtn = document.getElementById("proceed-checkout");
-
-checkoutBtn?.addEventListener("click", () => {
-  const cart = readJson("cart", []);
-
-  // ❌ Cart empty
-  if (cart.length === 0) {
-    showPopup("Your cart is empty!");
-    return;
-  }
-
-  // ❌ Nothing selected
-  if (selectedIndexes.size === 0) {
-    showPopup("Please select at least one product!");
-    return;
-  }
-
-  // ✅ Proceed
-  showPopup("Proceeding to checkout...");
-  // OR redirect:
-  // window.location.href = "/checkout";
 });
-});
-
-function showPopup(message, type = "info") {
-  const popup = document.getElementById("popup");
-  const msg = document.getElementById("popup-message");
-
-  if (!popup || !msg) return;
-
-  msg.textContent = message;
-
-  // reset classes
-  popup.classList.remove("success", "error", "info");
-
-  popup.classList.add("show", type);
-
-  // auto close for success
-  if (type === "success") {
-    setTimeout(() => {
-      popup.classList.remove("show");
-    }, 1500);
-  }
-}
-
-function closePopup() {
-  document.getElementById("popup")?.classList.remove("show");
-}
-

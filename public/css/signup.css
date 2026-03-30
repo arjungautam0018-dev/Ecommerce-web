@@ -512,3 +512,110 @@ input:focus {
 .submit-button{
     margin-top: 30px;
 }
+
+
+
+
+
+
+
+
+/* =============================================================================
+  11. POPUP & TOAST
+============================================================================= */
+
+/* Full-screen overlay */
+.popup {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(0, 0, 0, 0.4);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.popup.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.popup-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  width: 290px;
+}
+
+.popup-content button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 13px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #021024;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Toast stack */
+#toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  min-width: 240px;
+  max-width: 300px;
+  padding: 12px 14px;
+  border-radius: 12px;
+
+  background: #0f172a;
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 500;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+
+  /* Entrance animation state */
+  opacity: 0;
+  transform: translateX(50px);
+  transition: all 0.5s ease;
+}
+
+.toast.show { opacity: 1; transform: translateX(0); }
+.toast.hide { opacity: 0; transform: translateX(30px); }
+
+.toast-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #22c55e;
+}
+
+.toast-icon svg {
+  width: 14px;
+  height: 14px;
+  stroke: #fff;
+}
