@@ -1,4 +1,15 @@
 // ============================================================
+//Image URL Helper
+const BASE_URL = window.location.origin;
+
+function getImageUrl(img) {
+  if (img.startsWith("http")) return img;
+  return `${BASE_URL}/resources/${img}`;
+}
+
+
+
+// ============================================================
 // UTILITIES
 // ============================================================
 

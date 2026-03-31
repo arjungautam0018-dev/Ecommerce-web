@@ -180,8 +180,7 @@ function createProductCard(product) {
       <input type="hidden" name="img"      value="${product.img}">
       <input type="hidden" name="desc"     value="${product.desc}">
       <input type="hidden" name="quantity" value="1">
-      <input type="hidden" name="redirect" value="true">
-      <button type="submit" class="buy-now-btn">Buy Now</button>
+      <button type="submit" class="buy-now-btn">Add to Cart</button>
     </form>
 
     <form action="/api/cart/add" method="POST" class="add-to-cart">
@@ -190,7 +189,9 @@ function createProductCard(product) {
       <input type="hidden" name="img"      value="${product.img}">
       <input type="hidden" name="desc"     value="${product.desc}">
       <input type="hidden" name="quantity" value="1">
-      <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+            <input type="hidden" name="redirect" value="true">
+
+      <button type="submit" class="add-to-cart-btn">Buy now</button>
     </form>
 
   </div>

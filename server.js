@@ -110,7 +110,9 @@ app.use("/api", loginRoute);
 const cartRoute = require("./routes/cart.routes");
 app.use("/api", cartRoute);
 
-
+//Serve contact route
+const contactRoute = require("./routes/contact.routes");
+app.use("/api", contactRoute);
 
 //Start Server
 app.listen(3000, () => {
