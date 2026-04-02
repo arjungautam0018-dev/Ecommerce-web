@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema({
 
   phone: String,
 
+
   // STUDIO
   studio_name: String,
   studio_email: String,

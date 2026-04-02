@@ -4,7 +4,7 @@ const router = express.Router();
 const User = require("../models/register.models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
+const authMiddleware = require("../middlewares/auth.middleware");
 // Login route
 router.post("/login", async (req, res) => {
   console.log("Login route hit");
@@ -73,5 +73,8 @@ req.session.userId = user._id;
     return res.status(500).json({ message: "Internal server error" });
   }
 });
+
+
+
 
 module.exports = router;

@@ -106,6 +106,10 @@ app.use("/api", registerRoute);
 const loginRoute = require("./routes/login.routes");
 app.use("/api", loginRoute);
 
+//Serve profile route
+const profileRoute = require("./routes/profile.routes");
+app.use("/api", profileRoute);
+
 //Serve cart route
 const cartRoute = require("./routes/cart.routes");
 app.use("/api", cartRoute);
@@ -113,6 +117,12 @@ app.use("/api", cartRoute);
 //Serve contact route
 const contactRoute = require("./routes/contact.routes");
 app.use("/api", contactRoute);
+
+//Serve delivery address route
+const deliveryAddressRoute = require("./routes/delivery_adress.routes");
+app.use("/api", deliveryAddressRoute);
+
+
 
 //Start Server
 app.listen(3000, () => {
