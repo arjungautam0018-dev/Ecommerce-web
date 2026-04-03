@@ -443,3 +443,29 @@ body.dark .payment.paid {
 body.dark .payment.cash {
   color: #ef4444;
 }
+
+/* Empty state */
+.empty-orders {
+  text-align: center;
+  padding: 60px 20px;
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+.shop-now-btn {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, #021024, #5483B3);
+  color: #fff;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.order-id {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}

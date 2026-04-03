@@ -174,25 +174,17 @@ function createProductCard(product) {
   </div>
   <div class="card-actions">
 
-    <form action="/api/cart/add" method="POST" class="buy-now-action">
-      <input type="hidden" name="title"    value="${product.title}">
-      <input type="hidden" name="price"    value="${product.price}">
-      <input type="hidden" name="img"      value="${product.img}">
-      <input type="hidden" name="desc"     value="${product.desc}">
-      <input type="hidden" name="quantity" value="1">
-      <button type="submit" class="buy-now-btn">Add to Cart</button>
-    </form>
+    <button type="button" class="add-to-cart-btn"
+      data-title="${product.title}"
+      data-price="${product.price}"
+      data-img="${product.img}"
+      data-desc="${product.desc}">Add to Cart</button>
 
-    <form action="/api/cart/add" method="POST" class="add-to-cart">
-      <input type="hidden" name="title"    value="${product.title}">
-      <input type="hidden" name="price"    value="${product.price}">
-      <input type="hidden" name="img"      value="${product.img}">
-      <input type="hidden" name="desc"     value="${product.desc}">
-      <input type="hidden" name="quantity" value="1">
-            <input type="hidden" name="redirect" value="true">
-
-      <button type="submit" class="add-to-cart-btn">Buy now</button>
-    </form>
+    <button type="button" class="buy-now-btn"
+      data-title="${product.title}"
+      data-price="${product.price}"
+      data-img="${product.img}"
+      data-desc="${product.desc}">Buy Now</button>
 
   </div>
 `;
@@ -220,12 +212,12 @@ function renderProducts() {
 // CART HANDLERS
 // ============================================================
 
-function getProductFromCard(card) {
+function getProductFromCard(btn) {
   return {
-    title: card.querySelector("h3")?.textContent?.trim() || "",
-    price: card.querySelector(".price-product")?.textContent?.trim() || "0",
-    img: card.querySelector(".products_images")?.src || "",
-    desc: card.querySelector(".desc-product")?.textContent?.trim() || "",
+    title: btn.dataset.title || "",
+    price: btn.dataset.price || "0",
+    img:   btn.dataset.img   || "",
+    desc:  btn.dataset.desc  || "",
   };
 }
 
@@ -234,26 +226,23 @@ function setupAddToCartButtons() {
     const btn = e.target.closest(".add-to-cart-btn");
     if (!btn) return;
 
-    const card = btn.closest(".product-card");
-    if (!card) return;
+    const product = getProductFromCard(btn);
 
-    const product = getProductFromCard(card);
-
-    btn.disabled = true;
-    btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Adding...`;
+    btn.disabled    = true;
+    btn.textContent = "Adding…";
 
     try {
       await API.addToCart(product);
       showToast(`${product.title} added to cart!`, "success");
-      btn.innerHTML = `<i class="fa-solid fa-check"></i> Added`;
+      btn.textContent = "Added ✓";
       setTimeout(() => {
-        btn.disabled = false;
-        btn.innerHTML = `<i class="fa-solid fa-cart-shopping"></i> Add to Cart`;
+        btn.disabled    = false;
+        btn.textContent = "Add to Cart";
       }, 2000);
     } catch (err) {
       showToast(err.message, "error");
-      btn.disabled = false;
-      btn.innerHTML = `<i class="fa-solid fa-cart-shopping"></i> Add to Cart`;
+      btn.disabled    = false;
+      btn.textContent = "Add to Cart";
     }
   });
 }
@@ -263,21 +252,18 @@ function setupBuyNowButtons() {
     const btn = e.target.closest(".buy-now-btn");
     if (!btn) return;
 
-    const card = btn.closest(".product-card");
-    if (!card) return;
+    const product = getProductFromCard(btn);
 
-    const product = getProductFromCard(card);
-
-    btn.disabled = true;
-    btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Processing...`;
+    btn.disabled    = true;
+    btn.textContent = "Processing…";
 
     try {
       await API.addToCart(product);
       window.location.href = "/serve/cart";
     } catch (err) {
       showToast(err.message, "error");
-      btn.disabled = false;
-      btn.innerHTML = `<i class="fa-solid fa-bolt"></i> Buy Now`;
+      btn.disabled    = false;
+      btn.textContent = "Buy Now";
     }
   });
 }
@@ -424,6 +410,26 @@ function setupHeroSlider() {
   nextBtn.addEventListener("click", () => { nextSlide(); resetAutoPlay(); });
 
   startAutoPlay();
+}
+
+
+// ============================================================
+// LOGOUT FUNCTION
+// ============================================================
+
+async function logout(event) {
+  event.preventDefault();
+  try {
+    const res = await fetch("/api/logout", { method: "POST" });
+    if (res.ok) {
+      showToast("Logged out successfully!", "success");
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 1500);
+    }
+  } catch (err) {
+    showToast("Logout failed. Please try again.", "error");
+  }
 }
 
 // ============================================================

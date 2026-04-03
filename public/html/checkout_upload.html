@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Design — ShopHub</title>
+  <link rel="stylesheet" href="/css/checkout_upload.css">
+</head>
+<body>
+
+  <div class="navbar">
+    <a href="/" class="shophub-nav"><h1 class="gradient-text">ShopHub</h1></a>
+  </div>
+
+  <main class="upload-page">
+    <div class="upload-card">
+
+      <div class="upload-header">
+        <h2 class="upload-title">Upload Your Design</h2>
+        <p class="upload-subtitle">Send us your custom photos for the order. You can select multiple images at once.</p>
+      </div>
+
+      <div class="upload-total-badge" id="uploadTotalBadge"></div>
+
+      <form class="upload-form" id="uploadForm">
+
+        <!-- MULTIPLE PHOTOS -->
+        <div class="upload-field">
+          <label class="upload-label">
+            Design Photos
+            <span class="upload-optional">(optional — select as many as you need)</span>
+          </label>
+          <div class="upload-slot" id="photoSlot">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="upload-icon">
+              <path d="M14.5 4h-5L7.8 6H5.5A2.5 2.5 0 0 0 3 8.5v9A2.5 2.5 0 0 0 5.5 20h13A2.5 2.5 0 0 0 21 17.5v-9A2.5 2.5 0 0 0 18.5 6h-2.3L14.5 4z"/>
+              <circle cx="12" cy="13" r="3"/>
+            </svg>
+            <p class="upload-slot-text">Click to select photos</p>
+            <p class="upload-hint">JPG, PNG, WEBP — multiple allowed</p>
+            <!-- multiple + no limit -->
+            <input type="file" id="photoInput" accept="image/*" multiple class="upload-file-input">
+          </div>
+          <!-- preview grid renders here -->
+          <div class="upload-preview-grid" id="photoPreviewGrid"></div>
+          <p class="upload-count" id="photoCount"></p>
+        </div>
+
+        <!-- NOTE -->
+        <div class="upload-field">
+          <label class="upload-label">Note <span class="upload-optional">(optional)</span></label>
+          <textarea
+            id="noteInput"
+            class="upload-textarea"
+            placeholder="Any special instructions for your order…"
+            rows="3"
+          ></textarea>
+        </div>
+
+        <div class="upload-actions">
+          <button type="button" class="upload-btn-cancel" id="cancelBtn">Cancel</button>
+          <button type="submit" class="upload-btn-confirm" id="uploadSubmit">Confirm &amp; Pay</button>
+        </div>
+
+      </form>
+    </div>
+  </main>
+
+  <script src="/js/checkout_upload.js"></script>
+</body>
+</html>

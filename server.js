@@ -7,9 +7,34 @@ const cookieParser = require("cookie-parser");
 
 //Middleware
 app.use(express.static("public"));
-app.use(express.json()); // ✅ parse JSON body
-app.use(express.urlencoded({ extended: true })); // ✅ parse form data if sent
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+// ── Rate limiting ──────────────────────────────────────────
+const {
+    authLimiter,
+    sensitiveActionLimiter,
+    orderLimiter,
+    uploadLimiter,
+    generalLimiter,
+    contactLimiter,
+} = require("./middlewares/ratelimit.middleware");
+
+// General limiter on all /api routes
+app.use("/api", generalLimiter);
+
+// Specific limiters on vulnerable endpoints
+app.use("/api/login",                    authLimiter);
+app.use("/api/register",                 authLimiter);
+app.use("/api/logout",                   authLimiter);
+app.use("/api/profile/switch-role",      sensitiveActionLimiter);
+app.use("/api/profile/role",             sensitiveActionLimiter);
+app.use("/api/orders/place",             orderLimiter);
+app.use("/api/orders",                   generalLimiter);
+app.use(/^\/api\/orders\/.*\/upload/,    uploadLimiter);
+app.use("/api/contact",                  contactLimiter);
+// ──────────────────────────────────────────────────────────
 
 //Connect to database
 const {connectDb_submit} = require("./db/db");
@@ -77,6 +102,16 @@ app.get("/success", (req,res)=>{
     res.sendFile(__dirname+"/public/html/payment_success.html")
 });
 
+//Serve payment failed / cancelled
+app.get("/payment-fail", (req,res)=>{
+    res.sendFile(__dirname+"/public/html/payment_fail.html")
+});
+
+//Serve checkout upload page
+app.get("/serve/checkout/upload", (req,res)=>{
+    res.sendFile(__dirname+"/public/html/checkout_upload.html")
+});
+
 //Serve order tracking
 app.get("/orders", (req,res)=>{
     res.sendFile(__dirname+"/public/html/orders.html"
@@ -121,6 +156,14 @@ app.use("/api", contactRoute);
 //Serve delivery address route
 const deliveryAddressRoute = require("./routes/delivery_adress.routes");
 app.use("/api", deliveryAddressRoute);
+
+//Serve wishlist route
+const wishlistRoute = require("./routes/wishlist.routes");
+app.use("/api", wishlistRoute);
+
+//Serve order route
+const orderRoute = require("./routes/order.routes");
+app.use("/api", orderRoute);
 
 
 

@@ -139,6 +139,23 @@ const API = {
   },
 
   /**
+   * POST /api/cart/item/:itemId/wishlist
+   * Moves item from cart to wishlist, removes from cart.
+   */
+  async moveToWishlist(itemId) {
+    const res = await fetch(`/api/cart/item/${itemId}/wishlist`, {
+      method: "POST",
+      credentials: "include",
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      if (res.status === 401) handleUnauthorized(err);
+      throw new Error(err.message || "Failed to move to wishlist");
+    }
+    return res.json();
+  },
+
+  /**
    * DELETE /api/cart/item/:itemId
    */
   async removeItem(itemId) {
@@ -378,6 +395,27 @@ function bindCartEvents() {
       }
     });
 
+    // ── Wishlist button ──
+    card.querySelector(".cart-wishlist-btn")?.addEventListener("click", async (e) => {
+      e.stopPropagation();
+      const item = cartItems.find((i) => String(i._id) === id);
+      if (!item) return;
+
+      const btn = card.querySelector(".cart-wishlist-btn");
+      btn.disabled = true;
+
+      try {
+        const data = await API.moveToWishlist(id);
+        cartItems = data.cart.items;
+        selectedIds.delete(id);
+        renderCart();
+        showToast(`${item.title} moved to wishlist`);
+      } catch (err) {
+        showToast(err.message, "error");
+        btn.disabled = false;
+      }
+    });
+
     // ── Delete item ──
     card.querySelector(".delete-product")?.addEventListener("click", async (e) => {
       e.stopPropagation();
@@ -398,8 +436,209 @@ function bindCartEvents() {
 }
 
 // ============================================================
-// CHECKOUT
+// CHECKOUT POPUP
 // ============================================================
+
+const PAYMENT_METHODS = [
+  { id: "esewa",   label: "eSewa",            logo: "🟢" },
+  { id: "khalti",  label: "Khalti",           logo: "🟣" },
+  { id: "ime",     label: "IME Pay",          logo: "🔵" },
+  { id: "connectips", label: "ConnectIPS",   logo: "🏦" },
+  { id: "cod",     label: "Cash on Delivery", logo: "💵" },
+];
+
+let selectedPayment = null;
+
+function buildCheckoutPopup() {
+  const existing = document.getElementById("_checkoutPopup");
+  if (existing) existing.remove();
+
+  // build order rows from selected items
+  const selectedItems = cartItems.filter(i => selectedIds.has(String(i._id)));
+  const subtotal = selectedItems.reduce((s, i) => s + i.price * i.quantity, 0);
+  const tax      = Math.round(subtotal * 0.13);
+  const total    = subtotal + tax;
+
+  const orderRowsHTML = selectedItems.map(i => `
+    <div class="co-item">
+      <img src="${i.img || ''}" alt="${i.title}">
+      <div class="co-item-info">
+        <span class="co-item-title">${i.title}</span>
+        <span class="co-item-qty">× ${i.quantity}</span>
+      </div>
+      <span class="co-item-price">Rs.${(i.price * i.quantity).toLocaleString()}</span>
+    </div>
+  `).join("");
+
+  const paymentHTML = PAYMENT_METHODS.map(m => `
+    <button class="co-pay-btn" data-method="${m.id}" type="button">
+      <span class="co-pay-logo">${m.logo}</span>
+      <span class="co-pay-label">${m.label}</span>
+    </button>
+  `).join("");
+
+  const overlay = document.createElement("div");
+  overlay.id        = "_checkoutPopup";
+  overlay.className = "co-overlay";
+  overlay.innerHTML = `
+    <div class="co-modal" role="dialog" aria-modal="true" aria-label="Checkout">
+
+      <div class="co-header">
+        <h2 class="co-title">Checkout</h2>
+        <button class="co-close" id="_coClose" aria-label="Close">✕</button>
+      </div>
+
+      <div class="co-body">
+
+        <!-- ORDER SUMMARY -->
+        <section class="co-section">
+          <h3 class="co-section-title">Order Summary</h3>
+          <div class="co-items">${orderRowsHTML}</div>
+          <div class="co-totals">
+            <div class="co-total-row"><span>Subtotal</span><span>Rs.${subtotal.toLocaleString()}</span></div>
+            <div class="co-total-row"><span>Tax (13%)</span><span>Rs.${tax.toLocaleString()}</span></div>
+            <div class="co-total-row co-total-final"><span>Total</span><span>Rs.${total.toLocaleString()}</span></div>
+          </div>
+        </section>
+
+        <!-- DELIVERY ADDRESS -->
+        <section class="co-section">
+          <h3 class="co-section-title">Delivery Address <span class="co-edit-hint">— click any field to edit</span></h3>
+          <div class="co-address-grid" id="_coAddressGrid">
+            <div class="co-addr-loading">Loading address…</div>
+          </div>
+        </section>
+
+        <!-- PAYMENT METHOD -->
+        <section class="co-section">
+          <h3 class="co-section-title">Payment Method</h3>
+          <div class="co-pay-grid">${paymentHTML}</div>
+        </section>
+
+      </div>
+
+      <div class="co-footer">
+        <button class="co-btn-cancel" id="_coCancel">Cancel</button>
+        <button class="co-btn-continue" id="_coContinue" disabled>Continue</button>
+      </div>
+
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+
+  // close handlers
+  document.getElementById("_coClose").addEventListener("click",  () => overlay.remove());
+  document.getElementById("_coCancel").addEventListener("click", () => overlay.remove());
+  overlay.addEventListener("click", e => { if (e.target === overlay) overlay.remove(); });
+
+  // payment selection
+  overlay.querySelectorAll(".co-pay-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      overlay.querySelectorAll(".co-pay-btn").forEach(b => b.classList.remove("selected"));
+      btn.classList.add("selected");
+      selectedPayment = btn.dataset.method;
+      document.getElementById("_coContinue").disabled = false;
+    });
+  });
+
+  // continue button — save order to DB then redirect
+  document.getElementById("_coContinue").addEventListener("click", async () => {
+    if (!selectedPayment) return;
+
+    const continueBtn = document.getElementById("_coContinue");
+
+    // collect address from editable fields
+    const deliveryAddress = {};
+    overlay.querySelectorAll(".co-addr-field[data-key]").forEach(el => {
+      deliveryAddress[el.dataset.key] = el.textContent.trim();
+    });
+
+    continueBtn.disabled    = true;
+    continueBtn.textContent = "Placing order…";
+
+    try {
+      // save order to DB
+      const res = await fetch("/api/orders/place", {
+        method:      "POST",
+        credentials: "include",
+        headers:     { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: selectedItems.map(i => ({
+            title:       i.title,
+            price:       i.price,
+            img:         i.img,
+            description: i.description,
+            quantity:    i.quantity,
+          })),
+          deliveryAddress,
+          subtotal,
+          tax,
+          total,
+          paymentMethod: selectedPayment,
+        }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        showToast(err.message || "Failed to place order", "error");
+        continueBtn.disabled    = false;
+        continueBtn.textContent = "Continue";
+        return;
+      }
+
+      const { orderId } = await res.json();
+      overlay.remove();
+
+      // all methods → go to upload page for custom design files
+      // upload page handles COD → /success and online → payment gateway
+      window.location.href = `/serve/checkout/upload?orderId=${orderId}&method=${selectedPayment}&total=${total}`;
+
+    } catch (err) {
+      console.error("[checkout] error:", err);
+      showToast("Something went wrong. Please try again.", "error");
+      continueBtn.disabled    = false;
+      continueBtn.textContent = "Continue";
+    }
+  });
+
+  // load delivery address
+  loadCheckoutAddress(overlay);
+}
+
+async function loadCheckoutAddress(overlay) {
+  const grid = document.getElementById("_coAddressGrid");
+  if (!grid) return;
+
+  try {
+    const res  = await fetch("/api/address/fetch", { credentials: "include" });
+    const data = await res.json();
+    const addr = data.deliveryAddress || {};
+
+    const fields = [
+      { key: "province",       label: "Province" },
+      { key: "district",       label: "District" },
+      { key: "municipality",   label: "Municipality" },
+      { key: "ward",           label: "Ward No." },
+      { key: "addressDetails", label: "Address Details" },
+    ];
+
+    grid.innerHTML = fields.map(f => `
+      <div class="co-addr-row">
+        <span class="co-addr-label">${f.label}</span>
+        <div
+          class="co-addr-field"
+          data-key="${f.key}"
+          contenteditable="true"
+          spellcheck="false"
+        >${addr[f.key] || "—"}</div>
+      </div>
+    `).join("");
+
+  } catch (err) {
+    grid.innerHTML = `<div class="co-addr-loading">Could not load address. You can type it below.</div>`;
+  }
+}
 
 function setupCheckout() {
   const checkoutBtn = document.getElementById("proceed-checkout");
@@ -414,10 +653,8 @@ function setupCheckout() {
       showPopup("Please select at least one product!");
       return;
     }
-    // Pass selected IDs to checkout page
-    const params = new URLSearchParams();
-    selectedIds.forEach((id) => params.append("items", id));
-    window.location.href = `/serve/checkout?${params.toString()}`;
+    selectedPayment = null;
+    buildCheckoutPopup();
   });
 }
 

@@ -4,6 +4,7 @@ const bcrypt           = require("bcrypt");
 const User             = require("../models/register.models");
 const Cart             = require("../models/cart.models");
 const DeliveryAddress  = require("../models/delivery_address.models");
+const Wishlist         = require("../models/wishlist.models");
 const { isAuthenticated } = require("../middlewares/auth.middleware");
 
 
@@ -169,11 +170,12 @@ router.post("/profile/switch-role", isAuthenticated, async (req, res) => {
             newAccountData.password  = hashedNewPassword;
         }
 
-        // delete old account + any associated cart and delivery address
+        // delete old account + all associated data
         await Promise.all([
             User.findByIdAndDelete(req.session.userId),
             Cart.deleteOne({ userId: req.session.userId }),
             DeliveryAddress.deleteOne({ userId: req.session.userId }),
+            Wishlist.deleteOne({ userId: req.session.userId }),
         ]);
 
         // create new account

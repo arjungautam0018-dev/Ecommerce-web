@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Cancelled — ShopHub</title>
+  <link rel="stylesheet" href="/css/payment_success.css">
+  <style>
+    .fail-circle {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      background-color: #ef4444;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    .fail-circle::before, .fail-circle::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: #ef4444;
+      opacity: 0.25;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .fail-circle::after { animation-delay: 0.5s; opacity: 0.12; }
+    .fail-x {
+      width: 44px;
+      height: 44px;
+      position: relative;
+    }
+    .fail-x::before, .fail-x::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 0;
+      width: 100%; height: 6px;
+      background: #fff;
+      border-radius: 4px;
+    }
+    .fail-x::before { transform: translateY(-50%) rotate(45deg); }
+    .fail-x::after  { transform: translateY(-50%) rotate(-45deg); }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <div class="nav-bar-left">
+      <a href="/" class="shophub-nav"><h1 class="gradient-text">ShopHub</h1></a>
+    </div>
+    <div class="nav-bar-right">
+      <a href="/serve/cart" aria-label="Cart">
+        <svg class="icons-svg-nav" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.7">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 8h15l-2 11H7L5 4H3"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 0 1 6 0v2"/>
+          <circle cx="9" cy="21" r="1.25"/><circle cx="17" cy="21" r="1.25"/>
+        </svg>
+      </a>
+      <a href="/serve/profile" aria-label="Profile">
+        <svg class="icons-svg-nav" fill="none" stroke="#000" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zM6 20c0-3.31 2.69-6 6-6s6 2.69 6 6H6z"/>
+        </svg>
+      </a>
+      <div class="hamburger" onclick="toggleMenu()">
+        <svg class="icons-svg-nav" fill="none" stroke="#000" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </div>
+      <div class="quickies">
+        <a href="/serve/cart"><svg class="menu-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8h15l-2 11H7L5 4H3"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Cart</span></a>
+        <a href="/serve/wishlist"><svg class="menu-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg><span>Wishlist</span></a>
+        <a href="#" class="theme-toggle"><span class="icon"></span><span>Theme</span></a>
+        <button onclick="logout()" class="logout-btn">
+          <svg class="menu-item-icon" fill="currentColor" viewBox="0 0 474 512.46"><path d="M249.71.13 12.08 35.6C5.46 36.59 0 43.43 0 50.23v418.88c0 6.77 5.39 9.38 12.08 10.31l237.63 32.97c6.68.92 12.08-7.77 12.08-14.63V10.44c0-6.86-5.53-11.28-12.08-10.31zm124.96 329.08-.01-34.07c-.58.17-1.2.27-1.83.27h-53.47c-3.55 0-6.45-2.96-6.45-6.45v-66.2c0-3.48 2.97-6.45 6.45-6.45h53.47c.63 0 1.24.1 1.82.27v-34.06c0-6.29 5.1-11.4 11.39-11.4 3.29 0 6.25 1.4 8.33 3.63l76.01 70.9c4.59 4.27 4.85 11.47.58 16.06l-76.95 75.59c-4.47 4.4-11.67 4.34-16.07-.13a11.439 11.439 0 0 1-3.27-7.96zm-87.26 129.54h31.02V345.46h25.37v113.9c0 6.77-2.8 12.95-7.27 17.44-4.47 4.52-10.67 7.31-17.49 7.31h-31.63v-25.36zm31.02-292.48V52.98h-31.02V27.62h31.63c6.81 0 13.01 2.79 17.49 7.27 4.47 4.48 7.27 10.68 7.27 17.49v113.89h-25.37zm-87.67 58.52-24.93-5.68v74.24l24.93-7.18v-61.38z"/></svg>
+          <span>Logout</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="fail-circle"><div class="fail-x"></div></div>
+    <div class="text-h1">
+      <h1>Order Cancelled</h1>
+      <p>Your order was not completed.</p>
+    </div>
+  </div>
+
+  <div class="order-card">
+    <div class="order-row">
+      <span>Order Number</span>
+      <span class="bold-text" id="orderNumber">—</span>
+    </div>
+    <div class="order-row">
+      <span>Status</span>
+      <span class="bold-text" style="color:#ef4444">Cancelled</span>
+    </div>
+    <div class="order-row">
+      <span>Payment</span>
+      <span class="bold-text" id="paymentMethod">—</span>
+    </div>
+    <div class="order-info-block no-border">
+      <div class="info-label"><span class="icon">💬</span> Reason</div>
+      <div class="info-value" id="cancelReason">Process was not completed</div>
+    </div>
+  </div>
+
+  <div class="lower-version">
+    <button class="btn btn-primary" onclick="window.location.href='/serve/cart'">Back to Cart</button>
+    <button class="btn btn-secondary" onclick="window.location.href='/'">Continue Shopping</button>
+    <p class="support-text">Need help? <a href="/serve/contact">Contact Support</a></p>
+  </div>
+
+  <script src="/js/logout.js"></script>
+  <script>
+    function toggleMenu() {
+      document.querySelector(".quickies")?.classList.toggle("show");
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      const params  = new URLSearchParams(window.location.search);
+      const orderId = params.get("orderId");
+      if (!orderId) return;
+
+      try {
+        const res = await fetch(`/api/orders/${orderId}`, { credentials: "include" });
+        if (!res.ok) return;
+        const { order } = await res.json();
+
+        const el = document.getElementById("orderNumber");
+        if (el) el.textContent = order.orderId || "—";
+
+        const pm = document.getElementById("paymentMethod");
+        if (pm) pm.textContent = order.paymentMethod?.toUpperCase() || "—";
+
+        if (order.note) {
+          const r = document.getElementById("cancelReason");
+          if (r) r.textContent = order.note.replace("Cancelled: ", "");
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    });
+  </script>
+</body>
+</html>

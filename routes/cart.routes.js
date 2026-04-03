@@ -1,7 +1,8 @@
 const express = require('express');
-const router = express.Router();
+const router  = express.Router();
 const authMiddleware = require('../middlewares/auth.middleware');
-const Cart = require('../models/cart.models');
+const Cart     = require('../models/cart.models');
+const Wishlist = require('../models/wishlist.models');
 
 function parsePrice(priceText) {
   return Number(String(priceText).replace(/[^0-9]/g, "")) || 0;
@@ -10,12 +11,7 @@ function parsePrice(priceText) {
 // POST /api/cart/add
 router.post("/cart/add", authMiddleware.isAuthenticated, async (req, res) => {
     try {
-        console.log("Cart route hit");
-        console.log("req.body:", req.body); // will now show all fields
-
         const userId = req.session.userId;
-
-        // Frontend sends individual fields — NOT an "items" array
         const { title, price, img, desc, quantity = 1, redirect } = req.body;
 
         if (!title || price === undefined) {
@@ -24,23 +20,17 @@ router.post("/cart/add", authMiddleware.isAuthenticated, async (req, res) => {
 
         const incomingItem = {
             title,
-            price:       parsePrice(price),   // "रू.2,499" → 2499
+            price:       parsePrice(price),
             img,
             description: desc,
             quantity:    Number(quantity) || 1,
         };
 
-        console.log("Parsed item:", incomingItem);
-
         let cart = await Cart.findOne({ userId });
 
         if (cart) {
-            const existingIndex = cart.items.findIndex(
-                (item) => item.title === title
-            );
-
+            const existingIndex = cart.items.findIndex(i => i.title === title);
             if (existingIndex > -1) {
-                // Item already in cart — bump quantity
                 cart.items[existingIndex].quantity += incomingItem.quantity;
             } else {
                 cart.items.push(incomingItem);
@@ -50,39 +40,103 @@ router.post("/cart/add", authMiddleware.isAuthenticated, async (req, res) => {
         }
 
         await cart.save();
-        console.log("Cart saved:", cart);
 
-        // HTML form submission — respond with redirect not JSON
-        if (redirect === "true") {
-            return res.redirect("/serve/cart");
-        }
-
-        // fetch() / JS submission — respond with JSON
+        if (redirect === "true") return res.redirect("/serve/cart");
         return res.json({ message: "Cart updated successfully", cart });
 
     } catch (error) {
         console.error("Error updating cart:", error);
-
-        if (req.body.redirect === "true") {
-            return res.redirect("back");
-        }
-
+        if (req.body.redirect === "true") return res.redirect("back");
         return res.status(500).json({ message: "Internal server error" });
     }
 });
 
-//Fetch cart items for the logged-in user
+// GET /api/cart
 router.get("/cart", authMiddleware.isAuthenticated, async (req, res) => {
     try {
-        const userId = req.session.userId;
-        const cart = await Cart.findOne({ userId }).populate("items");
-        if (!cart) {
-            return res.status(404).json({ message: "Cart not found" });
-        }
+        const cart = await Cart.findOne({ userId: req.session.userId });
+        if (!cart) return res.status(404).json({ message: "Cart not found" });
         return res.json({ cart });
     } catch (error) {
         console.error("Error fetching cart:", error);
         return res.status(500).json({ message: "Internal server error" });
     }
 });
+
+// PATCH /api/cart/item/:itemId/quantity
+router.patch("/cart/item/:itemId/quantity", authMiddleware.isAuthenticated, async (req, res) => {
+    try {
+        const { quantity } = req.body;
+        if (!quantity || quantity < 1) {
+            return res.status(400).json({ message: "quantity must be >= 1" });
+        }
+
+        const cart = await Cart.findOne({ userId: req.session.userId });
+        if (!cart) return res.status(404).json({ message: "Cart not found" });
+
+        const item = cart.items.id(req.params.itemId);
+        if (!item) return res.status(404).json({ message: "Item not found" });
+
+        item.quantity = Number(quantity);
+        await cart.save();
+
+        return res.json({ message: "Quantity updated", cart });
+    } catch (error) {
+        console.error("Error updating quantity:", error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+// DELETE /api/cart/item/:itemId
+router.delete("/cart/item/:itemId", authMiddleware.isAuthenticated, async (req, res) => {
+    try {
+        const cart = await Cart.findOne({ userId: req.session.userId });
+        if (!cart) return res.status(404).json({ message: "Cart not found" });
+
+        cart.items = cart.items.filter(i => String(i._id) !== req.params.itemId);
+        await cart.save();
+
+        return res.json({ message: "Item removed", cart });
+    } catch (error) {
+        console.error("Error removing item:", error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+// POST /api/cart/item/:itemId/wishlist
+// Moves item from cart → wishlist, removes from cart
+router.post("/cart/item/:itemId/wishlist", authMiddleware.isAuthenticated, async (req, res) => {
+    try {
+        const cart = await Cart.findOne({ userId: req.session.userId });
+        if (!cart) return res.status(404).json({ message: "Cart not found" });
+
+        const item = cart.items.id(req.params.itemId);
+        if (!item) return res.status(404).json({ message: "Item not found in cart" });
+
+        // add to wishlist
+        let wishlist = await Wishlist.findOne({ userId: req.session.userId });
+        if (!wishlist) wishlist = new Wishlist({ userId: req.session.userId, items: [] });
+
+        const alreadyInWishlist = wishlist.items.find(w => w.title === item.title);
+        if (!alreadyInWishlist) {
+            wishlist.items.push({
+                title: item.title,
+                price: item.price,
+                img:   item.img,
+                desc:  item.description,
+            });
+            await wishlist.save();
+        }
+
+        // remove from cart
+        cart.items = cart.items.filter(i => String(i._id) !== req.params.itemId);
+        await cart.save();
+
+        return res.json({ message: "Moved to wishlist", cart });
+    } catch (error) {
+        console.error("Error moving to wishlist:", error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+});
+
 module.exports = router;
