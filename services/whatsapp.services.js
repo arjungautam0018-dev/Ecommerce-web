@@ -1,8 +1,8 @@
 const twilio = require("twilio");
 
 // Sandbox credentials — hardcoded for testing
-const accountSid = "REMOVED";
-const authToken  = "REMOVED";  // replace with what Twilio gave you
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken  = process.env.TWILIO_AUTH_TOKEN;
 const client     = twilio(accountSid, authToken);
 
 async function sendWhatsApp(to, body) {
