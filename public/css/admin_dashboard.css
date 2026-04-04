@@ -340,7 +340,47 @@ body {
 
 @media (max-width: 768px) {
   .sidebar { display: none; }
-  .main-content { padding: 16px; }
+  .main-content { padding: 12px 10px 80px; }
+
+  /* bottom nav for mobile */
+  .mobile-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: #161b22;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    z-index: 100;
+    padding: 6px 0 8px;
+  }
+
+  .mobile-nav-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 6px 4px;
+    border: none;
+    background: transparent;
+    color: rgba(230,237,243,0.45);
+    font-size: 0.62rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: color 0.15s ease;
+  }
+
+  .mobile-nav-btn svg { width: 18px; height: 18px; }
+  .mobile-nav-btn.active { color: #7DA0CA; }
+
+  .panel-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .filter-row { margin-left: 0; flex-wrap: wrap; }
+
+  .data-table th, .data-table td { padding: 10px 10px; font-size: 0.78rem; }
+}
+
+@media (min-width: 769px) {
+  .mobile-nav { display: none; }
 }
 
 /* ── Download all button ── */

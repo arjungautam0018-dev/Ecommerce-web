@@ -13,17 +13,19 @@ document.addEventListener("DOMContentLoaded", async () => {
         return res;
     }
 
-/* ── tab switching ── */
-    const navItems  = document.querySelectorAll(".nav-item");
-    const tabPanels = document.querySelectorAll(".tab-panel");
+/* ── tab switching (sidebar + mobile nav) ── */
+    const navItems     = document.querySelectorAll(".nav-item, .mobile-nav-btn");
+    const tabPanels    = document.querySelectorAll(".tab-panel");
+
+    function switchTab(tabName) {
+        document.querySelectorAll(".nav-item, .mobile-nav-btn").forEach(b => b.classList.remove("active"));
+        tabPanels.forEach(p => p.classList.remove("active"));
+        document.querySelectorAll(`[data-tab="${tabName}"]`).forEach(b => b.classList.add("active"));
+        document.getElementById(`tab-${tabName}`)?.classList.add("active");
+    }
 
     navItems.forEach(btn => {
-        btn.addEventListener("click", () => {
-            navItems.forEach(b => b.classList.remove("active"));
-            tabPanels.forEach(p => p.classList.remove("active"));
-            btn.classList.add("active");
-            document.getElementById(`tab-${btn.dataset.tab}`).classList.add("active");
-        });
+        btn.addEventListener("click", () => switchTab(btn.dataset.tab));
     });
 
 /* ── logout ── */
@@ -233,6 +235,42 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 /* ════════════════════════════════════════════════════════════
+   CONTACTS
+   ════════════════════════════════════════════════════════════ */
+    async function loadContacts() {
+        const tbody = document.getElementById("contactsBody");
+        if (!tbody) return;
+        try {
+            const res  = await apiFetch("/api/admin/contacts");
+            const data = await res.json();
+            const contacts = data.contacts || [];
+
+            const countEl = document.getElementById("contactsCount");
+            if (countEl) countEl.textContent = contacts.length;
+
+            if (!contacts.length) {
+                tbody.innerHTML = `<tr><td colspan="5" class="loading-row">No messages yet</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = contacts.map(c => `
+                <tr>
+                    <td>${c.name}</td>
+                    <td>${c.email}</td>
+                    <td>${c.subject}</td>
+                    <td style="max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.message}</td>
+                    <td>${formatDate(c.createdAt)}</td>
+                </tr>
+            `).join("");
+
+        } catch (err) {
+            if (err.message !== "Unauth" && tbody) {
+                tbody.innerHTML = `<tr><td colspan="5" class="loading-row">Failed to load</td></tr>`;
+            }
+        }
+    }
+
+/* ════════════════════════════════════════════════════════════
    ORDER DETAIL POPUP
    ════════════════════════════════════════════════════════════ */
     function showOrderPopup(order) {
@@ -349,6 +387,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 /* ── init ── */
-    await Promise.all([loadActiveOrders(), loadHistoryOrders(), loadUsers()]);
+    await Promise.all([loadActiveOrders(), loadHistoryOrders(), loadUsers(), loadContacts()]);
 
 });

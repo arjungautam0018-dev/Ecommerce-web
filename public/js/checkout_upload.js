@@ -85,6 +85,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const newFiles = Array.from(photoInput.files);
         if (!newFiles.length) return;
 
+        // filter images only — reject anything else with a message
+        const nonImages = newFiles.filter(f => !f.type.startsWith("image/"));
+        if (nonImages.length) {
+            alert(`Only image files are allowed.\nRejected: ${nonImages.map(f => f.name).join(", ")}`);
+            photoInput.value = "";
+            return;
+        }
+
         // merge with existing selection (no duplicates by name+size)
         newFiles.forEach(f => {
             const exists = selectedFiles.some(e => e.name === f.name && e.size === f.size);

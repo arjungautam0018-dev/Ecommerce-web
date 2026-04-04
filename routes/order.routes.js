@@ -7,7 +7,17 @@ const Order        = require("../models/order.models");
 const { isAuthenticated } = require("../middlewares/auth.middleware");
 const { sendWhatsApp }    = require("../services/whatsapp.services");
 const { uploadLimiter }   = require("../middlewares/ratelimit.middleware");
-const upload = multer();
+const upload = multer({
+    storage: multer.memoryStorage(),
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype.startsWith("image/")) {
+            cb(null, true);
+        } else {
+            cb(new Error(`Only image files are allowed. Got: ${file.mimetype}`), false);
+        }
+    },
+    limits: { fileSize: 10 * 1024 * 1024 }, // 10MB per file
+});
 
 const ADMIN_WHATSAPP = process.env.ADMIN_WHATSAPP;
 
@@ -271,6 +281,15 @@ router.post(
 
             if (!req.files?.length) {
                 return res.json({ message: "No files uploaded", urls: [] });
+            }
+
+            // validate — images only
+            const ALLOWED = ["image/jpeg", "image/png", "image/webp", "image/gif", "image/jpg"];
+            const invalid  = req.files.filter(f => !ALLOWED.includes(f.mimetype));
+            if (invalid.length) {
+                return res.status(400).json({
+                    message: `Invalid file type: ${invalid.map(f => f.originalname).join(", ")}. Only images are allowed.`
+                });
             }
 
             const uploadedUrls = [];
