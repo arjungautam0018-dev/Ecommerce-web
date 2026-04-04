@@ -123,9 +123,29 @@ app.get("/api/nepal-data", (req,res)=>{
     res.sendFile(__dirname+"/public/resources/nepal-address.json")
 });
 
+//Serve Products JSON
+app.get("/api/products", (req,res)=>{
+    res.sendFile(__dirname+"/public/resources/products.json")
+});
+
+//Serve admin dashboard
+app.get("/admin/dashboard", (req,res)=>{
+    res.sendFile(__dirname+"/public/html/admin_dashboard.html")
+});
+
 //Serve login page
 app.get("/login", (req,res)=>{
     res.sendFile(__dirname+"/public/html/login.html")
+});
+
+//Serve admin login
+app.get("/admin/login", (req,res)=>{
+    res.sendFile(__dirname+"/public/html/admin/login.html")
+});
+
+//Serve admin login (alternate path)
+app.get("/login/admin", (req,res)=>{
+    res.sendFile(__dirname+"/public/html/login_admin.html")
 });
 
 //Serve signup member
@@ -164,6 +184,10 @@ app.use("/api", wishlistRoute);
 //Serve order route
 const orderRoute = require("./routes/order.routes");
 app.use("/api", orderRoute);
+
+//Serve admin login route
+const adminLoginRoute = require("./routes/admin_login.routes");
+app.use("/api", adminLoginRoute);
 
 
 

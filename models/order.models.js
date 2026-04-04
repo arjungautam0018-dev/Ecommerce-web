@@ -1,19 +1,32 @@
 const mongoose = require("mongoose");
 
-// Generate human-readable order ID: ORD-XXXXXXXX
-function generateOrderId() {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    let id = "ORD-";
-    for (let i = 0; i < 8; i++) id += chars[Math.floor(Math.random() * chars.length)];
-    return id;
+// ── Nepali BS year counter for orderId ─────────────────────
+// Converts current AD date to approximate BS year (BS = AD + 56 or 57)
+function getNepaliYear() {
+    const now    = new Date();
+    const month  = now.getMonth() + 1; // 1-12
+    const day    = now.getDate();
+    // BS new year is around April 13-14; before that still previous BS year
+    const offset = (month > 4 || (month === 4 && day >= 14)) ? 57 : 56;
+    return now.getFullYear() + offset;
+}
+
+async function generateOrderId() {
+    const year   = getNepaliYear();
+    const prefix = `${year}-`;
+    // count existing orders for this BS year
+    const count  = await mongoose.model("Order").countDocuments({
+        orderId: { $regex: `^${prefix}` }
+    });
+    return `${prefix}${count}`;
 }
 
 const orderSchema = new mongoose.Schema({
 
     orderId: {
-        type:    String,
-        unique:  true,
-        default: generateOrderId,
+        type:   String,
+        unique: true,
+        // generated in order.routes.js before create()
     },
 
     userId: {

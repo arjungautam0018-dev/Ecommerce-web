@@ -35,65 +35,19 @@ function parsePrice(priceText) {
 }
 
 // ============================================================
-// PRODUCTS DATA
+// PRODUCTS DATA — loaded from /api/products (products.json)
 // ============================================================
 
-const PRODUCTS = [
-  {
-    title: "Custom Frame",
-    desc: "A personalized frame for photos or artwork, perfect as a gift or for home decoration.",
-    price: "रू.2,499",
-    img: "/resources/frame1.jpg",
-  },
-  {
-    title: "Custom Frame",
-    desc: "A personalized frame for photos or artwork, perfect as a gift or for home decoration.",
-    price: "रू.2,499",
-    img: "/resources/frame.jpg",
-  },
-  {
-    title: "Custom Wall Frame",
-    desc: "Elegant customizable wall frame with premium print finish.",
-    price: "रू.3,499",
-    img: "/resources/frame.webp",
-  },
-  {
-    title: "Stamp Set",
-    desc: "Official stamp set suitable for badge programs and office use.",
-    price: "रू.1,299",
-    img: "/resources/stamp.jpg",
-  },
-  {
-    title: "Event Frame",
-    desc: "A modern showcase frame designed for event photos and memories.",
-    price: "रू.2,999",
-    img: "/resources/frame3.webp",
-  },
-  {
-    title: "Sport Medals",
-    desc: "Custom engraved medals for tournaments, schools, and clubs.",
-    price: "रू.899",
-    img: "/resources/medal.jpg",
-  },
-  {
-    title: "Trophies",
-    desc: "Classic and modern trophy designs for winners and MVPs.",
-    price: "रू.3,499",
-    img: "/resources/trophies.jpg",
-  },
-  {
-    title: "Token of Love",
-    desc: "Keepsake tokens and commemorative pieces for special moments.",
-    price: "रू.1,299",
-    img: "/resources/token.jpg",
-  },
-  {
-    title: "Khada",
-    desc: "Traditional ceremonial scarves — honor guests and champions.",
-    price: "रू.499",
-    img: "/resources/khada.jpg",
-  },
-];
+let PRODUCTS = [];
+
+async function loadProducts() {
+  try {
+    const res  = await fetch("/api/products");
+    PRODUCTS   = await res.json();
+  } catch (e) {
+    console.error("Failed to load products:", e);
+  }
+}
 
 // ============================================================
 // API LAYER — DB-READY ENDPOINTS
@@ -436,11 +390,12 @@ async function logout(event) {
 // INIT
 // ============================================================
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   setupMenuOutsideClick();
+  await loadProducts();
   renderProducts();
   setupAddToCartButtons();
   setupBuyNowButtons();
-  setupThemeToggle(); // async — fetches theme from DB
+  setupThemeToggle();
   setupHeroSlider();
 });

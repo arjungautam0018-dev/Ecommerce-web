@@ -1,10 +1,30 @@
 const express      = require("express");
 const router       = express.Router();
+const multer       = require("multer");
+const { PutObjectCommand } = require("@aws-sdk/client-s3");
+const r2           = require("../config/r2.config");
 const Order        = require("../models/order.models");
 const { isAuthenticated } = require("../middlewares/auth.middleware");
 const { sendWhatsApp }    = require("../services/whatsapp.services");
+const { uploadLimiter }   = require("../middlewares/ratelimit.middleware");
+const upload = multer();
 
-const ADMIN_WHATSAPP = process.env.ADMIN_WHATSAPP || "+9779847825916";
+// ── Nepali BS orderId generator ────────────────────────────
+function getNepaliYear() {
+    const now    = new Date();
+    const month  = now.getMonth() + 1;
+    const day    = now.getDate();
+    const offset = (month > 4 || (month === 4 && day >= 14)) ? 57 : 56;
+    return now.getFullYear() + offset;
+}
+
+async function generateOrderId() {
+    const year   = getNepaliYear();
+    const prefix = `${year}-`;
+    const count  = await Order.countDocuments({ orderId: { $regex: `^${prefix}` } });
+    return `${prefix}${count}`;
+}
+// ──────────────────────────────────────────────────────────
 
 
 /* ════════════════════════════════════════════════════════════
@@ -19,7 +39,10 @@ router.post("/orders/place", isAuthenticated, async (req, res) => {
         if (!paymentMethod)   return res.status(400).json({ message: "Payment method required" });
         if (!deliveryAddress) return res.status(400).json({ message: "Delivery address required" });
 
+        const orderId = await generateOrderId();
+
         const order = await Order.create({
+            orderId,
             userId: req.session.userId,
             items,
             deliveryAddress,
@@ -228,74 +251,144 @@ router.post("/orders/:orderId/cancel", isAuthenticated, async (req, res) => {
 
 /* ════════════════════════════════════════════════════════════
    POST /api/orders/:orderId/upload-designs
-   Receives multipart/form-data with field "designs" (multiple images).
-   Uploads each to Cloudflare Images and saves URLs to the order.
-
-   CLOUDFLARE IMAGES INTEGRATION:
-   ─────────────────────────────────────────────────────────
-   TODO: Install multer + set up Cloudflare Images upload.
-
-   1. npm install multer
-   2. Set env vars:
-      CLOUDFLARE_ACCOUNT_ID=your_account_id
-      CLOUDFLARE_IMAGES_TOKEN=your_api_token
-
-   3. Replace the placeholder below with:
-
-   const multer  = require("multer");
-   const upload  = multer({ storage: multer.memoryStorage() });
-   const fetch   = require("node-fetch"); // or use native fetch (Node 18+)
-   const FormData = require("form-data");
-
-   router.post("/orders/:orderId/upload-designs",
-     isAuthenticated,
-     upload.array("designs", 20),  // max 20 photos
-     async (req, res) => {
-       const order = await Order.findOne({ _id: req.params.orderId, userId: req.session.userId });
-       if (!order) return res.status(404).json({ message: "Order not found" });
-
-       const uploadedUrls = [];
-
-       for (const file of req.files) {
-         const fd = new FormData();
-         fd.append("file", file.buffer, { filename: file.originalname, contentType: file.mimetype });
-
-         const cfRes = await fetch(
-           `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/images/v1`,
-           {
-             method: "POST",
-             headers: { Authorization: `Bearer ${process.env.CLOUDFLARE_IMAGES_TOKEN}` },
-             body: fd,
-           }
-         );
-         const cfData = await cfRes.json();
-         if (cfData.success) {
-           uploadedUrls.push(cfData.result.variants[0]); // public URL
-         }
-       }
-
-       order.designImages = uploadedUrls;
-       await order.save();
-
-       return res.json({ message: "Designs uploaded", urls: uploadedUrls });
-     }
-   );
-   ─────────────────────────────────────────────────────────
+   Receives multipart/form-data field "designs" (multiple images).
+   Uploads each to Cloudflare R2, saves public URLs to order.designImages[].
    ════════════════════════════════════════════════════════════ */
-router.post("/orders/:orderId/upload-designs", isAuthenticated, async (req, res) => {
-    // PLACEHOLDER — returns success without actually uploading
-    // Replace this entire handler with the Cloudflare implementation above
+router.post(
+    "/orders/:orderId/upload-designs",
+    isAuthenticated,
+    uploadLimiter,
+    upload.array("designs", 20),
+    async (req, res) => {
+        try {
+            const order = await Order.findOne({
+                _id:    req.params.orderId,
+                userId: req.session.userId,
+            });
+            if (!order) return res.status(404).json({ message: "Order not found" });
+
+            if (!req.files?.length) {
+                return res.json({ message: "No files uploaded", urls: [] });
+            }
+
+            const uploadedUrls = [];
+
+            for (const file of req.files) {
+                // unique key: orderId/timestamp-originalname
+                const key = `orders/${order._id}/${Date.now()}-${file.originalname.replace(/\s+/g, "_")}`;
+
+                await r2.send(new PutObjectCommand({
+                    Bucket:      process.env.bucket_name,
+                    Key:         key,
+                    Body:        file.buffer,
+                    ContentType: file.mimetype,
+                }));
+
+                // public URL — uses R2 public bucket domain from env
+                const publicUrl = `${process.env.R2_PUBLIC_URL}/${key}`;
+                uploadedUrls.push(publicUrl);
+            }
+
+            // save URLs to order
+            order.designImages = uploadedUrls;
+            await order.save();
+
+            return res.json({ message: "Designs uploaded", urls: uploadedUrls });
+
+        } catch (err) {
+            console.error("[order/upload-designs]", err);
+            return res.status(500).json({ message: "Upload failed. Please try again." });
+        }
+    }
+);
+
+
+/* ════════════════════════════════════════════════════════════
+   ADMIN ROUTES
+   ════════════════════════════════════════════════════════════ */
+
+function isAdmin(req, res, next) {
+    if (req.session.adminId) return next();
+    return res.status(401).json({ message: "Admin access required" });
+}
+
+// GET /api/admin/orders — all orders (history)
+router.get("/admin/orders", isAdmin, async (req, res) => {
     try {
-        const order = await Order.findOne({ _id: req.params.orderId, userId: req.session.userId });
-        if (!order) return res.status(404).json({ message: "Order not found" });
-        // TODO: process req.files after adding multer middleware
-        return res.json({ message: "Upload received (Cloudflare integration pending)", urls: [] });
+        const orders = await Order.find().sort({ createdAt: -1 }).populate("userId", "full_name email_address studio_name studio_email free_name free_email role");
+        return res.json({ orders });
     } catch (err) {
-        console.error("[order/upload-designs]", err);
+        console.error("[admin/orders]", err);
         return res.status(500).json({ message: "Internal server error" });
     }
 });
 
+// GET /api/admin/orders/active — processing orders only
+router.get("/admin/orders/active", isAdmin, async (req, res) => {
+    try {
+        const orders = await Order.find({ orderStatus: "processing" }).sort({ createdAt: -1 }).populate("userId", "full_name email_address studio_name studio_email free_name free_email role phone studio_phone free_phone");
+        return res.json({ orders });
+    } catch (err) {
+        console.error("[admin/orders/active]", err);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+// PATCH /api/admin/orders/:orderId/deliver — mark as delivered
+router.patch("/admin/orders/:orderId/deliver", isAdmin, async (req, res) => {
+    try {
+        const order = await Order.findByIdAndUpdate(
+            req.params.orderId,
+            { $set: { orderStatus: "delivered", paymentStatus: "paid" } },
+            { new: true }
+        );
+        if (!order) return res.status(404).json({ message: "Order not found" });
+        return res.json({ message: "Marked as delivered", order });
+    } catch (err) {
+        console.error("[admin/deliver]", err);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+// GET /api/admin/users — all users
+router.get("/admin/users", isAdmin, async (req, res) => {
+    try {
+        const User = require("../models/register.models");
+        const users = await User.find().select("-password -studio_password -free_password").sort({ createdAt: -1 });
+        return res.json({ users });
+    } catch (err) {
+        console.error("[admin/users]", err);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+// GET /api/admin/proxy-image?url=... — proxies R2 images through backend to avoid CORS
+router.get("/admin/proxy-image", isAdmin, async (req, res) => {
+    const { url } = req.query;
+    if (!url) return res.status(400).json({ message: "url param required" });
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) return res.status(response.status).json({ message: "Failed to fetch image" });
+
+        const contentType = response.headers.get("content-type") || "image/jpeg";
+        res.setHeader("Content-Type", contentType);
+        res.setHeader("Cache-Control", "private, max-age=3600");
+
+        // pipe the stream directly to response
+        const buffer = await response.arrayBuffer();
+        res.send(Buffer.from(buffer));
+    } catch (err) {
+        console.error("[proxy-image]", err);
+        return res.status(500).json({ message: "Proxy failed" });
+    }
+});
+
+/* ════════════════════════════════════════════════════════════
+   eSewa INTEGRATION PLACEHOLDER
+   ════════════════════════════════════════════════════════════
+   TODO: Add eSewa initiate payment route here.
+   Docs: https://developer.esewa.com.np/
 
    router.post("/orders/:orderId/pay/esewa", isAuthenticated, async (req, res) => {
        const order = await Order.findById(req.params.orderId);
@@ -308,6 +401,7 @@ router.post("/orders/:orderId/upload-designs", isAuthenticated, async (req, res)
        };
        return res.json({ esewaUrl: "https://uat.esewa.com.np/epay/main", params });
    });
+   ════════════════════════════════════════════════════════════ */
 
 
 /* ════════════════════════════════════════════════════════════

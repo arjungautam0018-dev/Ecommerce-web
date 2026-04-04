@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login — ShopHub</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', 'Manrope', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(84,131,179,0.18) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 80%, rgba(2,16,36,0.12) 0%, transparent 55%),
+        linear-gradient(135deg, #0a0f1c 0%, #021024 60%, #052659 100%);
+    }
+
+    .card {
+      width: 100%;
+      max-width: 400px;
+      margin: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 20px;
+      padding: 40px 36px 36px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .logo-text {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #C1E8FF, #7DA0CA);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+    }
+
+    .logo-sub {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-top: 4px;
+    }
+
+    h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 28px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+
+    label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.04em;
+    }
+
+    input {
+      height: 48px;
+      padding: 0 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      color: #f1f5f9;
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input::placeholder { color: rgba(255,255,255,0.2); }
+
+    input:focus {
+      border-color: rgba(125,160,202,0.7);
+      box-shadow: 0 0 0 4px rgba(84,131,179,0.18);
+    }
+
+    .error-msg {
+      font-size: 0.82rem;
+      color: #f87171;
+      min-height: 18px;
+      margin-bottom: 4px;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      height: 50px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #5483B3, #7DA0CA);
+      color: #021024;
+      font-size: 0.95rem;
+      font-weight: 800;
+      font-family: inherit;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      transition: box-shadow 0.2s ease, transform 0.12s ease, opacity 0.2s ease;
+      box-shadow: 0 8px 28px rgba(84,131,179,0.35);
+      margin-top: 8px;
+    }
+
+    button[type="submit"]:hover    { box-shadow: 0 12px 36px rgba(84,131,179,0.5); transform: translateY(-1px); }
+    button[type="submit"]:active   { transform: scale(0.98); }
+    button[type="submit"]:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+    .divider {
+      height: 1px;
+      background: rgba(255,255,255,0.07);
+      margin: 28px 0 20px;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.3);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .back-link:hover { color: rgba(255,255,255,0.6); }
+
+    /* spinner inside button */
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(2,16,36,0.3);
+      border-top-color: #021024;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+
+    <div class="logo">
+      <span class="logo-text">ShopHub</span>
+      <span class="logo-sub">Admin Panel</span>
+    </div>
+
+    <h1>Welcome back</h1>
+    <p class="subtitle">Sign in to your admin account</p>
+
+    <form id="adminLoginForm" novalidate>
+
+      <div class="field">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="admin"
+          autocomplete="username"
+          required
+        >
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="••••••••"
+          autocomplete="current-password"
+          required
+        >
+      </div>
+
+      <p class="error-msg" id="errorMsg"></p>
+
+      <button type="submit" id="loginBtn">Sign In</button>
+
+    </form>
+
+    <div class="divider"></div>
+    <a href="/" class="back-link">← Back to ShopHub</a>
+
+  </div>
+
+  <script>
+    document.getElementById("adminLoginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
+      const errorMsg = document.getElementById("errorMsg");
+      const loginBtn = document.getElementById("loginBtn");
+
+      errorMsg.textContent = "";
+
+      if (!username || !password) {
+        errorMsg.textContent = "Please enter both username and password.";
+        return;
+      }
+
+      loginBtn.disabled   = true;
+      loginBtn.innerHTML  = `<span class="spinner"></span> Signing in…`;
+
+      try {
+        const res = await fetch("/api/admin/login", {
+          method:      "POST",
+          credentials: "include",
+          headers:     { "Content-Type": "application/json" },
+          body:        JSON.stringify({ username, password }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          errorMsg.textContent = data.message || "Invalid credentials.";
+          loginBtn.disabled    = false;
+          loginBtn.textContent = "Sign In";
+          return;
+        }
+
+        // success — redirect to admin dashboard
+        window.location.href = "/admin/dashboard";
+
+      } catch (err) {
+        errorMsg.textContent = "Something went wrong. Please try again.";
+        loginBtn.disabled    = false;
+        loginBtn.textContent = "Sign In";
+      }
+    });
+  </script>
+
+</body>
+</html>

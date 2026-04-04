@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login — ShopHub</title>
+  <link rel="stylesheet" href="/css/login_admin.css">
+</head>
+<body>
+
+  <div class="admin-login-wrap">
+
+    <div class="admin-card">
+
+      <div class="admin-brand">
+        <span class="brand-name">ShopHub</span>
+        <span class="brand-badge">Admin</span>
+      </div>
+
+      <h1 class="admin-title">Sign in</h1>
+      <p class="admin-sub">Admin access only</p>
+
+      <form id="adminForm" novalidate>
+
+        <div class="field">
+          <label for="adminUser">Username</label>
+          <input type="text" id="adminUser" name="username" placeholder="admin" autocomplete="username" required>
+        </div>
+
+        <div class="field">
+          <label for="adminPass">Password</label>
+          <input type="password" id="adminPass" name="password" placeholder="••••••••" autocomplete="current-password" required>
+        </div>
+
+        <p class="error-msg" id="errorMsg"></p>
+
+        <button type="submit" id="loginBtn">Sign In</button>
+
+      </form>
+
+      <a href="/" class="back-home">← Back to store</a>
+
+    </div>
+
+  </div>
+
+  <script src="/js/login_admin.js"></script>
+</body>
+</html>
