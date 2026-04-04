@@ -9,6 +9,8 @@ const { sendWhatsApp }    = require("../services/whatsapp.services");
 const { uploadLimiter }   = require("../middlewares/ratelimit.middleware");
 const upload = multer();
 
+const ADMIN_WHATSAPP = process.env.ADMIN_WHATSAPP;
+
 // ── Nepali BS orderId generator ────────────────────────────
 function getNepaliYear() {
     const now    = new Date();
