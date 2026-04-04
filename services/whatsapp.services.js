@@ -1,23 +1,23 @@
 const twilio = require("twilio");
 
-// Sandbox credentials — hardcoded for testing
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken  = process.env.TWILIO_AUTH_TOKEN;
-const client     = twilio(accountSid, authToken);
+const client = twilio(
+    process.env.TWILIO_ACCOUNT_SID,
+    process.env.TWILIO_AUTH_TOKEN
+);
 
 async function sendWhatsApp(to, body) {
-  try {
-    const message = await client.messages.create({
-      from: "whatsapp:+14155238886", // Twilio sandbox number
-      to: `whatsapp:${to}`,           // your phone number joined in sandbox
-      body
-    });
-    console.log("WhatsApp message sent:", message.sid);
-    return message;
-  } catch (err) {
-    console.error("Error sending WhatsApp message:", err);
-    throw err;
-  }
+    try {
+        const message = await client.messages.create({
+            from: "whatsapp:+14155238886", // Twilio sandbox number
+            to:   `whatsapp:${to}`,
+            body,
+        });
+        console.log("[WhatsApp] sent:", message.sid);
+        return message;
+    } catch (err) {
+        console.error("[WhatsApp] error:", err.message);
+        throw err;
+    }
 }
 
 module.exports = { sendWhatsApp };
