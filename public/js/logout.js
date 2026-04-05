@@ -1,19 +1,54 @@
 // Shared logout — used by all pages.
-// POSTs to /api/logout to destroy the session server-side,
-// then redirects to /login.
 async function logout() {
     try {
         await fetch("/api/logout", { method: "POST", credentials: "include" });
-    } catch (e) {
-        // even if fetch fails, redirect anyway
-    }
+    } catch (e) {}
     window.location.href = "/login";
 }
 
-// Make .logout-btn look identical to the quickies <a> links
 (function () {
     const style = document.createElement("style");
     style.textContent = `
+        /* ── Page loading spinner ── */
+        #_pageLoader {
+            position: fixed;
+            inset: 0;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(6px);
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            transition: opacity 0.35s ease;
+        }
+        body.theme-dark #_pageLoader {
+            background: rgba(10,15,28,0.94);
+        }
+        #_pageLoader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        ._loader-ring {
+            width: 44px;
+            height: 44px;
+            border: 3px solid rgba(84,131,179,0.2);
+            border-top-color: #5483B3;
+            border-radius: 50%;
+            animation: _spin 0.75s linear infinite;
+        }
+        ._loader-text {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: rgba(2,16,36,0.45);
+            font-family: 'Manrope', 'Poppins', sans-serif;
+            letter-spacing: 0.04em;
+        }
+        body.theme-dark ._loader-text { color: rgba(229,231,235,0.45); }
+        @keyframes _spin { to { transform: rotate(360deg); } }
+
+        /* ── logout button ── */
         .logout-btn {
             display: flex;
             align-items: center;
@@ -35,7 +70,7 @@ async function logout() {
         body.theme-dark .logout-btn { color: #f87171; background: none; border-bottom-color: rgba(255,255,255,0.1); }
         body.theme-dark .logout-btn:hover { background: rgba(255,255,255,0.06); border-radius: 8px; }
 
-        /* nav login button — shown when not logged in */
+        /* nav login button */
         .nav-login-btn {
             display: inline-flex;
             align-items: center;
@@ -52,15 +87,36 @@ async function logout() {
             transition: box-shadow 0.2s ease, transform 0.12s ease;
             box-shadow: 0 4px 14px rgba(2,16,36,0.25);
         }
-        .nav-login-btn:hover {
-            box-shadow: 0 8px 22px rgba(2,16,36,0.35);
-            transform: translateY(-1px);
-        }
+        .nav-login-btn:hover { box-shadow: 0 8px 22px rgba(2,16,36,0.35); transform: translateY(-1px); }
         .nav-login-btn:active { transform: scale(0.97); }
-        body.theme-dark .nav-login-btn {
-            background: linear-gradient(135deg, #2563eb, #1e3a8a);
-            box-shadow: 0 4px 14px rgba(37,99,235,0.35);
-        }
+        body.theme-dark .nav-login-btn { background: linear-gradient(135deg, #2563eb, #1e3a8a); }
     `;
     document.head.appendChild(style);
+
+    // inject spinner into body as soon as DOM is available
+    function injectLoader() {
+        const loader = document.createElement("div");
+        loader.id = "_pageLoader";
+        loader.innerHTML = `<div class="_loader-ring"></div><span class="_loader-text">Loading…</span>`;
+        document.body.prepend(loader);
+
+        // hide after page fully loads (or max 4s)
+        const hide = () => {
+            loader.classList.add("hidden");
+            setTimeout(() => loader.remove(), 400);
+        };
+
+        if (document.readyState === "complete") {
+            hide();
+        } else {
+            window.addEventListener("load", hide);
+            setTimeout(hide, 4000); // fallback
+        }
+    }
+
+    if (document.body) {
+        injectLoader();
+    } else {
+        document.addEventListener("DOMContentLoaded", injectLoader);
+    }
 })();
