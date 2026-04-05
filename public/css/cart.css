@@ -1356,6 +1356,22 @@ body.theme-dark .toast-icon { background: #22c55e; }
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+.co-addr-select {
+  flex: 1;
+  height: 36px;
+  padding: 0 10px;
+  border-radius: 10px;
+  background: rgba(243,244,246,0.9);
+  border: 1px solid rgba(2,16,36,0.07);
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+  color: #021024;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
 .co-addr-field:hover {
   border-color: rgba(84,131,179,0.4);
   background: #fff;
@@ -1476,6 +1492,12 @@ body.theme-dark .co-addr-field {
 
 body.theme-dark .co-addr-field:hover  { background: #1f2937; border-color: rgba(125,160,202,0.4); }
 body.theme-dark .co-addr-field:focus  { border-color: rgba(125,160,202,0.7); box-shadow: 0 0 0 3px rgba(125,160,202,0.18); }
+
+body.theme-dark .co-addr-select {
+  background: #111827;
+  border-color: rgba(255,255,255,0.10);
+  color: #f3f4f6;
+}
 
 body.theme-dark .co-pay-btn {
   background: rgba(255,255,255,0.05);

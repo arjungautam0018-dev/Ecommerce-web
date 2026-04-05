@@ -548,11 +548,17 @@ function buildCheckoutPopup() {
 
     const continueBtn = document.getElementById("_coContinue");
 
-    // collect address from editable fields
+    // collect address — selects for province/district/municipality, contenteditable for rest
     const deliveryAddress = {};
-    overlay.querySelectorAll(".co-addr-field[data-key]").forEach(el => {
-      deliveryAddress[el.dataset.key] = el.textContent.trim();
-    });
+    const grid = document.getElementById("_coAddressGrid");
+    if (grid) {
+      grid.querySelectorAll(".co-addr-select[data-key]").forEach(el => {
+        deliveryAddress[el.dataset.key] = el.value;
+      });
+      grid.querySelectorAll(".co-addr-field[data-key]").forEach(el => {
+        deliveryAddress[el.dataset.key] = el.textContent.trim();
+      });
+    }
 
     continueBtn.disabled    = true;
     continueBtn.textContent = "Placing order…";
@@ -610,34 +616,98 @@ async function loadCheckoutAddress(overlay) {
   const grid = document.getElementById("_coAddressGrid");
   if (!grid) return;
 
+  // load saved address
+  let addr = {};
   try {
     const res  = await fetch("/api/address/fetch", { credentials: "include" });
     const data = await res.json();
-    const addr = data.deliveryAddress || {};
+    addr = data.deliveryAddress || {};
+  } catch (e) { /* use empty addr */ }
 
-    const fields = [
-      { key: "province",       label: "Province" },
-      { key: "district",       label: "District" },
-      { key: "municipality",   label: "Municipality" },
-      { key: "ward",           label: "Ward No." },
-      { key: "addressDetails", label: "Address Details" },
-    ];
+  // load nepal geo data
+  let addressData = [];
+  try {
+    const res  = await fetch("/api/nepal-data");
+    const data = await res.json();
+    addressData = data.provinceList || [];
+  } catch (e) { /* ignore */ }
 
-    grid.innerHTML = fields.map(f => `
-      <div class="co-addr-row">
-        <span class="co-addr-label">${f.label}</span>
-        <div
-          class="co-addr-field"
-          data-key="${f.key}"
-          contenteditable="true"
-          spellcheck="false"
-        >${addr[f.key] || "—"}</div>
-      </div>
-    `).join("");
+  // build province options
+  const provinceOptions = addressData.map(p =>
+    `<option value="${p.name}" ${addr.province === p.name ? "selected" : ""}>${p.name}</option>`
+  ).join("");
 
-  } catch (err) {
-    grid.innerHTML = `<div class="co-addr-loading">Could not load address. You can type it below.</div>`;
-  }
+  // build district options for saved province
+  const savedProvince = addressData.find(p => p.name === addr.province);
+  const districtOptions = savedProvince
+    ? savedProvince.districtList.map(d =>
+        `<option value="${d.name}" ${addr.district === d.name ? "selected" : ""}>${d.name}</option>`
+      ).join("")
+    : "";
+
+  // build municipality options for saved district
+  const savedDistrict = savedProvince?.districtList.find(d => d.name === addr.district);
+  const municipalityOptions = savedDistrict
+    ? savedDistrict.municipalityList.map(m =>
+        `<option value="${m.name}" ${addr.municipality === m.name ? "selected" : ""}>${m.name}</option>`
+      ).join("")
+    : "";
+
+  grid.innerHTML = `
+    <div class="co-addr-row">
+      <span class="co-addr-label">Province</span>
+      <select class="co-addr-select" id="_coProvince" data-key="province">
+        <option value="">Select Province</option>
+        ${provinceOptions}
+      </select>
+    </div>
+    <div class="co-addr-row">
+      <span class="co-addr-label">District</span>
+      <select class="co-addr-select" id="_coDistrict" data-key="district">
+        <option value="">Select District</option>
+        ${districtOptions}
+      </select>
+    </div>
+    <div class="co-addr-row">
+      <span class="co-addr-label">Municipality</span>
+      <select class="co-addr-select" id="_coMunicipality" data-key="municipality">
+        <option value="">Select Municipality</option>
+        ${municipalityOptions}
+      </select>
+    </div>
+    <div class="co-addr-row">
+      <span class="co-addr-label">Ward No.</span>
+      <div class="co-addr-field" data-key="ward" contenteditable="true" spellcheck="false">${addr.ward || ""}</div>
+    </div>
+    <div class="co-addr-row">
+      <span class="co-addr-label">Address Details</span>
+      <div class="co-addr-field" data-key="addressDetails" contenteditable="true" spellcheck="false">${addr.addressDetails || ""}</div>
+    </div>
+  `;
+
+  const provinceEl     = grid.querySelector("#_coProvince");
+  const districtEl     = grid.querySelector("#_coDistrict");
+  const municipalityEl = grid.querySelector("#_coMunicipality");
+
+  // cascade: province → district
+  provinceEl.addEventListener("change", () => {
+    const province = addressData.find(p => p.name === provinceEl.value);
+    districtEl.innerHTML     = `<option value="">Select District</option>`;
+    municipalityEl.innerHTML = `<option value="">Select Municipality</option>`;
+    province?.districtList.forEach(d => {
+      districtEl.innerHTML += `<option value="${d.name}">${d.name}</option>`;
+    });
+  });
+
+  // cascade: district → municipality
+  districtEl.addEventListener("change", () => {
+    const province = addressData.find(p => p.name === provinceEl.value);
+    const district = province?.districtList.find(d => d.name === districtEl.value);
+    municipalityEl.innerHTML = `<option value="">Select Municipality</option>`;
+    district?.municipalityList.forEach(m => {
+      municipalityEl.innerHTML += `<option value="${m.name}">${m.name}</option>`;
+    });
+  });
 }
 
 function setupCheckout() {

@@ -170,10 +170,34 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Prevent form submission and show toast
   const form = document.getElementById("contactForm");
-  form.addEventListener("submit", function(event) {
-    event.preventDefault(); // ✅ Prevent page refresh / navigation
-    showToast("✅ Message sent successfully");
+  form.addEventListener("submit", async function(event) {
+    event.preventDefault();
 
-    // Optional: clear form fields
-    form.reset();
+    const name    = form.querySelector('[name="name"]')?.value.trim();
+    const email   = form.querySelector('[name="email"]')?.value.trim();
+    const subject = form.querySelector('[name="subject"]')?.value.trim();
+    const message = form.querySelector('[name="message"]')?.value.trim();
+
+    const submitBtn = form.querySelector('[type="submit"]');
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Sending…"; }
+
+    try {
+      const res = await fetch("/api/contact", {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify({ name, email, subject, message }),
+      });
+
+      if (res.ok) {
+        showToast("✅ Message sent successfully");
+        form.reset();
+      } else {
+        const data = await res.json().catch(() => ({}));
+        showToast("❌ " + (data.error || data.message || "Failed to send message"));
+      }
+    } catch (err) {
+      showToast("❌ Network error. Please try again.");
+    } finally {
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "Send Message"; }
+    }
   });

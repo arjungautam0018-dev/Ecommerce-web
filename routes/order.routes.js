@@ -67,6 +67,7 @@ router.post("/orders/place", isAuthenticated, async (req, res) => {
 
         // ── WhatsApp: new order placed ─────────────────────
         try {
+            console.log("[order/place] sending WhatsApp to:", ADMIN_WHATSAPP);
             const itemList = order.items.map(i => `  • ${i.title} x${i.quantity}`).join("\n");
             const addr     = order.deliveryAddress;
             const addrStr  = [addr.province, addr.district, addr.municipality, addr.ward, addr.addressDetails]

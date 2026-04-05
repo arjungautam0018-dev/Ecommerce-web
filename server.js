@@ -138,6 +138,11 @@ app.get("/login", (req,res)=>{
     res.sendFile(__dirname+"/public/html/login.html")
 });
 
+//Serve forgot password page
+app.get("/forgot-password", (req,res)=>{
+    res.sendFile(__dirname+"/public/html/forgot_password.html")
+});
+
 //Serve admin login
 app.get("/admin/login", (req,res)=>{
     res.sendFile(__dirname+"/public/html/admin/login.html")

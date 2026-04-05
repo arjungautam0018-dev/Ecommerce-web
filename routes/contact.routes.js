@@ -16,17 +16,32 @@ router.post("/contact", async (req, res) => {
         const contact = new Contact({ name, email, subject, message });
         await contact.save();
 
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS }
-        });
+        // send email — non-blocking, failure won't affect the response
+        try {
+            const transporter = nodemailer.createTransport({
+                host:   "smtp.gmail.com",
+                port:   465,
+                secure: true,
+                auth: {
+                    user: process.env.EMAIL_USER,
+                    pass: process.env.EMAIL_PASS,
+                },
+            });
 
-        await transporter.sendMail({
-            from:    `"ShopHub Contact" <${process.env.EMAIL_USER}>`,
-            to:      "arjungautam0018@gmail.com",
-            subject: `New Contact: ${subject}`,
-            html:    `<h3>New Message</h3><p><b>Name:</b> ${name}</p><p><b>Email:</b> ${email}</p><p><b>Message:</b><br>${message}</p>`
-        });
+            await transporter.sendMail({
+                from:    `"ShopHub Contact" <${process.env.EMAIL_USER}>`,
+                to:      "arjungautam0018@gmail.com",
+                replyTo: email,
+                subject: `New Contact: ${subject}`,
+                html:    `<h3>New Message from ${name}</h3>
+                          <p><b>Email:</b> ${email}</p>
+                          <p><b>Subject:</b> ${subject}</p>
+                          <p><b>Message:</b><br>${message}</p>`,
+            });
+            console.log("[email] contact notification sent");
+        } catch (emailErr) {
+            console.error("[email] contact failed — code:", emailErr.code, "message:", emailErr.message);
+        }
 
         res.status(201).json({ message: "Message sent successfully" });
     } catch (error) {
