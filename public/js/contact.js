@@ -148,9 +148,7 @@ async function setupThemeToggle() {
 
 document.addEventListener("DOMContentLoaded", async () => {
   setupMenuClose();
-  setupContactForm();
-
-  await setupThemeToggle(); // 👈 important
+  await setupThemeToggle();
 });
 
 
