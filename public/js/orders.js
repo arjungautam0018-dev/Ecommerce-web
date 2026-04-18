@@ -19,12 +19,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     const themeBtn = document.querySelector(".theme-toggle");
     if (themeBtn) {
         const saved = localStorage.getItem("theme");
-        if (saved === "dark") document.body.classList.add("dark");
+        if (saved === "dark") document.body.classList.add("theme-dark");
 
         themeBtn.addEventListener("click", (e) => {
             e.preventDefault();
-            document.body.classList.toggle("dark");
-            localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
+            document.body.classList.toggle("theme-dark");
+            localStorage.setItem("theme", document.body.classList.contains("theme-dark") ? "dark" : "light");
         });
     }
 

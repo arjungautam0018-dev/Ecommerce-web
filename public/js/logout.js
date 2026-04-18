@@ -6,6 +6,16 @@ async function logout() {
     window.location.href = "/login";
 }
 
+// Apply saved theme immediately to prevent flash
+(function () {
+    const t = localStorage.getItem("theme");
+    if (t === "dark") document.documentElement.classList.add("theme-dark");
+    // also apply to body once DOM is ready
+    document.addEventListener("DOMContentLoaded", () => {
+        if (t === "dark") document.body.classList.add("theme-dark");
+    });
+})();
+
 (function () {
     const style = document.createElement("style");
     style.textContent = `

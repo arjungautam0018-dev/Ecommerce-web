@@ -11,6 +11,7 @@
   <meta property="og:description" content="Nepal's trusted store for custom frames, trophies, medals, stamps and office essentials.">
   <meta property="og:type" content="website">
   <meta name="robots" content="index, follow">
+  <link rel="stylesheet" href="/css/theme.css">
   <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
@@ -95,6 +96,8 @@
 
   <div class="main-content">
     <section class="hero-banner">
+      <button class="carousel-btn prev" type="button" aria-label="Previous image">&lt;</button>
+      <button class="carousel-btn next" type="button" aria-label="Next image">&gt;</button>
       <div class="hero-inner">
         <div class="hero-text">
           <p class="hero-pill">New in • Curated for you</p>
@@ -113,17 +116,20 @@
         </div>
         <div class="hero-media">
           <div class="hero-slider">
-            <div class="carousel-layer active">
-              <img src="/resources/frame1.jpg" alt="Featured custom frame" class="hero-main-image">
+            <div class="carousel-layer active" data-title="Custom Frame" data-price="रू.2,499" data-desc="Personalized frame for photos or artwork.">
+              <img src="/resources/frame1.jpg" alt="Custom Frame" class="hero-main-image">
             </div>
-            <div class="carousel-layer">
-              <img src="/resources/frame3.webp" alt="Featured event frame" class="hero-main-image">
+            <div class="carousel-layer" data-title="Event Frame" data-price="रू.2,999" data-desc="Modern showcase frame for event photos.">
+              <img src="/resources/frame3.webp" alt="Event Frame" class="hero-main-image">
             </div>
-            <div class="carousel-layer">
-              <img src="/resources/stamp.jpg" alt="Featured stamp set" class="hero-main-image">
+            <div class="carousel-layer" data-title="Stamp Set" data-price="रू.1,299" data-desc="Official stamp set for office use.">
+              <img src="/resources/stamp.jpg" alt="Stamp Set" class="hero-main-image">
             </div>
-            <button class="carousel-btn prev" type="button" aria-label="Previous image">&lt;</button>
-            <button class="carousel-btn next" type="button" aria-label="Next image">&gt;</button>
+          </div>
+          <div class="hero-slide-info">
+            <span class="hero-slide-title"></span>
+            <span class="hero-slide-price"></span>
+            <span class="hero-slide-desc"></span>
           </div>
         </div>
       </div>
@@ -211,6 +217,7 @@
 <div id="toast-container"></div>
   <script src="/js/navbar.js"></script>
   <script src="/js/logout.js"></script>
+  <script src="/js/hero.js"></script>
   <script src="/js/index.js"></script>
 </body>
 </html>

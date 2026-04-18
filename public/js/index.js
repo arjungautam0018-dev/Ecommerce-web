@@ -323,9 +323,9 @@ function setupMenuOutsideClick() {
 }
 
 // ============================================================
-// HERO SLIDER
+// HERO SLIDER — moved to /js/hero.js
 // ============================================================
-
+/*
 function setupHeroSlider() {
   const layers = document.querySelectorAll(".hero-slider .carousel-layer");
   const prevBtn = document.querySelector(".hero-slider .carousel-btn.prev");
@@ -352,7 +352,7 @@ function setupHeroSlider() {
   }
 
   function startAutoPlay() {
-    autoPlayTimer = setInterval(nextSlide, 4000);
+    autoPlayTimer = setInterval(nextSlide, 6000);
   }
 
   function resetAutoPlay() {
@@ -365,6 +365,7 @@ function setupHeroSlider() {
 
   startAutoPlay();
 }
+*/
 
 
 // ============================================================
@@ -397,5 +398,5 @@ document.addEventListener("DOMContentLoaded", async () => {
   setupAddToCartButtons();
   setupBuyNowButtons();
   setupThemeToggle();
-  setupHeroSlider();
+  // setupHeroSlider(); — now handled by hero.js
 });

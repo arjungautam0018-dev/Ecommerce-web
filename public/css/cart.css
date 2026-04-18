@@ -72,7 +72,7 @@ body {
 .nav-bar-right {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
   position: relative;
 }
 
@@ -82,11 +82,11 @@ body {
   height: 30px;
   stroke-width: 1.6;
   cursor: pointer;
-  transition: transform 0.15s ease;
+  transition: opacity 0.15s ease;
 }
 
 .icons-svg-nav:active {
-  transform: scale(1.15);
+  opacity: 0.75;
 }
 
 
@@ -97,8 +97,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 34px;
+  height: 34px;
   padding: 0;
   cursor: pointer;
 }
@@ -106,11 +106,11 @@ body {
 /* Dropdown panel */
 .quickies {
   position: absolute;
-  top: 60px;
+  top: 50px;
   right: 10px;
   z-index: 999;
 
-  width: 180px;
+  width: 220px;
   display: flex;
   flex-direction: column;
 
@@ -120,14 +120,13 @@ body {
 
   /* Hidden by default */
   opacity: 0;
-  transform: translateY(-10px);
   pointer-events: none;
   transition: all 0.25s ease;
 }
 
 .quickies.show {
   opacity: 1;
-  transform: translateY(0);
+  top: 60px;
   pointer-events: auto;
 }
 
@@ -136,12 +135,10 @@ body {
   display: flex;
   align-items: center;
   gap: 11px;
-
   padding: 14px 16px;
-  font-size: 1.1rem;
+  font-size: 0.96rem;
   text-decoration: none;
   color: #333;
-
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   transition: background 0.15s ease;
 }
@@ -157,9 +154,8 @@ body {
 
 /* Icon inside each menu link */
 .menu-item-icon {
-  width: 16px;
-  height: 16px;
-  transform: scale(1.5);
+  width: 19px;
+  height: 19px;
 }
 
 
@@ -516,14 +512,15 @@ body {
 }
 
 #proceed-checkout {
-  background: #020617;
+  background: linear-gradient(135deg, #f0b429, #c9920a);
   color: #fff;
+  box-shadow: 0 4px 14px rgba(201,146,10,0.28);
 }
 
-#proceed-checkout:hover  { background: #031738; }
+#proceed-checkout:hover { opacity: 0.88; box-shadow: 0 6px 20px rgba(201,146,10,0.38); }
 
-#continue-shopping       { background: #f3f4f6; color: #111; }
-#continue-shopping:hover { background: #ddd; }
+#continue-shopping       { background: #f5f5f0; color: #1a1a1a; border: 1px solid rgba(0,0,0,0.12); }
+#continue-shopping:hover { background: #ebebе5; }
 
 /* Checkout prices */
 .checkout-line-price,
@@ -1038,8 +1035,8 @@ body.theme-dark #total,
 body.theme-dark .total-line              { color: #f9fafb; }
 
 /* Checkout buttons */
-body.theme-dark #proceed-checkout       { background: linear-gradient(135deg, #2563eb, #1e3a8a); color: #fff; }
-body.theme-dark #proceed-checkout:hover { background: linear-gradient(135deg, #3b82f6, #1e40af); }
+body.theme-dark #proceed-checkout       { background: linear-gradient(135deg, #d4a017, #a87508); color: #fff; }
+body.theme-dark #proceed-checkout:hover { opacity: 0.88; }
 
 body.theme-dark #continue-shopping       { background: rgba(255, 255, 255, 0.08); color: #e5e7eb; }
 body.theme-dark #continue-shopping:hover { background: rgba(255, 255, 255, 0.15); }

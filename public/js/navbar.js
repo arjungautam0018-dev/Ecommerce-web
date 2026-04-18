@@ -31,6 +31,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             // hide cart icon
             if (cartLink) cartLink.style.display = "none";
+
+            // hide logout button in quickies
+            document.querySelectorAll(".logout-btn").forEach(btn => btn.style.display = "none");
         }
 
     } catch (e) {

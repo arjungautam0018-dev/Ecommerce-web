@@ -50,12 +50,12 @@ body {
     stroke-width: 1.6;
 
     cursor: pointer;
-    transition: transform 0.15s ease;
+    transition: opacity 0.15s ease;
 }
 
 /* Tap effect */
 .icons-svg-nav:active {
-    transform: scale(1.15);
+    opacity: 0.75;
 }
 
 /* Hamburger */
@@ -64,8 +64,8 @@ body {
     align-items: center;
     cursor: pointer;
       justify-content: center; /* center the SVG */
-    width: 24px;  /* control container width */
-    height: 24px; /* control container height */
+    width: 34px;  /* control container width */
+    height: 34px; /* control container height */
     padding: 0;   /* remove any extra spacing */
     cursor: pointer;
 }
@@ -76,18 +76,18 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
+    width: 34px;
+    height: 34px;
     cursor: pointer;
 }
 
 /* Dropdown menu */
 .quickies {
     position: absolute;
-    top: 60px;
+    top: 50px;
     right: 10px;
 
-    width: 200px;
+    width: 220px;
     background: #fff;
 
     border-radius: 12px;
@@ -97,7 +97,6 @@ body {
     flex-direction: column;
 
     opacity: 0;
-    transform: translateY(-10px);
     pointer-events: none;
 
     transition: all 0.25s ease;
@@ -106,7 +105,7 @@ body {
 
 .quickies.show {
     opacity: 1;
-    transform: translateY(0);
+    top: 60px;
     pointer-events: auto;
 }
 
@@ -115,7 +114,7 @@ body {
 /* Links */
 .quickies a {
     padding: 14px 16px;
-    font-size: 0.8rem;
+    font-size: 0.96rem;
     text-decoration: none;
     color: #333;
 
@@ -144,7 +143,6 @@ body {
 .menu-item-icon {
     width: 16px;
     height: 16px;
-    transform: scale(1.5);
 }
 .category-page { padding: 18px 14px 24px; }
 .category-header h2 { margin: 0; font-size: 1.55rem; }
@@ -220,13 +218,8 @@ body {
 .quick-add-btn { background: #0f4c81; color: #fff; border-color: #0f4c81; }
 .quick-add-btn:hover { background: #1f6aa8; }
 
-.quickies a {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.menu-item-icon { width: 16px; height: 16px; }
+/* menu-item-icon size handled by theme.css */
+.menu-item-icon { width: 19px; height: 19px; }
 
 /* Footer base */
 .footers {
@@ -530,21 +523,9 @@ body.theme-dark .quickies a:hover {
 
 
 /* request-based overrides */
-.icons-svg-nav {
-  width: 24px;
-  height: 24px;
-}
-
-.nav-bar-right > a:first-child {
-  margin-right: 8px;
-}
-
-
-
-.menu-item-icon {
-  width: 16px;
-  height: 16px;
-}
+.icons-svg-nav { width: 30px !important; height: 30px !important; }
+.nav-bar-right > a:first-child { margin-right: 8px; }
+.menu-item-icon { width: 19px !important; height: 19px !important; }
 
 
 

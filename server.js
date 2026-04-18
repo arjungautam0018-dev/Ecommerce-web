@@ -38,7 +38,23 @@ app.use("/api/contact",                  contactLimiter);
 
 //Connect to database
 const {connectDb_submit} = require("./db/db");
-connectDb_submit();
+connectDb_submit().then(async () => {
+    // Auto-seed admin from env vars if no admin exists
+    try {
+        const Admin = require("./models/admin.models");
+        const count = await Admin.countDocuments();
+        if (count === 0 && process.env.ADMIN_USERNAME && process.env.ADMIN_PASSWORD) {
+            await Admin.create({
+                username: process.env.ADMIN_USERNAME,
+                password: process.env.ADMIN_PASSWORD, // pre-save hook hashes it
+                role: "superadmin"
+            });
+            console.log(`[admin] Seeded admin: ${process.env.ADMIN_USERNAME}`);
+        }
+    } catch (e) {
+        console.error("[admin seed]", e.message);
+    }
+});
 
 //Session Setup
 

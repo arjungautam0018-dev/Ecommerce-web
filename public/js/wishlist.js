@@ -144,19 +144,21 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         wishlistItems.forEach(item => {
-            const card = document.createElement("article");
-            card.className    = "wishlist-card";
+            const card = document.createElement("div");
+            card.className     = "product-card";
             card.dataset.title = item.title;
             card.innerHTML = `
-                <img src="${item.img || ''}" alt="${item.title}" loading="lazy">
-                <div class="wishlist-card-body">
+                <div class="product-card-thumb">
+                    <img class="products_images" src="${item.img || ''}" alt="${item.title}" loading="lazy">
+                </div>
+                <div class="product-inform">
                     <h3>${item.title}</h3>
-                    <p>${item.desc || "Saved item from your product list."}</p>
-                    <div class="wishlist-price">Rs.${(item.price || 0).toLocaleString()}</div>
-                    <div class="wishlist-actions">
-                        <button class="move-cart-btn" data-title="${item.title}">Add to Cart</button>
-                        <button class="remove-btn"    data-title="${item.title}">Remove</button>
-                    </div>
+                    <p class="desc-product">${item.desc || "Saved item from your product list."}</p>
+                    <p class="price-product">Rs.${(item.price || 0).toLocaleString()}</p>
+                </div>
+                <div class="card-actions">
+                    <button type="button" class="add-to-cart-btn move-cart-btn" data-title="${item.title}">Add to Cart</button>
+                    <button type="button" class="buy-now-btn remove-btn"        data-title="${item.title}">Remove</button>
                 </div>
             `;
             root.appendChild(card);
