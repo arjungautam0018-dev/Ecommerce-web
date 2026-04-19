@@ -231,69 +231,78 @@ body {
 }
 
 /* DARK MODE ROOT */
-body.dark {
+body.theme-dark {
   background: #0f172a;
   color: #e2e8f0;
 }
 
 /* NAVBAR */
-body.dark .navbar {
+body.theme-dark .navbar {
   background: linear-gradient(180deg, #0f172a, #020617);
   border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
 /* LOGO */
-body.dark .gradient-text {
+body.theme-dark .gradient-text {
   background: none;
   -webkit-text-fill-color: #f9fafb;
   color: #f9fafb;
 }
 
 /* ICONS */
-body.dark .icons-svg-nav {
+body.theme-dark .icons-svg-nav {
   stroke: #e2e8f0;
 }
 
 /* DROPDOWN */
-body.dark .quickies {
+body.theme-dark .quickies {
   background: #1e293b;
   box-shadow: 0 8px 24px rgba(0,0,0,0.4);
 }
 
-body.dark .quickies a {
+body.theme-dark .quickies a {
   color: #e2e8f0;
   border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-body.dark .quickies a:hover {
+body.theme-dark .quickies a:hover {
   background: #334155;
 }
 
 /* CARDS */
-body.dark .order-card {
+body.theme-dark .order-card {
   background: #1e293b;
+  border-color: rgba(255,255,255,0.08);
   box-shadow: 0 6px 18px rgba(0,0,0,0.4);
 }
 
 /* TEXT */
-body.dark .details {
+body.theme-dark .details {
   color: #94a3b8;
 }
 
-body.dark .order-info {
-  color: #cbd5f5;
+body.theme-dark .order-info {
+  color: #cbd5e1;
+}
+
+body.theme-dark .orders-page h2 {
+  color: #f1f5f9;
+}
+
+body.theme-dark .name {
+  color: #f1f5f9;
 }
 
 /* STATUS COLORS (slightly softer for dark) */
-body.dark .status.pending {
+body.theme-dark .status.pending {
   color: #facc15;
 }
 
-body.dark .payment.paid {
+body.theme-dark .payment.paid {
   color: #22c55e;
 }
 
-body.dark .payment.cash {
+body.theme-dark .payment.cash {
   color: #ef4444;
 }
 

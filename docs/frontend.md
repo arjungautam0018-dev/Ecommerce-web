@@ -116,3 +116,50 @@ Orders use a Nepali Bikram Sambat (BS) year-based ID: `2082-0`, `2082-1`, `2082-
 3. Backend uploads to Cloudflare R2 and returns public URLs
 4. URLs are saved to the order in MongoDB
 5. Admin can view and download all design images from the order detail popup in the dashboard (downloaded as a ZIP)
+
+---
+
+## Image Ratios
+
+All product images across every page use the same **4:3 ratio** for thumbnails and **1:1 ratio** for square card thumbs. Upload images at the correct ratio to avoid cropping or distortion.
+
+### Standard Ratios
+
+| Context | Ratio | CSS Rule | Notes |
+|---------|-------|----------|-------|
+| Product card thumb (home, category, wishlist) | **1:1** | `aspect-ratio: 1 / 1` + `object-fit: cover` | Square. Use 800×800px minimum |
+| Hero slider image | **4:3** | `max-width: 400px; height: 340px` + `object-fit: contain` | Shown full without cropping |
+| Cart item thumbnail | **1:1** | `60×60px` fixed + `object-fit: cover` | Small square preview |
+| Order item thumbnail | **1:1** | `50×50px` fixed + `object-fit: cover` | Small square preview |
+| Checkout upload preview | **1:1** | `aspect-ratio: 1` + `object-fit: cover` | User-uploaded design file |
+| Admin order popup image | **1:1** | `80×80px` fixed + `object-fit: cover` | Design file preview |
+
+### Recommended Upload Sizes
+
+| Image Type | Recommended Size | Format |
+|------------|-----------------|--------|
+| Product photo | 800×800px | `.webp` or `.jpg` |
+| Hero banner image | 800×600px | `.webp` or `.jpg` |
+| Custom design upload | Any — shown as preview | `.jpg`, `.png`, `.webp` |
+
+### How It Works in CSS
+
+Product card thumbs use a CSS custom property so the ratio can be changed globally:
+
+```css
+.products,
+.products2 {
+  --product-thumb-aspect: 1 / 1;
+}
+
+.product-card-thumb {
+  aspect-ratio: var(--product-thumb-aspect, 1 / 1);
+  object-fit: cover;
+}
+```
+
+To change all product card images to 4:3 sitewide, just update the variable:
+
+```css
+.products, .products2 { --product-thumb-aspect: 4 / 3; }
+```

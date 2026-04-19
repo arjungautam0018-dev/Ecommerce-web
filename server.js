@@ -65,7 +65,7 @@ app.use(
     saveUninitialized: false, 
     cookie: {
       httpOnly: true, // prevents browser From accessing cookie
-      secure: false, 
+      secure: process.env.NODE_ENV === "production", 
       maxAge: 1000 * 60 * 60, //Limit of 1 hour
       sameSite: "strict",
     },

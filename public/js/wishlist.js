@@ -19,50 +19,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 /* ============================================================
    SECTION 2 — THEME TOGGLE
-   Reads from localStorage, applies on load, toggles on click.
+   Handled by /js/theme.js
    ============================================================ */
-
-    const ICONS = {
-        sun: `<svg class="menu-item-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g fill="#ffe62e">
-                <path d="M20.5 59.7l7-7.2c-2.5-.5-4.8-1.5-6.9-2.9l-.1 10.1"/>
-                <path d="M43.5 4.3l-7 7.2c2.5.5 4.8 1.5 6.9 2.9l.1-10.1"/>
-                <path d="M4.3 43.5l10.1-.1C13 41.3 12 39 11.5 36.5l-7.2 7"/>
-                <path d="M59.7 20.5l-10.1.1c1.3 2.1 2.3 4.4 2.9 6.9l7.2-7"/>
-            </g>
-            <circle cx="32" cy="32" r="19" fill="#ffce31"/>
-        </svg>`,
-        moon: `<svg class="menu-item-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
-        </svg>`,
-    };
-
-    const themeButton = document.querySelector(".theme-toggle");
-    if (themeButton) {
-        const iconContainer = themeButton.querySelector(".icon");
-        const savedTheme    = localStorage.getItem("theme") ||
-            (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-
-        applyTheme(savedTheme);
-
-        themeButton.addEventListener("click", (e) => {
-            e.preventDefault();
-            document.body.classList.toggle("theme-dark");
-            const newTheme = document.body.classList.contains("theme-dark") ? "dark" : "light";
-            localStorage.setItem("theme", newTheme);
-            applyTheme(newTheme);
-        });
-
-        function applyTheme(theme) {
-            if (theme === "dark") {
-                document.body.classList.add("theme-dark");
-                if (iconContainer) iconContainer.innerHTML = ICONS.moon;
-            } else {
-                document.body.classList.remove("theme-dark");
-                if (iconContainer) iconContainer.innerHTML = ICONS.sun;
-            }
-        }
-    }
 
 
 /* ============================================================

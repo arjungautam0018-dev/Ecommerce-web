@@ -85,21 +85,26 @@ async function logout() {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 8px 16px;
-            background: linear-gradient(135deg, #021024, #5483B3);
+            height: 36px;
+            padding: 0 24px;
+            background: linear-gradient(135deg, #f0b429, #c9920a);
             color: #fff !important;
             font-size: 0.85rem;
             font-weight: 700;
             font-family: inherit;
-            border-radius: 10px;
+            border-radius: 999px;
             text-decoration: none;
-            letter-spacing: 0.02em;
-            transition: box-shadow 0.2s ease, transform 0.12s ease;
-            box-shadow: 0 4px 14px rgba(2,16,36,0.25);
+            white-space: nowrap;
+            border: none;
+            transition: box-shadow 0.15s ease, transform 0.15s ease;
+            box-shadow: 0 3px 12px rgba(201,146,10,0.4);
         }
-        .nav-login-btn:hover { box-shadow: 0 8px 22px rgba(2,16,36,0.35); transform: translateY(-1px); }
+        .nav-login-btn:hover { box-shadow: 0 6px 18px rgba(201,146,10,0.5); transform: translateY(-1px); }
         .nav-login-btn:active { transform: scale(0.97); }
-        body.theme-dark .nav-login-btn { background: linear-gradient(135deg, #2563eb, #1e3a8a); }
+        body.theme-dark .nav-login-btn { background: linear-gradient(135deg, #f0b429, #c9920a); color: #fff !important; }
+        @media (min-width: 768px) {
+            .nav-login-btn { height: 40px; padding: 0 36px; font-size: 0.9rem; }
+        }
     `;
     document.head.appendChild(style);
 

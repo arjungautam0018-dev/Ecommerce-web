@@ -221,6 +221,22 @@ body.theme-dark .contact-info h3 {
   color: #e5e7eb;
 }
 
+body.theme-dark .contact-form input,
+body.theme-dark .contact-form textarea {
+  background: #111827;
+  border-color: rgba(255,255,255,0.12);
+  color: #e5e7eb;
+}
+
+body.theme-dark .contact-form label {
+  color: #e5e7eb;
+}
+
+body.theme-dark .contact-form button {
+  background: linear-gradient(135deg, #f0b429, #c9920a);
+  color: #fff;
+}
+
 
 /* Wrapper */
 .social-icons {

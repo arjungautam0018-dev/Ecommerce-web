@@ -29,8 +29,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
 /* ── logout ── */
-    document.getElementById("adminLogoutBtn").addEventListener("click", async () => {
-        await fetch("/api/admin/logout", { method: "POST", credentials: "include" });
+    document.getElementById("adminLogoutBtn")?.addEventListener("click", async () => {
+        try {
+            await fetch("/api/admin/logout", { method: "POST", credentials: "include" });
+        } catch (e) { /* ignore network errors */ }
         window.location.href = "/login/admin";
     });
 

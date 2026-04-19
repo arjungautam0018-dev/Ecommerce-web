@@ -291,7 +291,7 @@ body {
 /* hero slider — no box, just the image */
 .hero-slider {
   width: 100%;
-  max-width: 280px;
+  max-width: 320px;
   height: 260px;
   position: relative;
   overflow: visible;
@@ -321,29 +321,39 @@ body {
 
 /* product info — below the image, in normal flow */
 .hero-slide-info {
-  margin-top: 12px;
+  margin-top: 14px;
   text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 5px;
+  max-width: 320px;
+  width: 100%;
+  padding: 0 4px;
 }
 
 .hero-slide-title {
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 700;
   color: #1a1a1a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .hero-slide-price {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: #b8860b;
 }
 
 .hero-slide-desc {
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   color: #6b7280;
-  line-height: 1.4;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .top-products {
     padding: 2rem 1rem;
@@ -1036,8 +1046,8 @@ body.theme-dark .category:hover .svg-category {
   }
 
   .hero-slider {
-    max-width: 360px;
-    height: 320px;
+    max-width: 400px;
+    height: 340px;
   }
 
   /* on desktop — buttons at far left/right of the whole hero-banner */
@@ -1265,6 +1275,22 @@ body.theme-dark .hero-banner {
 body.theme-dark .hero-pill {
   background: rgba(59,130,246,0.15);
   border-color: rgba(96,165,250,0.3);
+  color: #93c5fd;
+}
+
+body.theme-dark .hero-text h1,
+body.theme-dark .hero-slide-title {
+  color: #f9fafb;
+}
+
+body.theme-dark .hero-subtitle,
+body.theme-dark .hero-meta,
+body.theme-dark .hero-slide-desc {
+  color: rgba(229,231,235,0.85);
+}
+
+body.theme-dark .hero-slide-price {
+  color: #fbbf24;
 }
 
 body.theme-dark .hero-primary-btn {

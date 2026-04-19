@@ -103,7 +103,7 @@ const orderSchema = new mongoose.Schema({
 
 }, { timestamps: true });
 
-// TTL index — deletes document 86400 seconds (24h) after cancelledAt is set
-orderSchema.index({ cancelledAt: 1 }, { expireAfterSeconds: 86400, partialFilterExpression: { cancelledAt: { $type: "date" } } });
+// TTL index — deletes document 360000 seconds (100h) after cancelledAt is set
+orderSchema.index({ cancelledAt: 1 }, { expireAfterSeconds: 360000, partialFilterExpression: { cancelledAt: { $type: "date" } } });
 
 module.exports = mongoose.model("Order", orderSchema);

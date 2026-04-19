@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
 
 /* ============================================================
-   SECTION 1 — HAMBURGER + THEME
+   SECTION 1 — HAMBURGER
    ============================================================ */
 
     window.toggleMenu = function () {
@@ -15,18 +15,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             menu.classList.remove("show");
         }
     });
-
-    const themeBtn = document.querySelector(".theme-toggle");
-    if (themeBtn) {
-        const saved = localStorage.getItem("theme");
-        if (saved === "dark") document.body.classList.add("theme-dark");
-
-        themeBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            document.body.classList.toggle("theme-dark");
-            localStorage.setItem("theme", document.body.classList.contains("theme-dark") ? "dark" : "light");
-        });
-    }
 
 
 /* ============================================================

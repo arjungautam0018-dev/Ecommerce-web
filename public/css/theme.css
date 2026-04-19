@@ -234,15 +234,41 @@ body.theme-dark .menu-item-icon { stroke: #e5e7eb !important; color: #e5e7eb !im
    NAV LOGIN BUTTON
    ============================================================ */
 .nav-login-btn {
-  display: inline-flex; align-items: center; justify-content: center;
-  padding: 8px 16px;
-  background: linear-gradient(135deg, #f0b429, #c9920a);
-  color: #fff !important; font-size: 0.82rem; font-weight: 700;
-  font-family: var(--font-base); border-radius: var(--radius-sm);
-  text-decoration: none; box-shadow: var(--shadow-primary);
-  transition: opacity 0.15s ease;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 36px !important;
+  padding: 0 24px !important;
+  background: linear-gradient(135deg, #f0b429, #c9920a) !important;
+  color: #fff !important;
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  font-family: var(--font-base) !important;
+  border-radius: 999px !important;
+  text-decoration: none !important;
+  box-shadow: 0 3px 12px rgba(201,146,10,0.4) !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+  white-space: nowrap !important;
+  border: none !important;
 }
-.nav-login-btn:hover { opacity: 0.88; }
+.nav-login-btn:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 18px rgba(201,146,10,0.5) !important;
+}
+.nav-login-btn:active {
+  transform: scale(0.97) !important;
+}
+body.theme-dark .nav-login-btn {
+  background: linear-gradient(135deg, #f0b429, #c9920a) !important;
+  color: #fff !important;
+}
+@media (min-width: 768px) {
+  .nav-login-btn {
+    height: 40px !important;
+    padding: 0 36px !important;
+    font-size: 0.9rem !important;
+  }
+}
 
 /* ============================================================
    WISHLIST CARD — same as homepage product card
@@ -258,8 +284,11 @@ body.theme-dark .menu-item-icon { stroke: #e5e7eb !important; color: #e5e7eb !im
   flex-direction: column !important;
 }
 .wishlist-card img {
-  width: 100% !important; height: 180px !important;
-  object-fit: cover !important; display: block !important;
+  width: 100% !important;
+  aspect-ratio: 4 / 3 !important;
+  height: auto !important;
+  object-fit: cover !important;
+  display: block !important;
 }
 .wishlist-card-body {
   flex: 1 !important; display: flex !important; flex-direction: column !important;
