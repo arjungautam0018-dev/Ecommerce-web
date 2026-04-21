@@ -1385,3 +1385,200 @@ body.theme-dark::-webkit-scrollbar-thumb {
 body.theme-dark .quickies a:last-child {
   color: #f87171;
 }
+
+/* ============================================================
+   HOT SECTION — full-width banner, text overlaid on image
+   ============================================================ */
+
+.hot-section {
+  width: 100%;
+  margin: 2.5rem 0;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.hot-img-wrap {
+  position: relative;
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  min-height: 480px;
+}
+
+.hot-img {
+  width: 100%;
+  height: 100%;
+  min-height: 480px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* dark gradient overlay so text is readable */
+.hot-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(5, 10, 25, 0.55) 0%,
+    rgba(5, 10, 25, 0.1) 40%,
+    rgba(5, 10, 25, 0.85) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 20px 28px;
+}
+
+.hot-badge {
+  position: static;
+  display: inline-flex;
+  align-self: flex-start;
+  background: linear-gradient(135deg, #f0b429, #c9920a);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 999px;
+  box-shadow: 0 4px 12px rgba(201,146,10,0.45);
+  white-space: nowrap;
+}
+
+.hot-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.hot-top {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.hot-tag {
+  display: inline-flex;
+  width: fit-content;
+  padding: 3px 12px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: rgba(240,180,41,0.18);
+  border: 1px solid rgba(240,180,41,0.4);
+  color: #f0b429;
+}
+
+.hot-title {
+  margin: 0;
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.15;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+}
+
+.hot-desc {
+  margin: 0;
+  font-size: 0.88rem;
+  color: rgba(229,231,235,0.8);
+  line-height: 1.5;
+  max-width: 480px;
+}
+
+.hot-price {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #f0b429;
+}
+
+.hot-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.hot-cart-btn {
+  height: 44px;
+  padding: 0 26px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, #f0b429, #c9920a);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(201,146,10,0.4);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.hot-cart-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+.hot-cart-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.hot-buy-btn {
+  height: 44px;
+  padding: 0 26px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: background 0.15s ease;
+}
+.hot-buy-btn:hover { background: rgba(255,255,255,0.16); }
+
+@media (min-width: 768px) {
+  .hot-section { padding: 0 28px; }
+
+  .hot-img-wrap { min-height: 360px; border-radius: 24px; }
+  .hot-img { min-height: 360px; }
+
+  .hot-overlay {
+    justify-content: flex-end;
+    padding: 48px 52px;
+    background: linear-gradient(
+      to right,
+      rgba(5, 10, 25, 0.85) 0%,
+      rgba(5, 10, 25, 0.5) 50%,
+      rgba(5, 10, 25, 0.05) 100%
+    );
+  }
+
+  .hot-top {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hot-badge {
+    position: static;
+  }
+
+  .hot-title { font-size: 2.6rem; }
+  .hot-desc { font-size: 0.95rem; }
+}
+
+@media (min-width: 1024px) {
+  .hot-section {
+    max-width: 1240px;
+    margin: 2.5rem auto;
+    padding: 0 28px;
+  }
+  .hot-img-wrap { min-height: 400px; border-radius: 28px; }
+  .hot-img { min-height: 400px; }
+  .hot-title { font-size: 3rem; }
+  .hot-overlay { padding: 60px 64px; }
+}

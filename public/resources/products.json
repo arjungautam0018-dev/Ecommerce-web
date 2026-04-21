@@ -10,11 +10,11 @@
   },
   {
     "id": 2,
-    "title": "Custom Frame",
-    "desc": "A personalized frame for photos or artwork, perfect as a gift or for home decoration.",
-    "price": "रू.2,499",
-    "priceNum": 2499,
-    "img": "/resources/frame.jpg",
+    "title": "Custom Badge",
+    "desc": "A personalized badge for any events for offices , colleges , schools.",
+    "price": "रू.249",
+    "priceNum": 249,
+    "img": "/resources/badge.png",
     "category": "custom"
   },
   {
