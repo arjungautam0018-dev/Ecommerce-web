@@ -148,18 +148,48 @@ function createProductCard(product) {
 }
 
 function renderProducts() {
-  const sections = [
-    document.querySelector(".products"),
-    document.querySelector(".products2"),
-  ];
+  const featured    = PRODUCTS.filter(p => p.featured);
+  const nonFeatured = PRODUCTS.filter(p => !p.featured);
 
-  sections.forEach((container) => {
-    if (!container) return;
-    container.innerHTML = "";
-    PRODUCTS.forEach((product) =>
-      container.appendChild(createProductCard(product))
+  const topContainer     = document.querySelector(".products");
+  const exploreContainer = document.querySelector(".products2");
+
+  if (topContainer) {
+    topContainer.innerHTML = "";
+    featured.forEach((product, i) => {
+      const card = createProductCard(product);
+      card.classList.add("product-card--featured");
+      const badge = document.createElement("span");
+      badge.className = "product-rank-badge";
+      badge.textContent = `#${i + 1}`;
+      card.querySelector(".product-card-thumb").appendChild(badge);
+      topContainer.appendChild(card);
+    });
+  }
+
+  if (exploreContainer) {
+    exploreContainer.innerHTML = "";
+    nonFeatured.forEach(product =>
+      exploreContainer.appendChild(createProductCard(product))
     );
-  });
+  }
+
+  // Build hero slider from featured products
+  const slider = document.querySelector(".hero-slider");
+  if (slider && featured.length) {
+    slider.innerHTML = "";
+    featured.forEach((product, i) => {
+      const layer = document.createElement("div");
+      layer.className = `carousel-layer${i === 0 ? " active" : ""}`;
+      layer.dataset.title = product.title;
+      layer.dataset.price = product.price;
+      layer.dataset.desc  = product.desc;
+      layer.innerHTML = `<img src="${product.img}" alt="${product.title}" class="hero-main-image">`;
+      slider.appendChild(layer);
+    });
+    // re-init hero slider now that slides exist
+    if (typeof initHeroSlider === "function") initHeroSlider();
+  }
 }
 
 // ============================================================

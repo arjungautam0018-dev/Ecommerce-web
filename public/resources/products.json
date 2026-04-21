@@ -6,34 +6,38 @@
     "price": "रू.2,499",
     "priceNum": 2499,
     "img": "/resources/frame1.jpg",
-    "category": "custom"
+    "category": "custom",
+    "featured": true
   },
   {
     "id": 2,
     "title": "Custom Badge",
-    "desc": "A personalized badge for any events for offices , colleges , schools.",
+    "desc": "A personalized badge for any events, offices, colleges and schools.",
     "price": "रू.249",
     "priceNum": 249,
     "img": "/resources/badge.png",
-    "category": "custom"
+    "category": "custom",
+    "featured": true
   },
   {
     "id": 3,
-    "title": "Custom Wall Frame",
-    "desc": "Elegant customizable wall frame with premium print finish.",
+    "title": "Trophies",
+    "desc": "Classic and modern trophy designs for winners and MVPs.",
     "price": "रू.3,499",
     "priceNum": 3499,
-    "img": "/resources/frame.webp",
-    "category": "custom"
+    "img": "/resources/trophies.png",
+    "category": "sports",
+    "featured": true
   },
   {
     "id": 4,
-    "title": "Stamp Set",
-    "desc": "Official stamp set suitable for badge programs and office use.",
+    "title": "Premium Token",
+    "desc": "Keepsake tokens and commemorative pieces for special moments.",
     "price": "रू.1,299",
     "priceNum": 1299,
-    "img": "/resources/stamp.jpg",
-    "category": "office"
+    "img": "/resources/premium_token.png",
+    "category": "events",
+    "featured": true
   },
   {
     "id": 5,
@@ -50,26 +54,26 @@
     "desc": "Custom engraved medals for tournaments, schools, and clubs.",
     "price": "रू.899",
     "priceNum": 899,
-    "img": "/resources/medal.jpg",
+    "img": "/resources/medal.png",
     "category": "sports"
   },
   {
     "id": 7,
-    "title": "Trophies",
-    "desc": "Classic and modern trophy designs for winners and MVPs.",
+    "title": "Custom Wall Frame",
+    "desc": "Elegant customizable wall frame with premium print finish.",
     "price": "रू.3,499",
     "priceNum": 3499,
-    "img": "/resources/trophies.jpg",
-    "category": "sports"
+    "img": "/resources/frame.webp",
+    "category": "custom"
   },
   {
     "id": 8,
-    "title": "Token of Love",
-    "desc": "Keepsake tokens and commemorative pieces for special moments.",
+    "title": "Stamp Set",
+    "desc": "Official stamp set suitable for badge programs and office use.",
     "price": "रू.1,299",
     "priceNum": 1299,
-    "img": "/resources/token.jpg",
-    "category": "events"
+    "img": "/resources/stamp.jpg",
+    "category": "office"
   },
   {
     "id": 9,
@@ -79,5 +83,24 @@
     "priceNum": 499,
     "img": "/resources/khada.jpg",
     "category": "custom"
+  },
+  {
+    "id": 10,
+    "title": "Sublimation Cup",
+    "desc": "Customizable ceramic cup with smooth full-wrap print surface. Perfect for gifting or branding.",
+    "price": "रू.5,999",
+    "priceNum": 5999,
+    "img": "/resources/sublimationcup.png",
+    "category": "custom"
+  },
+
+  {
+    "id": 11,
+    "title": "Token of Love",
+    "desc": "Keepsake tokens and commemorative pieces for special moments and celebrations.",
+    "price": "रू.1,299",
+    "priceNum": 1299,
+    "img": "/resources/token.png",
+    "category": "events"
   }
 ]

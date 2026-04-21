@@ -1,12 +1,10 @@
 /* ============================================================
    hero.js — Hero section slider
-   - Buttons are direct children of .hero-banner (far edges on desktop)
-   - Image fills slider with no box/border
-   - Info (title, price, desc) shown below image in .hero-slide-info
+   initHeroSlider() is called by index.js after slides are built
+   from featured products.
    ============================================================ */
 
-document.addEventListener("DOMContentLoaded", () => {
-
+function initHeroSlider() {
     const banner   = document.querySelector(".hero-banner");
     const slider   = document.querySelector(".hero-slider");
     if (!banner || !slider) return;
@@ -52,9 +50,26 @@ document.addEventListener("DOMContentLoaded", () => {
         timer = setInterval(next, 6000);
     }
 
-    if (prevBtn) prevBtn.addEventListener("click", () => { prev(); startAuto(); });
-    if (nextBtn) nextBtn.addEventListener("click", () => { next(); startAuto(); });
+    // remove old listeners by cloning buttons
+    if (prevBtn) {
+        const newPrev = prevBtn.cloneNode(true);
+        prevBtn.replaceWith(newPrev);
+        newPrev.addEventListener("click", () => { prev(); startAuto(); });
+    }
+    if (nextBtn) {
+        const newNext = nextBtn.cloneNode(true);
+        nextBtn.replaceWith(newNext);
+        newNext.addEventListener("click", () => { next(); startAuto(); });
+    }
 
     showSlide(0);
     startAuto();
+}
+
+// fallback: also run on DOMContentLoaded in case slides are pre-rendered
+document.addEventListener("DOMContentLoaded", () => {
+    const slider = document.querySelector(".hero-slider");
+    if (slider && slider.querySelectorAll(".carousel-layer").length > 0) {
+        initHeroSlider();
+    }
 });

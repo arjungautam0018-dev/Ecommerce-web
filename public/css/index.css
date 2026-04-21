@@ -1582,3 +1582,36 @@ body.theme-dark .quickies a:last-child {
   .hot-title { font-size: 3rem; }
   .hot-overlay { padding: 60px 64px; }
 }
+
+/* ── Featured / Top Products highlight ── */
+.product-card--featured {
+  border-color: rgba(201,146,10,0.3) !important;
+  box-shadow: 0 8px 28px rgba(201,146,10,0.12), 0 2px 8px rgba(0,0,0,0.06) !important;
+  position: relative;
+}
+
+.product-card--featured:hover {
+  border-color: rgba(201,146,10,0.55) !important;
+  box-shadow: 0 14px 36px rgba(201,146,10,0.2), 0 4px 12px rgba(0,0,0,0.08) !important;
+}
+
+.product-rank-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: linear-gradient(135deg, #f0b429, #c9920a);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 3px 9px;
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(201,146,10,0.4);
+  z-index: 1;
+  pointer-events: none;
+}
+
+body.theme-dark .product-card--featured {
+  border-color: rgba(201,146,10,0.25) !important;
+  box-shadow: 0 8px 28px rgba(201,146,10,0.1), 0 2px 8px rgba(0,0,0,0.3) !important;
+}
