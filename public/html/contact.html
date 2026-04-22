@@ -85,9 +85,64 @@
   <main class="contact-page">
     <section class="contact-head">
       <h2>Contact Us</h2>
-      <p>Send your feedback, questions, or requests. We reply quickly.</p>
+      <p>We'd love to hear from you. Reach out through any channel below.</p>
     </section>
-    <section class="contact-card">
+
+    <!-- INFO + SOCIAL CARDS (side by side) -->
+    <div class="contact-top-row">
+
+      <!-- Details card -->
+      <div class="ccard ccard-details">
+        <h3 class="ccard-title">Get in Touch</h3>
+        <div class="cinfo-item">
+          <span class="cinfo-icon">📍</span>
+          <div>
+            <p class="cinfo-label">Location</p>
+            <p class="cinfo-value">Kathmandu, Nepal</p>
+          </div>
+        </div>
+        <div class="cinfo-item">
+          <span class="cinfo-icon">🕐</span>
+          <div>
+            <p class="cinfo-label">Office Hours</p>
+            <p class="cinfo-value">Sun – Fri, 9:00 AM – 6:00 PM</p>
+          </div>
+        </div>
+        <div class="cinfo-item">
+          <span class="cinfo-icon">📧</span>
+          <div>
+            <p class="cinfo-label">Email</p>
+            <a class="cinfo-value cinfo-link" href="mailto:arjungautam0018@gmail.com">arjungautam0018@gmail.com</a>
+          </div>
+        </div>
+        <div class="cinfo-item">
+          <span class="cinfo-icon">📞</span>
+          <div>
+            <p class="cinfo-label">Call Us</p>
+            <a class="cinfo-value cinfo-link" href="tel:+9779847825916">+977 98-4782-5916</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Social card -->
+      <div class="ccard ccard-social">
+        <h3 class="ccard-title">Connect With Us</h3>
+        <a href="https://wa.me/9779847825916?text=Hello%20Photo%20Concern%2C%20I%20need%20help." target="_blank" class="cinfo-social-btn cinfo-wa">
+          <img src="/resources/whatsapp.webp" alt="WhatsApp"> WhatsApp
+        </a>
+        <a href="https://www.facebook.com/YourPage" target="_blank" class="cinfo-social-btn cinfo-fb">
+          <img src="/resources/facebook.webp" alt="Facebook"> Facebook
+        </a>
+        <a href="mailto:arjungautam0018@gmail.com" class="cinfo-social-btn cinfo-mail">
+          <img src="/resources/gmail.webp" alt="Email"> Email Us
+        </a>
+      </div>
+
+    </div>
+
+    <!-- FORM CARD -->
+    <section class="ccard ccard-form">
+      <h3 class="ccard-title">Send a Message</h3>
       <form id="contactForm" class="contact-form" action="/api/contact" method="POST">
         <label>Name<input type="text" id="name" name="name" required placeholder="Your name"></label>
         <label>Email<input type="email" id="email" name="email" required placeholder="you@example.com"></label>
@@ -95,27 +150,6 @@
         <label>Message<textarea id="message" name="message" rows="5" required placeholder="Write your message"></textarea></label>
         <button type="submit">Send Message</button>
       </form>
-      <div class="contact-info">
-        <h3>Business Contact</h3>
-        <p>Email: arjungautam0018@gmail.com</p>
-        <p>Support Hours: 9:00 AM - 6:00 PM</p>
-<div class="social-icons">
-
-  <a href="https://wa.me/9779800000000?text=Hello%20ShopHub%2C%20I%20need%20help%20with%20my%20order." target="_blank">
-    <img src="/resources/whatsapp.webp" alt="WhatsApp">
-  </a>
-
-  <a href="https://www.facebook.com/YourPage" target="_blank">
-    <img src="/resources/facebook.webp" alt="Facebook">
-  </a>
-
-  <a href="mailto:arjungautam0018@gmail.com">
-    <img src="/resources/gmail.webp" alt="Gmail">
-  </a>
-
-</div>
-
-      </div>
     </section>
   </main>
 

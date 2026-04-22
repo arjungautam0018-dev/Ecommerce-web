@@ -199,15 +199,16 @@ function renderSummary() {
     `);
   });
 
-  const tax   = Math.round(subtotal * 0.13);
-  const total = subtotal + tax;
+  const total = subtotal;
 
   const subEl   = document.getElementById("subtotal");
   const taxEl   = document.getElementById("tax");
   const totalEl = document.getElementById("total");
 
   if (subEl)   subEl.textContent   = `Rs.${subtotal.toLocaleString()}`;
-  if (taxEl)   taxEl.textContent   = `Rs.${tax.toLocaleString()}`;
+  if (taxEl)   taxEl.style.display = "none";
+  const taxRow = taxEl?.closest(".summary-line");
+  if (taxRow)  taxRow.style.display = "none";
   if (totalEl) totalEl.textContent = `Rs.${total.toLocaleString()}`;
 }
 
@@ -244,6 +245,14 @@ function renderCart() {
 
     card.innerHTML = 
     `<div class="cart-product-top">
+<div class="wish-del">
+<button type="button" class="cart-wishlist-btn">
+<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+</button>
+<button type="button" class="delete-product">
+<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+</button>
+</div>
 <div class="details-product">
 <label class="item-check">
 <input type="checkbox" class="item-checkbox" ${isSelected ? "checked" : ""}>
@@ -254,30 +263,17 @@ function renderCart() {
 <div class="details-price-row">
 <p class="cart-price-each">रू.${item.price.toLocaleString()} /piece</p>
 <div class="details-row-actions">
-<div class="first-btn">
- 
 <div class="quantity">
 <button type="button" class="decrease">-</button>
 <span class="quantity-value">${item.quantity}</span>
 <button type="button" class="increase">+</button>
 </div>
-<div class="wish-del">
-<button type="button" class="cart-wishlist-btn">
-<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
-</button>
-<button type="button" class="delete-product">
-<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-</button>
 </div>
 </div>
 </div>
 </div>
 </div>
-</div>
-</div>
- 
 <div class="cart-item-side">
- 
 <h3 class="cart-line-total">
   ${item.quantity} × रू.${item.price.toLocaleString()} = रू.${(item.price * item.quantity).toLocaleString()}
 </h3></div>
@@ -722,8 +718,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     const data = await API.getCart();
     cartItems = data.cart?.items || [];
   } catch (err) {
-    // handleUnauthorized already called inside API if 401
     cartItems = [];
+  }
+
+  // auto-select item if redirected from Buy Now
+  const selectId = new URLSearchParams(window.location.search).get("select");
+  if (selectId) {
+    selectedIds.add(selectId);
+    // clean URL
+    history.replaceState(null, "", "/serve/cart");
   }
 
   renderCart();

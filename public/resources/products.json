@@ -5,7 +5,7 @@
     "desc": "A personalized frame for photos or artwork, perfect as a gift or for home decoration.",
     "price": "रू.2,499",
     "priceNum": 2499,
-    "img": "/resources/frame1.jpg",
+    "img": "/resources/frame1.png",
     "category": "custom",
     "featured": true
   },
@@ -15,7 +15,7 @@
     "desc": "A personalized badge for any events, offices, colleges and schools.",
     "price": "रू.249",
     "priceNum": 249,
-    "img": "/resources/badge.png",
+    "img": "/resources/badge1.png",
     "category": "custom",
     "featured": true
   },
@@ -25,7 +25,7 @@
     "desc": "Classic and modern trophy designs for winners and MVPs.",
     "price": "रू.3,499",
     "priceNum": 3499,
-    "img": "/resources/trophies.png",
+    "img": "/resources/trophies1.png",
     "category": "sports",
     "featured": true
   },
@@ -35,7 +35,7 @@
     "desc": "Keepsake tokens and commemorative pieces for special moments.",
     "price": "रू.1,299",
     "priceNum": 1299,
-    "img": "/resources/premium_token.png",
+    "img": "/resources/token-love.png",
     "category": "events",
     "featured": true
   },

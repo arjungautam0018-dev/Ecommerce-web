@@ -179,25 +179,57 @@ body {
    6. CART PRODUCT CARD
 ============================================================================= */
 .cart-product {
+  position: relative;
   background: #fff;
-  border-radius: 16px;
-  padding: 12px;
-  margin: 12px 0;
-
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.cart-product:active {
-  transform: scale(0.98);
+  border-radius: 14px;
+  padding: 10px 12px 10px;
+  margin: 8px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.2s ease;
+  border: 1px solid rgba(84,131,179,0.15);
+  background: linear-gradient(135deg, rgba(193,232,255,0.25), rgba(255,255,255,0.95));
 }
 
 /* Flex column wrapper inside each card */
 .cart-product-top {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
+
+/* Wishlist & delete — top-right corner */
+.wish-del {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  z-index: 1;
+}
+
+.cart-wishlist-btn,
+.delete-product {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: none;
+  background: rgba(255,255,255,0.7);
+  cursor: pointer;
+  border-radius: 8px;
+  transition: color 0.15s ease, background 0.15s ease;
+  backdrop-filter: blur(4px);
+}
+
+.cart-wishlist-btn svg,
+.delete-product svg { display: block; width: 18px; height: 18px; }
+.cart-wishlist-btn       { color: #6b7280; }
+.cart-wishlist-btn:hover { color: #db2777; background: rgba(219,39,119,0.12); }
+.delete-product          { color: #6b7280; }
+.delete-product:hover    { color: #b91c1c; background: rgba(185,28,28,0.1); }
 
 
 /* =============================================================================
@@ -213,11 +245,11 @@ body {
 
 /* Thumbnail */
 .img-product img {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   flex-shrink: 0;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: 10px;
   border: none;
   padding: 0;
   margin: 0;
@@ -252,11 +284,20 @@ body {
   color: #021024;
 }
 
-/* Wishlist & delete buttons wrapper */
+/* Wishlist & delete buttons wrapper — grouped right */
 .details-row-actions {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
+  margin-left: auto;
+}
+
+.wish-del {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  border-radius: 10px;
+  padding: 2px;
 }
 
 /* Shared icon-button base */
@@ -265,18 +306,19 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
-  padding: 8px;
+  padding: 5px;
   border: none;
   background: transparent;
   cursor: pointer;
-  border-radius: 10px;
+  border-radius: 8px;
   transition: color 0.15s ease, background 0.15s ease;
 }
 
 .cart-wishlist-btn svg,
 .delete-product svg {
   display: block;
+  width: 16px;
+  height: 16px;
 }
 
 /* Wishlist */
@@ -284,9 +326,8 @@ body {
 .cart-wishlist-btn:hover { color: #db2777; background: rgba(219, 39, 119, 0.1); }
 
 /* Delete */
-.delete-product            { color: #6b7280; margin: -4px -4px -4px 0; }
-.delete-product:hover      { color: #b91c1c; background: rgba(185, 28, 28, 0.08); }
-.delete-product:active     { transform: scale(1.05); }
+.delete-product       { color: #6b7280; }
+.delete-product:hover { color: #b91c1c; background: rgba(185, 28, 28, 0.08); }
 
 /* Checkbox (desktop-only — hidden on mobile via media query below) */
 .item-check {
@@ -404,10 +445,10 @@ body {
   max-width: 480px;
   margin: 30px auto;
   padding: 24px;
-
-  background: #fff;
+  background: linear-gradient(140deg, #ffffff, #eaf4ff, #dbeafe);
+  border: 1px solid rgba(84,131,179,0.2);
   border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 20px rgba(2,16,36,0.08);
   font-family: 'Manrope', sans-serif;
 }
 

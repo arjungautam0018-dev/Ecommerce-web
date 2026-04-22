@@ -25,10 +25,13 @@ function showToast(message, type = "info", duration = 3000) {
 }
 
 // Login form submission
-document.querySelector(".credentials-form").addEventListener("submit", async (e) => {
+document.querySelector(".auth-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
   const data = Object.fromEntries(formData.entries());
+
+  const btn = e.target.querySelector(".auth-btn");
+  if (btn) { btn.disabled = true; btn.textContent = "Signing in…"; }
 
   try {
     const res = await fetch("/api/login", {
@@ -39,17 +42,16 @@ document.querySelector(".credentials-form").addEventListener("submit", async (e)
 
     const result = await res.json();
 
-    // Show toast
-    showToast(result.message, result.type || (res.ok ? "success" : "error"), 4000);
-
-    // Redirect if provided
-    if (result.redirect) {
-      setTimeout(() => {
-        window.location.href = result.redirect;
-      }, result.delay || 3000);
+    if (res.ok) {
+      // Redirect on success — use server redirect or default to home
+      window.location.href = result.redirect || "/";
+    } else {
+      showToast(result.message || "Login failed. Please try again.", "error", 4000);
+      if (btn) { btn.disabled = false; btn.textContent = "Sign In"; }
     }
   } catch (err) {
     showToast("Network error. Please try again.", "error", 4000);
+    if (btn) { btn.disabled = false; btn.textContent = "Sign In"; }
     console.error(err);
   }
 });

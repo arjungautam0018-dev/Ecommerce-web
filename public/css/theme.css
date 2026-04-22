@@ -77,8 +77,9 @@ body {
 }
 
 body.theme-dark .nav-logo {
-  mix-blend-mode: screen;
-  filter: brightness(1.1);
+  content: url("/resources/bannerblack.png");
+  mix-blend-mode: normal;
+  filter: none;
 }
 
 @media (min-width: 1024px) {
@@ -114,6 +115,17 @@ body.theme-dark .nav-logo {
   cursor: pointer !important;
   display: block !important;
   transition: opacity 0.15s ease !important;
+}
+
+@media (max-width: 768px) {
+  .icons-svg-nav {
+    width: 22px !important;
+    height: 22px !important;
+  }
+  .hamburger {
+    width: 26px !important;
+    height: 26px !important;
+  }
 }
 
 .hamburger {

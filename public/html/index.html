@@ -88,8 +88,6 @@
 
   <div class="main-content">
     <section class="hero-banner">
-      <button class="carousel-btn prev" type="button" aria-label="Previous image">&lt;</button>
-      <button class="carousel-btn next" type="button" aria-label="Next image">&gt;</button>
       <div class="hero-inner">
         <div class="hero-text">
           <p class="hero-pill">New in • Curated for you</p>
@@ -121,10 +119,10 @@
 
     <div class="top-products">
       <div class="text-top-products">
-        <h2>Top Products</h2>
+        <h2>Our Products</h2>
         <p>Our best-selling items</p>
       </div>
-      <div class="products"></div>
+      <div class="products featured-banners"></div>
     </div>
 
     <!-- HOT SECTION -->
@@ -134,7 +132,6 @@
         <div class="hot-overlay">
           <div class="hot-top">
             <div class="hot-badge">🔥 Hot Right Now</div>
-            <span class="hot-tag">Limited Edition</span>
           </div>
           <div class="hot-content">
             <h2 class="hot-title">Photo Book</h2>
@@ -145,19 +142,15 @@
                 data-title="Photo Book"
                 data-price="1499"
                 data-img="/resources/photobook.png"
-                data-desc="Custom printed photo book with premium paper.">Add to Cart</button>
-              <button type="button" class="buy-now-btn hot-buy-btn"
-                data-title="Photo Book"
-                data-price="1499"
-                data-img="/resources/photobook.png"
                 data-desc="Custom printed photo book with premium paper.">Buy Now</button>
+              <button type="button" class="hot-learn-btn" data-title="Photo Book">Learn More</button>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="categories" id="categories">
+    <div class="categories" id="categories" style="display:none">
       <div class="categories-heading">
         <h2>Categories</h2>
         <p>Shop by category</p>
@@ -200,7 +193,7 @@
       </div>
     </div>
 
-    <div class="top-products">
+    <div class="top-products" style="display:none">
       <div class="text-top-products">
         <h2>Explore more</h2>
         <p>Featured products just for you!</p>

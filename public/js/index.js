@@ -117,53 +117,75 @@ function createProductCard(product) {
   const card = document.createElement("div");
   card.className = "product-card";
 
-  card.innerHTML = card.innerHTML = `
-  <div class="product-card-thumb">
-    <img class="products_images" src="${product.img}" alt="${product.title}" loading="lazy">
-  </div>
-  <div class="product-inform">
-    <h3>${product.title}</h3>
-    <p class="desc-product">${product.desc}</p>
-    <p class="price-product">${product.price}</p>
-  </div>
-  <div class="card-actions">
-
-    <button type="button" class="add-to-cart-btn"
-      data-title="${product.title}"
-      data-price="${product.price}"
-      data-img="${product.img}"
-      data-desc="${product.desc}">Add to Cart</button>
-
-    <button type="button" class="buy-now-btn"
-      data-title="${product.title}"
-      data-price="${product.price}"
-      data-img="${product.img}"
-      data-desc="${product.desc}">Buy Now</button>
-
+  card.innerHTML = `
+  <div class="product-card-wrap">
+    <img class="product-card-img" src="${product.img}" alt="${product.title}" loading="lazy">
+    <div class="product-card-overlay">
+      <div class="product-card-content">
+        <h3 class="product-card-title">${product.title}</h3>
+        <p class="product-card-desc">${product.desc}</p>
+        <p class="product-card-price">${product.price}</p>
+        <div class="product-card-actions">
+          <button type="button" class="add-to-cart-btn"
+            data-title="${product.title}"
+            data-price="${product.price}"
+            data-img="${product.img}"
+            data-desc="${product.desc}">Add to Cart</button>
+          <button type="button" class="buy-now-btn"
+            data-title="${product.title}"
+            data-price="${product.price}"
+            data-img="${product.img}"
+            data-desc="${product.desc}">Buy Now</button>
+        </div>
+      </div>
+    </div>
   </div>
 `;
 
-
   return card;
+}
+
+function createFeaturedBanner(product, index) {
+  const wrap = document.createElement("div");
+  wrap.className = "hot-section";  // same class as photo book — identical layout
+  wrap.innerHTML = `
+    <div class="hot-img-wrap">
+      <img src="${product.img}" alt="${product.title}" class="hot-img">
+      <div class="hot-overlay">
+        <div class="hot-top">
+          <div class="hot-badge">#${index + 1} Top Selling</div>
+        </div>
+        <div class="hot-content">
+          <h2 class="hot-title">${product.title}</h2>
+          <p class="hot-desc">${product.desc}</p>
+          <p class="hot-price">${product.price}</p>
+          <div class="hot-actions">
+            <button type="button" class="add-to-cart-btn hot-cart-btn"
+              data-title="${product.title}"
+              data-price="${product.priceNum || product.price}"
+              data-img="${product.img}"
+              data-desc="${product.desc}">Buy Now</button>
+            <button type="button" class="hot-learn-btn"
+              data-title="${product.title}">Learn More</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  return wrap;
 }
 
 function renderProducts() {
   const featured    = PRODUCTS.filter(p => p.featured);
   const nonFeatured = PRODUCTS.filter(p => !p.featured);
 
-  const topContainer     = document.querySelector(".products");
+  const topContainer     = document.querySelector(".featured-banners");
   const exploreContainer = document.querySelector(".products2");
 
   if (topContainer) {
     topContainer.innerHTML = "";
     featured.forEach((product, i) => {
-      const card = createProductCard(product);
-      card.classList.add("product-card--featured");
-      const badge = document.createElement("span");
-      badge.className = "product-rank-badge";
-      badge.textContent = `#${i + 1}`;
-      card.querySelector(".product-card-thumb").appendChild(badge);
-      topContainer.appendChild(card);
+      topContainer.appendChild(createFeaturedBanner(product, i));
     });
   }
 
@@ -187,7 +209,6 @@ function renderProducts() {
       layer.innerHTML = `<img src="${product.img}" alt="${product.title}" class="hero-main-image">`;
       slider.appendChild(layer);
     });
-    // re-init hero slider now that slides exist
     if (typeof initHeroSlider === "function") initHeroSlider();
   }
 }
@@ -216,18 +237,28 @@ function setupAddToCartButtons() {
     btn.textContent = "Adding…";
 
     try {
-      await API.addToCart(product);
-      showToast(`${product.title} added to cart!`, "success");
-      btn.textContent = "Added ✓";
-      setTimeout(() => {
-        btn.disabled    = false;
-        btn.textContent = "Add to Cart";
-      }, 2000);
+      const result = await API.addToCart(product);
+      // find the added item by title to get its _id
+      const items = result?.cart?.items || [];
+      const added = [...items].reverse().find(i => i.title === product.title);
+      const itemId = added?._id || "";
+      window.location.href = `/serve/cart${itemId ? `?select=${itemId}` : ""}`;
     } catch (err) {
       showToast(err.message, "error");
       btn.disabled    = false;
-      btn.textContent = "Add to Cart";
+      btn.textContent = "Buy Now";
     }
+  });
+}
+
+function setupLearnMoreButtons() {
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest(".hot-learn-btn");
+    if (!btn) return;
+    const title = btn.dataset.title || "";
+    // navigate to a product detail page (slug from title)
+    const slug = title.toLowerCase().replace(/\s+/g, "-");
+    window.location.href = `/product/${slug}`;
   });
 }
 
@@ -335,6 +366,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   await loadProducts();
   renderProducts();
   setupAddToCartButtons();
-  setupBuyNowButtons();
+  setupLearnMoreButtons();
   // setupHeroSlider(); — now handled by hero.js
 });
