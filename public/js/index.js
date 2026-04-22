@@ -118,27 +118,22 @@ function createProductCard(product) {
   card.className = "product-card";
 
   card.innerHTML = `
-  <div class="product-card-wrap">
-    <img class="product-card-img" src="${product.img}" alt="${product.title}" loading="lazy">
-    <div class="product-card-overlay">
-      <div class="product-card-content">
-        <h3 class="product-card-title">${product.title}</h3>
-        <p class="product-card-desc">${product.desc}</p>
-        <p class="product-card-price">${product.price}</p>
-        <div class="product-card-actions">
-          <button type="button" class="add-to-cart-btn"
-            data-title="${product.title}"
-            data-price="${product.price}"
-            data-img="${product.img}"
-            data-desc="${product.desc}">Add to Cart</button>
-          <button type="button" class="buy-now-btn"
-            data-title="${product.title}"
-            data-price="${product.price}"
-            data-img="${product.img}"
-            data-desc="${product.desc}">Buy Now</button>
-        </div>
-      </div>
-    </div>
+  <div class="product-card-thumb">
+    <img src="${product.img}" alt="${product.title}" loading="lazy">
+  </div>
+  <div class="product-inform">
+    <h3>${product.title}</h3>
+    <p class="desc-product">${product.desc}</p>
+    <p class="price-product">${product.price}</p>
+  </div>
+  <div class="card-actions">
+    <button type="button" class="add-to-cart-btn"
+      data-title="${product.title}"
+      data-price="${product.price}"
+      data-img="${product.img}"
+      data-desc="${product.desc}">Buy Now</button>
+    <button type="button" class="hot-learn-btn"
+      data-title="${product.title}">Learn More</button>
   </div>
 `;
 
@@ -179,13 +174,13 @@ function renderProducts() {
   const featured    = PRODUCTS.filter(p => p.featured);
   const nonFeatured = PRODUCTS.filter(p => !p.featured);
 
-  const topContainer     = document.querySelector(".featured-banners");
+  const topContainer     = document.querySelector(".products");
   const exploreContainer = document.querySelector(".products2");
 
   if (topContainer) {
     topContainer.innerHTML = "";
-    featured.forEach((product, i) => {
-      topContainer.appendChild(createFeaturedBanner(product, i));
+    featured.forEach((product) => {
+      topContainer.appendChild(createProductCard(product));
     });
   }
 

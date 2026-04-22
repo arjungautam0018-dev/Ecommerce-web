@@ -295,7 +295,7 @@ body {
 .hero-slider {
   width: 100%;
   max-width: 320px;
-  height: 260px;
+  height: 20px;
   position: relative;
   overflow: visible;
   background: none;
@@ -393,11 +393,6 @@ body {
 }
 .product-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.18); }
 .product-card:active { opacity: 0.95; }
-
-/* hide old inner elements — new structure uses product-card-wrap */
-.product-card-thumb,
-.product-inform,
-.card-actions { display: none !important; }
 
 .products,
 .products2 {
@@ -1044,7 +1039,7 @@ body.theme-dark .category:hover .svg-category {
 
   .hero-slider {
     max-width: 400px;
-    height: 340px;
+    height: 300px;
   }
 
   /* on desktop — buttons at far left/right of the whole hero-banner */

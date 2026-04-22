@@ -432,3 +432,45 @@ body.theme-dark #_pageLoader { background: rgba(13,17,23,0.94); }
 .logout-btn:hover { background: #fff5f5 !important; }
 body.theme-dark .logout-btn { color: #f87171 !important; }
 body.theme-dark .logout-btn:hover { background: rgba(248,113,113,0.08) !important; }
+
+/* ============================================================
+   MOBILE NAVBAR — hamburger left, logo center, icons right
+   ============================================================ */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 14px 16px !important;
+  }
+
+  .nav-bar-left {
+    position: absolute !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+
+  .nav-bar-right {
+    width: 100% !important;
+    justify-content: space-between !important;
+  }
+
+  /* Move hamburger to far left */
+  .hamburger {
+    order: -1 !important;
+  }
+
+  /* Hide contact + cart + profile icons on mobile — keep only hamburger */
+  .nav-bar-right > a {
+    display: none !important;
+  }
+
+  /* But keep the login button visible */
+  .nav-bar-right > .nav-login-btn {
+    display: inline-flex !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .quickies {
+    right: auto !important;
+    left: 10px !important;
+  }
+}
