@@ -179,7 +179,8 @@ function renderProducts() {
 
   if (topContainer) {
     topContainer.innerHTML = "";
-    featured.forEach((product) => {
+    // render featured products twice (duplicated)
+    [...featured, ...featured].forEach((product) => {
       topContainer.appendChild(createProductCard(product));
     });
   }
